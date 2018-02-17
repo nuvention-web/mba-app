@@ -1,0 +1,23 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var forms_1 = require("@angular/forms");
+var recaptcha_common_module_1 = require("./recaptcha-common.module");
+var recaptcha_value_accessor_directive_1 = require("./recaptcha-value-accessor.directive");
+var RecaptchaFormsModule = (function () {
+    function RecaptchaFormsModule() {
+    }
+    RecaptchaFormsModule.decorators = [
+        { type: core_1.NgModule, args: [{
+                    declarations: [
+                        recaptcha_value_accessor_directive_1.RecaptchaValueAccessorDirective,
+                    ],
+                    exports: [recaptcha_value_accessor_directive_1.RecaptchaValueAccessorDirective],
+                    imports: [forms_1.FormsModule, recaptcha_common_module_1.RecaptchaCommonModule],
+                },] },
+    ];
+    /** @nocollapse */
+    RecaptchaFormsModule.ctorParameters = function () { return []; };
+    return RecaptchaFormsModule;
+}());
+exports.RecaptchaFormsModule = RecaptchaFormsModule;

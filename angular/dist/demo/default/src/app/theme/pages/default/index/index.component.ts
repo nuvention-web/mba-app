@@ -1,0 +1,29 @@
+import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { Helpers } from '../../../../helpers';
+import { ScriptLoaderService } from '../../../../_services/script-loader.service';
+import { SchoolsService } from '../../../../_services/schools.service';
+
+@Component({
+    selector: "app-index",
+    templateUrl: "./index.component.html",
+    encapsulation: ViewEncapsulation.None,
+    providers: [SchoolsService]
+})
+export class IndexComponent implements OnInit, AfterViewInit {
+
+    data: any = {};
+
+    constructor(private _script: ScriptLoaderService, private _schools:SchoolsService) {
+      this._schools.getSchools().subscribe(d => this.data = d);
+    }
+
+    ngOnInit() {
+
+    }
+    ngAfterViewInit() {
+        this._script.loadScripts('app-index',
+            ['assets/app/js/dashboard.js']);
+
+    }
+
+}

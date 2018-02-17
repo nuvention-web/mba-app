@@ -1,0 +1,42 @@
+image: nodesource/jessie:latest
+
+before_script:
+  - export NODE_ENV=development
+  - apt-get update -qq
+  - apt-get -y -qq install ruby ruby-dev
+  - gem install sass
+  - npm install
+  - npm install -g grunt-cli
+
+test:
+  stage: test
+  script:
+  # Required by and phantomjs
+  - apt-get -y -qq install libssl-dev libfontconfig1-dev
+  - npm run test
+
+release:
+  stage: deploy
+  script:
+  - grunt
+  artifacts:
+    paths:
+    - dist
+    name: "dist"
+  only:
+  - master
+
+pages:
+  stage: deploy
+  script:
+  - apt-get -y -qq install ruby-dev
+  - ruby --version
+  - gem install jekyll -v 3.6.2
+  - gem install pygments.rb
+  - grunt build-website
+  - jekyll build -s website -d public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master

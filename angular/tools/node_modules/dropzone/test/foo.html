@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<link rel="stylesheet" href="../dist/dropzone.css" />
+
+
+<!-- The actual tests -->
+<script src="../src/dropzone.js"></script>
+
+
+<form action="http://localhost:4049" id="chunked-upload-form" class="dropzone"></form>
+
+<script>
+  Dropzone.options.chunkedUploadForm = {
+    uploadMultiple: false,
+
+    chunking: true,
+    forceChunking: true,
+//    chunkSize: 4000 * 1024,
+    chunkSize: 1024,
+    maxFiles: 1,
+
+    params: (files, xhr, chunk) => {
+      return {
+        name: chunk.file.name,
+        index: chunk.index
+      };
+    },
+
+    chunksUploaded: (file, done) => {
+      var self = this;
+
+      var indexList = '';
+      for (var i = 0; i < file.upload.totalChunkCount; i ++) {
+        indexList += i  + ',';
+      }
+
+      var data = {
+        name: file.upload.filename,
+        list: indexList
+      };
+      console.log(data);
+      var xhr = $.post("/DocumentManagement/DocumentUpload/Commit", data, function (result) {
+        if (!result.success) {
+          self._handleUploadError(files, xhr, result.error);
+        }
+        else {
+          done();
+        }
+      });
+    }
+  };
+</script>

@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var recaptcha_component_1 = require("./recaptcha.component");
+var RecaptchaCommonModule = (function () {
+    function RecaptchaCommonModule() {
+    }
+    RecaptchaCommonModule.decorators = [
+        { type: core_1.NgModule, args: [{
+                    declarations: [recaptcha_component_1.RecaptchaComponent],
+                    exports: [recaptcha_component_1.RecaptchaComponent],
+                },] },
+    ];
+    /** @nocollapse */
+    RecaptchaCommonModule.ctorParameters = function () { return []; };
+    return RecaptchaCommonModule;
+}());
+exports.RecaptchaCommonModule = RecaptchaCommonModule;

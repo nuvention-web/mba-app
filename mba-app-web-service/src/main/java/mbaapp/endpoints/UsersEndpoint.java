@@ -80,7 +80,7 @@ public class UsersEndpoint {
     }
 
 
-    @PostMapping("/{userEmail}/school")
+    @PostMapping("/{userEmail}")
     public ResponseEntity<String> addUser(@RequestBody String payloadString, @PathVariable String userEmail) {
 
         try {

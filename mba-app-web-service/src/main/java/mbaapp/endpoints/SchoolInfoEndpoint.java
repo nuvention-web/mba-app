@@ -1,5 +1,6 @@
 package mbaapp.endpoints;
 
+import io.swagger.annotations.ApiOperation;
 import mbaapp.core.SchoolInfo;
 import mbaapp.providers.SchoolInfoDBProvider;
 import org.json.JSONObject;
@@ -30,6 +31,7 @@ public class SchoolInfoEndpoint {
     SchoolInfoDBProvider schoolInfoDBProvider;
 
     @PostMapping()
+    @ApiOperation(value = "Add a new school to the DB ")
     public ResponseEntity<String> addSchool(@RequestBody String payloadString) {
         try {
 
@@ -45,6 +47,7 @@ public class SchoolInfoEndpoint {
     }
 
     @GetMapping()
+    @ApiOperation(value = "Retrieves all the schools from the DB")
     public List<SchoolInfo> getSchools(){
         return schoolInfoDBProvider.getAllSchools();
 

@@ -19,8 +19,13 @@ public class SwaggerConfig {
 
     @Bean
     public Docket productApi() {
+//        return new Docket(DocumentationType.SWAGGER_2)
+//                .select().apis(RequestHandlerSelectors.any()).paths(PathSelectors.any()).build();
+
         return new Docket(DocumentationType.SWAGGER_2)
-                .select().apis(RequestHandlerSelectors.any()).paths(PathSelectors.any()).build();
+                .select()                 .apis(RequestHandlerSelectors.basePackage("mbaapp.endpoints"))
+                .paths(regex("/mba.*"))
+                .build();
     }
 
 

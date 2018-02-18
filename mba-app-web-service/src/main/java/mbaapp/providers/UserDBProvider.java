@@ -17,7 +17,7 @@ public interface UserDBProvider {
 
     public void updateUser(JSONObject payload) throws Exception;
 
-    public void addSchool(JSONObject payload, User user) throws Exception;
+    public void updateUser(JSONObject payload, User user) throws Exception;
 
     public JSONObject getUserDetails(User user) throws Exception;
 

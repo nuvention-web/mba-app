@@ -51,9 +51,10 @@ public class MongoUserDBProvider implements UserDBProvider {
         JSONArray schoolsArray = userJSON.getJSONArray("schools");
         for(int i=0; i<schoolsArray.length(); i++) {
             JSONObject school = schoolsArray.getJSONObject(i);
-            String schoolName = school.getString("name");
-            SchoolInfo schoolInfo = schoolInfoRepository.findByName(schoolName);
+            String schoolName = school.getString("shortName");
+            SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(schoolName);
             if(schoolInfo!=null) {
+                school.put("name", schoolInfo.getName());
                 school.put("location", schoolInfo.getLocation());
                 school.put("round1_deadline", schoolInfo.getRound1Deadline());
                 school.put("round2_deadline", schoolInfo.getRound2Deadline());
@@ -70,7 +71,7 @@ public class MongoUserDBProvider implements UserDBProvider {
 
         UserSchool userSchool = null;
         for(UserSchool school : user.getSchools()) {
-            if(school.getName().equalsIgnoreCase(schoolName)){
+            if(school.getShortName().equalsIgnoreCase(schoolName)){
                 userSchool = school;
                 break;
             }
@@ -90,7 +91,7 @@ public class MongoUserDBProvider implements UserDBProvider {
 
 
     @Override
-    public void addSchool(JSONObject payload, User user) throws Exception {
+    public void updateUser(JSONObject payload, User user) throws Exception {
 
         JSONArray schools = payload.getJSONArray("schools");
         for(int i=0; i<schools.length(); i++) {
@@ -99,13 +100,13 @@ public class MongoUserDBProvider implements UserDBProvider {
             String schoolName = schools.getString(i);
             //Check if school is already added
             for(UserSchool school : user.getSchools()){
-                if(school.getName().equalsIgnoreCase(schoolName)){
+                if(school.getShortName().equalsIgnoreCase(schoolName)){
                     alreadyAdded = true;
                     break;
                 }
             }
 
-            if(schoolInfoRepository.findByName(schoolName)==null) {
+            if(schoolInfoRepository.findByShortName(schoolName)==null) {
                 throw new Exception("Did not find a school with the name ["+schoolName + "] in our DB");
             }
 

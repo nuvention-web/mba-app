@@ -16,6 +16,8 @@ public class SchoolInfo {
 
     private String location;
 
+    private String shortName;
+
     private String round1Deadline;
 
     private String round2Deadline;
@@ -40,6 +42,10 @@ public class SchoolInfo {
         return location;
     }
 
+    public String getShortName() {
+        return shortName;
+    }
+
     public String getRound1Deadline() {
         return round1Deadline;
     }
@@ -56,9 +62,10 @@ public class SchoolInfo {
         return round4Deadline;
     }
 
-    public SchoolInfo(String name, String location, String round1Deadline, String round2Deadline, String round3Deadline,
+    public SchoolInfo(String name, String shortName, String location, String round1Deadline, String round2Deadline, String round3Deadline,
                       String round4Deadline){
         this.name = name;
+        this.shortName = shortName;
         this.location = location;
         this.round1Deadline = round1Deadline;
         this.round2Deadline = round2Deadline;

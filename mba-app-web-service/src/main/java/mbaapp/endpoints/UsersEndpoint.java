@@ -1,5 +1,6 @@
 package mbaapp.endpoints;
 
+import io.swagger.annotations.ApiOperation;
 import mbaapp.core.User;
 import mbaapp.providers.SchoolInfoDBProvider;
 import mbaapp.providers.UserDBProvider;
@@ -13,14 +14,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static org.springframework.data.repository.init.ResourceReader.Type.JSON;
 
 /**
  * Created by jnag on 2/15/18.
@@ -41,6 +41,7 @@ public class UsersEndpoint {
 
 
     @PostMapping("/create")
+    @ApiOperation(value = "Create a new user")
     public ResponseEntity<String> addUser(@RequestBody String payloadString) {
         try {
 
@@ -66,6 +67,7 @@ public class UsersEndpoint {
     }
 
     @GetMapping(value = "/{userEmail}", produces = "application/json")
+    @ApiOperation(value = "Retrieve a user")
     public ResponseEntity getUser(@PathVariable String userEmail) {
         try {
             User user = userDBProvider.getUser(userEmail);
@@ -80,8 +82,9 @@ public class UsersEndpoint {
     }
 
 
-    @PostMapping("/{userEmail}")
-    public ResponseEntity<String> addUser(@RequestBody String payloadString, @PathVariable String userEmail) {
+    @PutMapping("/{userEmail}")
+    @ApiOperation(value = "Update a user")
+    public ResponseEntity<String> updateUser(@RequestBody String payloadString, @PathVariable String userEmail) {
 
         try {
             User user = userDBProvider.getUser(userEmail);
@@ -89,7 +92,7 @@ public class UsersEndpoint {
                 return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
             }
             JSONObject payload = new JSONObject(payloadString);
-            userDBProvider.addSchool(payload, user);
+            userDBProvider.updateUser(payload, user);
             return new ResponseEntity<>("Updated user", HttpStatus.OK);
 
         } catch (Exception e) {
@@ -99,8 +102,9 @@ public class UsersEndpoint {
 
     }
 
-    @DeleteMapping("/{userEmail}/school")
-    public ResponseEntity<String> deleteSchool(@PathVariable String userEmail, @RequestBody String payloadString ) {
+    @DeleteMapping("/{userEmail}/school/{schoolName}")
+    @ApiOperation(value = "Remove a particular school from the user's list of schools ")
+    public ResponseEntity<String> deleteSchool(@PathVariable String userEmail, @PathVariable String schoolName) {
 
         try {
             User user = userDBProvider.getUser(userEmail);
@@ -108,8 +112,6 @@ public class UsersEndpoint {
                 return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
             }
 
-            JSONObject payload = new JSONObject(payloadString);
-            String schoolName = payload.getString("name");
             userDBProvider.deleteSchool(user, schoolName);
 
             return new ResponseEntity<>("Deleted school", HttpStatus.OK);

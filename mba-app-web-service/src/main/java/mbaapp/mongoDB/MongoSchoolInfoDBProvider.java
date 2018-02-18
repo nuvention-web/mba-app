@@ -33,6 +33,12 @@ public class MongoSchoolInfoDBProvider implements SchoolInfoDBProvider {
         if(schoolName.isEmpty()) {
             throw new Exception("Missing schoolName");
         }
+
+        String shortName = payload.optString("shortName");
+        if(shortName.isEmpty()) {
+            throw new Exception("Missing shortName");
+        }
+
         String location = payload.optString("location");
         if(location.isEmpty()) {
             throw new Exception("Missing location");
@@ -41,11 +47,12 @@ public class MongoSchoolInfoDBProvider implements SchoolInfoDBProvider {
         if(round1.isEmpty()) {
             throw new Exception("Missing round1");
         }
+
         String round2 = payload.optString("round2");
         String round3 = payload.optString("round3");
         String round4 = payload.optString("round4");
 
-        SchoolInfo school = new SchoolInfo(schoolName, location, round1, round2, round3, round4);
+        SchoolInfo school = new SchoolInfo(schoolName, shortName, location, round1, round2, round3, round4);
         repository.save(school);
     }
 }

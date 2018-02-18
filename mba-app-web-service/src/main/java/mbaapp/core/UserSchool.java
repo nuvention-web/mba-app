@@ -14,10 +14,10 @@ public class UserSchool{
     private String recommendations;
     private String essays;
     private List<String> notes;
-    private String name;
+    private String shortName;
 
-    public String getName() {
-        return name;
+    public String getShortName() {
+        return shortName;
     }
 
     public String getRecommendations() {
@@ -53,6 +53,6 @@ public class UserSchool{
         recommendations = "";
         essays= "";
         notes = new ArrayList<>();
-        this.name = name;
+        this.shortName = name;
     }
 }

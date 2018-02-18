@@ -66,7 +66,7 @@ public class UsersEndpoint {
         }
     }
 
-    @GetMapping(value = "/{userEmail}", produces = "application/json")
+    @GetMapping(value = "/{userEmail:.+}", produces = "application/json")
     @ApiOperation(value = "Retrieve a user")
     public ResponseEntity getUser(@PathVariable String userEmail) {
         try {

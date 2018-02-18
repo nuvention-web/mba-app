@@ -7,7 +7,7 @@ export class SchoolsService {
  constructor(private http: Http) { }
 
  getSchools() {
-   return this.http.get("http://httpbin.org/get").map((response: Response) => response.json());
+   return this.http.get("https://mba-application.appspot.com/mba/users/john.doe@gmail.com").map((response: Response) => response.json().schools);
  }
 
 }

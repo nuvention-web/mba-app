@@ -11,10 +11,10 @@ import { SchoolsService } from '../../../../_services/schools.service';
 })
 export class IndexComponent implements OnInit, AfterViewInit {
 
-    data: any = {};
+    schools: any = {};
 
     constructor(private _script: ScriptLoaderService, private _schools:SchoolsService) {
-      this._schools.getSchools().subscribe(d => this.data = d);
+      this._schools.getSchools().subscribe(d => this.schools = d);
     }
 
     ngOnInit() {

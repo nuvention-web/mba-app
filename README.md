@@ -43,6 +43,7 @@ You need to have the angular framework installed on your machine
 ### Building the project
 You can run `ng build` from under mba-app/angular/dist/demo/default to build your project.
 
+If you are windows user, the operating system may be incompatible with the code. In this case, run `npm config set python "your path to python/python.exe"` `npm install --global --production windows-build-tools` `npm rebuild node-sass --force` in admin powershell. Then try `ng build` again.
 ### Building the app
 You can use 'ng serve' to run the application from under mba-app/angular/dist/demo/default to start up the application.
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,6 +42,7 @@ public class UsersEndpoint {
 
 
     @PostMapping("/create")
+    @CrossOrigin
     @ApiOperation(value = "Create a new user")
     public ResponseEntity<String> addUser(@RequestBody String payloadString) {
         try {
@@ -67,6 +69,7 @@ public class UsersEndpoint {
     }
 
     @GetMapping(value = "/{userEmail:.+}", produces = "application/json")
+    @CrossOrigin
     @ApiOperation(value = "Retrieve a user")
     public ResponseEntity getUser(@PathVariable String userEmail) {
         try {
@@ -83,6 +86,7 @@ public class UsersEndpoint {
 
 
     @PutMapping("/{userEmail}")
+    @CrossOrigin
     @ApiOperation(value = "Update a user")
     public ResponseEntity<String> updateUser(@RequestBody String payloadString, @PathVariable String userEmail) {
 

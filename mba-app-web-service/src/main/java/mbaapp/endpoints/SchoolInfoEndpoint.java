@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,7 @@ public class SchoolInfoEndpoint {
     SchoolInfoDBProvider schoolInfoDBProvider;
 
     @PostMapping()
+    @CrossOrigin
     @ApiOperation(value = "Add a new school to the DB ")
     public ResponseEntity<String> addSchool(@RequestBody String payloadString) {
         try {
@@ -47,6 +49,7 @@ public class SchoolInfoEndpoint {
     }
 
     @GetMapping()
+    @CrossOrigin
     @ApiOperation(value = "Retrieves all the schools from the DB")
     public List<SchoolInfo> getSchools(){
         return schoolInfoDBProvider.getAllSchools();

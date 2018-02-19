@@ -1,0 +1,52 @@
+package mbaapp.requests;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+/**
+ * Created by jnag on 2/19/18.
+ */
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class SchoolInfoRequest {
+
+    private String name;
+
+    private String location;
+
+    private String shortName;
+
+    private String round1Deadline;
+
+    private String round2Deadline;
+
+    private String round3Deadline;
+
+    private String round4Deadline;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public String getRound1Deadline() {
+        return round1Deadline;
+    }
+
+    public String getRound2Deadline() {
+        return round2Deadline;
+    }
+
+    public String getRound3Deadline() {
+        return round3Deadline;
+    }
+
+    public String getRound4Deadline() {
+        return round4Deadline;
+    }
+}

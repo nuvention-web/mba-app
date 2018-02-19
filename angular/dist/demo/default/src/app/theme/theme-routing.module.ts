@@ -21,6 +21,11 @@ const routes: Routes = [
                 "path": "",
                 "redirectTo": "index.html",
                 "pathMatch": "full"
+            },
+            {
+                "path": "index",
+                "redirectTo": "index.html",
+                "pathMatch": "full"
             }
         ]
     },

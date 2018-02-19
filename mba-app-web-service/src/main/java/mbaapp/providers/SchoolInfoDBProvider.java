@@ -1,6 +1,7 @@
 package mbaapp.providers;
 
 import mbaapp.core.SchoolInfo;
+import mbaapp.requests.SchoolInfoRequest;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -14,6 +15,6 @@ public interface SchoolInfoDBProvider {
 
     public SchoolInfo getSchool(String school);
 
-    public void addSchool(JSONObject payload) throws Exception;
+    public void addSchool(SchoolInfoRequest schoolInfoRequest) throws Exception;
 
 }

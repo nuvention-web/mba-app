@@ -1,6 +1,8 @@
 package mbaapp.endpoints;
 
 import io.swagger.annotations.ApiOperation;
+import mbaapp.requests.CreateUserRequest;
+import mbaapp.requests.UpdateUserRequest;
 import mbaapp.core.User;
 import mbaapp.providers.SchoolInfoDBProvider;
 import mbaapp.providers.UserDBProvider;
@@ -44,20 +46,18 @@ public class UsersEndpoint {
     @PostMapping("/create")
     @CrossOrigin
     @ApiOperation(value = "Create a new user")
-    public ResponseEntity<String> addUser(@RequestBody String payloadString) {
+    public ResponseEntity<String> addUser(@RequestBody CreateUserRequest createUserRequest) {
         try {
 
-            JSONObject payload = new JSONObject(payloadString);
-            String email = payload.optString("email");
-            if (email.isEmpty()) {
+            if (createUserRequest.getEmail().isEmpty()) {
                 return new ResponseEntity<String>("Missing email", HttpStatus.BAD_REQUEST);
             }
 
-            if (userDBProvider.getUser(email) != null) {
+            if (userDBProvider.getUser(createUserRequest.getEmail()) != null) {
                 return new ResponseEntity<String>("User exists", HttpStatus.NOT_ACCEPTABLE);
             }
 
-            userDBProvider.addUser(payload);
+            userDBProvider.addUser(createUserRequest);
 
             return new ResponseEntity<>("Added user", HttpStatus.CREATED);
 
@@ -88,15 +88,14 @@ public class UsersEndpoint {
     @PutMapping("/{userEmail}")
     @CrossOrigin
     @ApiOperation(value = "Update a user")
-    public ResponseEntity<String> updateUser(@RequestBody String payloadString, @PathVariable String userEmail) {
+    public ResponseEntity<String> updateUser(@RequestBody UpdateUserRequest userRequest, @PathVariable String userEmail) {
 
         try {
             User user = userDBProvider.getUser(userEmail);
             if (user == null) {
                 return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
             }
-            JSONObject payload = new JSONObject(payloadString);
-            userDBProvider.updateUser(payload, user);
+            userDBProvider.updateUser(userRequest, user);
             return new ResponseEntity<>("Updated user", HttpStatus.OK);
 
         } catch (Exception e) {

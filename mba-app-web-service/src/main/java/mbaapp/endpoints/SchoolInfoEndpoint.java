@@ -3,6 +3,7 @@ package mbaapp.endpoints;
 import io.swagger.annotations.ApiOperation;
 import mbaapp.core.SchoolInfo;
 import mbaapp.providers.SchoolInfoDBProvider;
+import mbaapp.requests.SchoolInfoRequest;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,11 +35,10 @@ public class SchoolInfoEndpoint {
     @PostMapping()
     @CrossOrigin
     @ApiOperation(value = "Add a new school to the DB ")
-    public ResponseEntity<String> addSchool(@RequestBody String payloadString) {
+    public ResponseEntity<String> addSchool(@RequestBody SchoolInfoRequest schoolInfoRequest) {
         try {
 
-            JSONObject payload = new JSONObject(payloadString);
-            schoolInfoDBProvider.addSchool(payload);
+            schoolInfoDBProvider.addSchool(schoolInfoRequest);
 
             return new ResponseEntity<>("Added School", HttpStatus.CREATED);
         }

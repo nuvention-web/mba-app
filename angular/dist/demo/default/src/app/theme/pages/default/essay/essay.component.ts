@@ -20,12 +20,12 @@ export class EssayComponent implements OnInit {
 
     ngOnInit() {
         var self = this;
-        $("#draft_editor").summernote({
+        (<any>$)("#draft_editor").summernote({
             placeholder: 'Start typing here...',
             tabsize: 2,
             height: 200
         });
-        $("#planning_editor").summernote({
+        (<any>$)("#planning_editor").summernote({
             placeholder: 'Start typing here...',
             tabsize: 2,
             height: 200

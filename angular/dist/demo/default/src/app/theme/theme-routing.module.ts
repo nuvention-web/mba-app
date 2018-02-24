@@ -18,6 +18,14 @@ const routes: Routes = [
                 "loadChildren": ".\/pages\/default\/not-found\/not-found.module#NotFoundModule"
             },
             {
+                "path": "essays/:school",
+                "loadChildren": ".\/pages\/default\/essays\/essays.module#EssaysModule"
+            },
+            {
+                "path": "essays/:school/:id",
+                "loadChildren": ".\/pages\/default\/essay\/essay.module#EssayModule"
+            },
+            {
                 "path": "",
                 "redirectTo": "index",
                 "pathMatch": "full"

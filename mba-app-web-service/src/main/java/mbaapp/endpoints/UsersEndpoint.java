@@ -106,6 +106,7 @@ public class UsersEndpoint {
     }
 
     @DeleteMapping("/{userEmail}/school/{schoolName}")
+    @CrossOrigin
     @ApiOperation(value = "Remove a particular school from the user's list of schools ")
     public ResponseEntity<String> deleteSchool(@PathVariable String userEmail, @PathVariable String schoolName) {
 

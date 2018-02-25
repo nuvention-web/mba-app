@@ -7,14 +7,14 @@ import { DefaultComponent } from '../../../../default.component';
 
 const routes: Routes = [
     {
-        "path": "",
-        "component": DefaultComponent,
-        "children": [
-            {
-                "path": "",
-                "component": ValidationFormWidgetsComponent
-            }
-        ]
+        // "path": "",
+        // "component": DefaultComponent,
+        // "children": [
+        //     {
+        //         "path": "",
+        //         "component": ValidationFormWidgetsComponent
+        //     }
+        // ]
     }
 ];
 @NgModule({

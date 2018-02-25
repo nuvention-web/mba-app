@@ -9,6 +9,10 @@ import { AppComponent } from './app.component';
 import { ScriptLoaderService } from "./_services/script-loader.service";
 import { ThemeRoutingModule } from "./theme/theme-routing.module";
 import { AuthModule } from "./auth/auth.module";
+import { IconFlaticonModule } from './theme/pages/default/components/buttons/icon/icon-flaticon/icon-flaticon.module';
+import { IconFlaticonComponent } from './theme/pages/default/components/buttons/icon/icon-flaticon/icon-flaticon.component';
+import { WidgetsBootstrapSelectComponent } from './theme/pages/default/components/forms/widgets/widgets-bootstrap-select/widgets-bootstrap-select.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -22,6 +26,7 @@ import { AuthModule } from "./auth/auth.module";
         AppRoutingModule,
         ThemeRoutingModule,
         AuthModule,
+        FormsModule
     ],
     providers: [ScriptLoaderService],
     bootstrap: [AppComponent]

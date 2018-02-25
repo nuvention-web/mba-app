@@ -17,6 +17,10 @@ export class IndexComponent implements OnInit, AfterViewInit {
       this._schools.getSchools().subscribe(d => this.schools = d);
     }
 
+    deleteSchool(schoolName: string) {
+        this._schools.userDeleteSchool(schoolName);
+    
+    }
     ngOnInit() {
 
     }

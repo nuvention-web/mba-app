@@ -1,10 +1,20 @@
-<!-- BEGIN: Subheader -->
+<router-outlet></router-outlet>
 <div class="m-subheader" appunwraptag="">
 	<div class="d-flex align-items-center">
 		<div class="mr-auto">
 			<h3 class="m-subheader__title">
 				My Schools
 			</h3>
+		</div>
+		<div class="mr-right">
+			<a class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" routerLink="./addschool" href="#" ng-reflect-href="#">
+				<span>
+					<i class="la la-plus"></i>
+					<span>
+						Add School
+					</span>
+				</span>
+			</a>
 		</div>
 	</div>
 </div>
@@ -14,7 +24,7 @@
 	<div class="row">
 		<div *ngFor="let school of schools" class="col-xl-4">
 			<!--begin:: Widgets/Top Products-->
-			<div class="m-portlet m-portlet--bordered-semi">
+			<div routerLink="/essays/{{school.shortName}}" class="show-hand m-portlet m-portlet--bordered-semi">
 				<div class="m-portlet__head">
 					<div class="m-portlet__head-caption">
 						<div class="m-portlet__head-title">
@@ -27,7 +37,6 @@
 						<ul class="m-portlet__nav">
 							<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover" aria-expanded="true">
 								<a href="#" class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill btn-secondary m-btn m-btn--label-brand">
-									Settings
 								</a>
 								<div class="m-dropdown__wrapper">
 									<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 36.5px;"></span>
@@ -36,10 +45,10 @@
 											<div class="m-dropdown__content">
 												<ul class="m-nav">
 													<li class="m-nav__item">
-														<a href="" class="m-nav__link">
-															<i class="m-nav__link-icon flaticon-share"></i>
+														<a (click)="deleteSchool(school.shortName)" class="m-nav__link">
+															<i class="m-nav__link-icon flaticon-circle"></i>
 															<span class="m-nav__link-text">
-																Delete School
+																Remove
 															</span>
 														</a>
 													</li>
@@ -54,24 +63,6 @@
 				</div>
 				<div class="m-portlet__body">
 
-				</div>
-				<div class="m-portlet__foot">
-					<div class="row align-items-center">
-						<div class="col-lg-6">
-							<button routerLink="/essays/{{school.shortName}}" class="btn btn-brand" type="submit">
-								Essays
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--end:: Widgets/Top Products-->
-		</div>
-		<div class="col-xl-4">
-			<!--begin:: Widgets/Top Products-->
-			<div class="m-portlet m-portlet--bordered-semi m-portlet--full-height">
-				<div id="add-school" class="m-portlet__body">
-					<i style="font-size:3em;" class="fa fa-plus"></i>
 				</div>
 			</div>
 			<!--end:: Widgets/Top Products-->

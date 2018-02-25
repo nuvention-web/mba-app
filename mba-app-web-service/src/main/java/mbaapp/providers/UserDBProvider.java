@@ -1,7 +1,11 @@
 package mbaapp.providers;
 
+import mbaapp.requests.EssayDraftRequest;
+import mbaapp.core.UserSchool;
+import mbaapp.requests.EssayStatusRequest;
+import mbaapp.requests.AddRecommendersRequest;
 import mbaapp.requests.CreateUserRequest;
-import mbaapp.requests.UpdateUserRequest;
+import mbaapp.requests.AddSchoolsRequest;
 import mbaapp.core.User;
 import org.json.JSONObject;
 
@@ -14,10 +18,25 @@ public interface UserDBProvider {
 
     public void addUser(CreateUserRequest createUserRequest) throws Exception;
 
-    public void updateUser(UpdateUserRequest request, User user) throws Exception;
+    public void addSchools(AddSchoolsRequest request, User user) throws Exception;
+
+    public void addRecommenders(AddRecommendersRequest request, User user) throws Exception;
 
     public JSONObject getUserDetails(User user) throws Exception;
 
     public void deleteSchool(User user, String schoolName) throws Exception;
+
+    public void deleteRecommender(User user, String recommenderName) throws Exception;
+
+
+    public void updateEssayStatus(User user, UserSchool userSchool, String essayID, EssayStatusRequest addEssayRequest) throws Exception;
+
+    public void addEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID) throws Exception;
+
+    public void updateEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID) throws Exception;
+
+    public void deleteEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID) throws Exception;
+
+    public JSONObject getUserSchoolDetail(User user, UserSchool userSchool) throws Exception;
 
 }

@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UpdateUserRequest {
+public class AddSchoolsRequest {
 
     public List<String> schools;
 

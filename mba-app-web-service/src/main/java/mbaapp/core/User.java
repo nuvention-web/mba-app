@@ -20,12 +20,16 @@ public class User {
     public String id;
     public String name;
     public String email;
+    public List<String> recommenders;
     public List<UserSchool> schools;
+    public List<Activity> userActivity;
 
     public User(String name, String email) {
         this.name = name;
         this.email = email;
         schools = new ArrayList<>();
+        recommenders = new ArrayList<>();
+        userActivity = new ArrayList<>();
     }
 
     public String getId() {
@@ -46,6 +50,14 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public List<String> getRecommenders() {
+        return recommenders;
+    }
+
+    public void addActivity(String message) {
+        userActivity.add(new Activity(message));
     }
 
     public void setEmail(String email) {

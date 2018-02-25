@@ -2,6 +2,8 @@ package mbaapp.requests;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.List;
+
 /**
  * Created by jnag on 2/19/18.
  */
@@ -21,6 +23,8 @@ public class SchoolInfoRequest {
     private String round3Deadline;
 
     private String round4Deadline;
+
+    private List<SchoolInfoEssayRequest> essays;
 
     public String getName() {
         return name;
@@ -49,4 +53,7 @@ public class SchoolInfoRequest {
     public String getRound4Deadline() {
         return round4Deadline;
     }
+
+    public List<SchoolInfoEssayRequest> getEssays() { return essays;}
+
 }

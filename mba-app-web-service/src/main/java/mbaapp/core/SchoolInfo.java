@@ -3,6 +3,9 @@ package mbaapp.core;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by jnag on 2/14/18.
  */
@@ -25,6 +28,8 @@ public class SchoolInfo {
     private String round3Deadline;
 
     private String round4Deadline;
+
+    private List<SchoolInfoEssay> essays;
 
     public SchoolInfo(){
 
@@ -71,5 +76,14 @@ public class SchoolInfo {
         this.round2Deadline = round2Deadline;
         this.round3Deadline = round3Deadline;
         this.round4Deadline = round4Deadline;
+        this.essays = new ArrayList<>();
+    }
+
+    public void addEssay(SchoolInfoEssay essay){
+        this.essays.add(essay);
+    }
+
+    public List<SchoolInfoEssay> getEssays(){
+        return essays;
     }
 }

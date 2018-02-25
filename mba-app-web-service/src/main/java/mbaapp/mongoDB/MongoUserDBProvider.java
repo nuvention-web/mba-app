@@ -1,8 +1,12 @@
 package mbaapp.mongoDB;
 
+import mbaapp.requests.EssayDraftRequest;
+import mbaapp.core.Recommendation;
 import mbaapp.core.SchoolInfo;
+import mbaapp.requests.EssayStatusRequest;
+import mbaapp.requests.AddRecommendersRequest;
 import mbaapp.requests.CreateUserRequest;
-import mbaapp.requests.UpdateUserRequest;
+import mbaapp.requests.AddSchoolsRequest;
 import mbaapp.core.User;
 import mbaapp.core.UserSchool;
 import mbaapp.providers.UserDBProvider;
@@ -85,8 +89,69 @@ public class MongoUserDBProvider implements UserDBProvider {
     }
 
 
+    public void deleteRecommender(User user, String recommenderName) throws Exception {
+
+        UserSchool userSchool = null;
+        if(user.getRecommenders().contains(recommenderName)){
+            user.getRecommenders().remove(recommenderName);
+        }
+        else {
+            throw new Exception("Did not find a recommender with the name "+recommenderName);
+        }
+
+        for(UserSchool school : user.getSchools()) {
+            Recommendation recommendationToDelete = null;
+            for (Recommendation recommendation : school.getRecommendations()) {
+                if (recommendation.getRecommender().equalsIgnoreCase(recommenderName)) {
+                    recommendationToDelete = recommendation;
+                }
+            }
+
+            school.getRecommendations().remove(recommendationToDelete);
+
+        }
+
+        userRepository.save(user);
+
+    }
+
+    public void addEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID) throws Exception {
+
+        SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(userSchool.getShortName());
+        userSchool.addEssayDraft(essayDraftRequest, essayID, schoolInfo);
+        userRepository.save(user);
+
+    }
+
+
+    public void updateEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID) throws Exception {
+
+        userSchool.updateEssayDraft(essayDraftRequest, essayID);
+        userRepository.save(user);
+
+    }
+
+    public void deleteEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID) throws Exception {
+        userSchool.deleteEssayDraft(essayDraftRequest, essayID);
+        userRepository.save(user);
+    }
+
+
+    public void updateEssayStatus(User user, UserSchool userSchool, String essayID, EssayStatusRequest essayRequest) throws Exception {
+        SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(userSchool.getShortName());
+        userSchool.updateEssayStatus(essayRequest, essayID, schoolInfo);
+        userRepository.save(user);
+    }
+
+
+    public JSONObject getUserSchoolDetail(User user, UserSchool userSchool) throws Exception{
+       SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(userSchool.getShortName());
+        return userSchool.toJSON(schoolInfo.getEssays());
+    }
+
+
     @Override
-    public void updateUser(UpdateUserRequest userRequest, User user) throws Exception {
+    public void addSchools(AddSchoolsRequest userRequest, User user) throws Exception {
 
         if (userRequest.getSchools() != null) {
             updateSchools(userRequest, user);
@@ -95,7 +160,29 @@ public class MongoUserDBProvider implements UserDBProvider {
     }
 
 
-    private void updateSchools(UpdateUserRequest userRequest, User user) throws Exception {
+    @Override
+    public void addRecommenders(AddRecommendersRequest request, User user) throws Exception {
+
+        if(request.getRecommenders()!=null) {
+            for(String recommender : request.getRecommenders()){
+                if(user.getRecommenders().contains(recommender)) {
+                    throw new Exception("A recommender by the name " + recommender +" already exists - please use a " +
+                            "different name");
+                }
+                user.getRecommenders().add(recommender);
+                //Update the schools with this recommender
+                for(UserSchool school : user.getSchools()) {
+                    school.addRecommendation(new Recommendation(recommender));
+                }
+            }
+        }
+        userRepository.save(user);
+    }
+
+
+
+
+    private void updateSchools(AddSchoolsRequest userRequest, User user) throws Exception {
 
         //Update school
         for (String schoolName : userRequest.getSchools()) {

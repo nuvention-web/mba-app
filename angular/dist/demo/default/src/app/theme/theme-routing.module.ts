@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { ThemeComponent } from './theme.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from "../auth/_guards/auth.guard";
+import {WidgetsBootstrapSelectComponent} from "./pages/default/components/forms/widgets/widgets-bootstrap-select/widgets-bootstrap-select.component";
 
 const routes: Routes = [
     {
@@ -10,7 +11,7 @@ const routes: Routes = [
         "canActivate": [AuthGuard],
         "children": [
             {
-                "path": "index",
+                "path": "index.html",
                 "loadChildren": ".\/pages\/default\/index\/index.module#IndexModule"
             },
             {
@@ -18,8 +19,20 @@ const routes: Routes = [
                 "loadChildren": ".\/pages\/default\/not-found\/not-found.module#NotFoundModule"
             },
             {
+                "path": "essays/:school",
+                "loadChildren": ".\/pages\/default\/essays\/essays.module#EssaysModule"
+            },
+            {
+                "path": "essays/:school/:id",
+                "loadChildren": ".\/pages\/default\/essay\/essay.module#EssayModule"
+            },
+            {
+                "path": "profile",
+                "loadChildren": ".\/pages\/default\/profile\/profile.module#ProfileModule"
+            },
+            {
                 "path": "",
-                "redirectTo": "index",
+                "redirectTo": "index.html",
                 "pathMatch": "full"
             }
         ]

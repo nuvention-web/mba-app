@@ -1,7 +1,13 @@
 package mbaapp.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import mbaapp.requests.EssayDraftRequest;
+import mbaapp.requests.EssayStatusRequest;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +17,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserSchool{
 
-    private String recommendations;
-    private String essays;
+    private List<Recommendation> recommendations;
+    private List<Essay> essays;
     private List<String> notes;
     private String shortName;
 
@@ -20,20 +26,16 @@ public class UserSchool{
         return shortName;
     }
 
-    public String getRecommendations() {
+    public List<Recommendation> getRecommendations() {
         return recommendations;
     }
 
-    public void setRecommendations(String recommendations) {
+    public void setRecommendations(List<Recommendation> recommendations) {
         this.recommendations = recommendations;
     }
 
-    public String getEssays() {
+    public List<Essay> getEssays() {
         return essays;
-    }
-
-    public void setEssays(String essays) {
-        this.essays = essays;
     }
 
     public List<String> getNotes() {
@@ -44,15 +46,159 @@ public class UserSchool{
         this.notes = notes;
     }
 
+    public void addRecommendation(Recommendation recommendation) {
+        if(this.recommendations == null ) {
+            this.recommendations = new ArrayList<>();
+        }
+        this.recommendations.add(recommendation);
+    }
 
     public UserSchool(){
 
     }
 
+
+    public void updateEssayStatus(EssayStatusRequest essayRequest, String essayID, SchoolInfo schoolInfo) throws Exception{
+
+        boolean essayNotFound = true;
+        for(Essay essay : essays) {
+            if(essay.getEssayID().equalsIgnoreCase(essayID)) {
+                essayNotFound = false;
+                if(essayRequest.getEssayStatus()!=null) {
+                    essay.setStatus(essayRequest.getEssayStatus());
+                }
+            }
+        }
+
+        if(essayNotFound){
+            for(SchoolInfoEssay schoolInfoEssay : schoolInfo.getEssays()) {
+                if(essayID.equalsIgnoreCase(schoolInfoEssay.getEssayID())) {
+                    Essay essay = new Essay(essayID, essayRequest.getEssayStatus());
+                    essays.add(essay);
+                    essayNotFound = false;
+                }
+            }
+        }
+
+        if(essayNotFound) {
+            throw new Exception("Did not find an essay with the essayID "+essayID);
+        }
+    }
+
+
+
+    public void addEssayDraft(EssayDraftRequest request, String essayID, SchoolInfo schoolInfo) throws Exception{
+
+        boolean essayNotFound = true;
+        for(Essay essay : essays) {
+            if(essay.getEssayID().equalsIgnoreCase(essayID)){
+                essayNotFound = false;
+                essay.addDraft(request.getDraftName(), request.getContents());
+            }
+        }
+
+        if(essayNotFound){
+            for(SchoolInfoEssay schoolInfoEssay : schoolInfo.getEssays()) {
+                if(essayID.equalsIgnoreCase(schoolInfoEssay.getEssayID())) {
+                    Essay essay = new Essay(essayID, request.getEssayStatus());
+                    essay.addDraft(request.getDraftName(), request.getContents());
+                    essays.add(essay);
+                    essayNotFound = false;
+                }
+            }
+        }
+
+        if(essayNotFound){
+            throw new Exception("Did not find an essay with the essayID "+essayID);
+        }
+
+    }
+
+
+    public void deleteEssayDraft(EssayDraftRequest request, String essayID) throws Exception {
+        if(request.getDraftID()==null) {
+            throw new Exception("Missing draft ID from request");
+        }
+        boolean essayNotFound = true;
+        for (Essay essay : essays) {
+            if (essay.getEssayID().equalsIgnoreCase(essayID)) {
+                essay.deleteDraft(request.getDraftID());
+            }
+        }
+
+        if(essayNotFound){
+            throw new Exception("Did not find an essay with the essayID "+essayID);
+        }
+
+    }
+
+
+    public void updateEssayDraft(EssayDraftRequest request, String essayID) throws Exception {
+        if(request.getDraftID()==null) {
+            throw new Exception("Missing draft ID from request");
+        }
+        boolean essayNotFound = true;
+        for (Essay essay : essays) {
+            if (essay.getEssayID().equalsIgnoreCase(essayID)) {
+                essay.updateDraft(request.getDraftID(), request.getContents());
+            }
+        }
+
+        if(essayNotFound){
+            throw new Exception("Did not find an essay with the essayID "+essayID);
+        }
+
+    }
+
+    public JSONObject toJSON(List<SchoolInfoEssay> schoolInfoEssays) throws Exception{
+
+        List<SchoolInfoEssay> schoolEssaysCopy = new ArrayList<>(schoolInfoEssays);
+
+        for(Essay essay : this.essays){
+            SchoolInfoEssay essayContained = null;
+            for(SchoolInfoEssay schoolInfoEssay : schoolEssaysCopy) {
+                if(schoolInfoEssay.getEssayID().equalsIgnoreCase(essay.getEssayID())){
+                    essayContained = schoolInfoEssay;
+                    break;
+                }
+            }
+            if(essayContained!=null) {
+                schoolEssaysCopy.remove(essayContained);
+            }
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        StringWriter stringWriter = new StringWriter();
+        objectMapper.writeValue(stringWriter, this);
+        JSONObject userJSON = new JSONObject(stringWriter.toString());
+
+        JSONArray essaysJSON = userJSON.getJSONArray("essays");
+        for(int i=0; i < essaysJSON.length(); i++) {
+            JSONObject essayJSON = essaysJSON.getJSONObject(i);
+            for(SchoolInfoEssay essay : schoolInfoEssays){
+                if(essayJSON.getString("essayID").equalsIgnoreCase(essay.getEssayID())){
+                    essayJSON.put("prompt", essay.getEssayPrompt());
+                }
+            }
+        }
+
+        for(SchoolInfoEssay essay : schoolEssaysCopy){
+            JSONObject essayJSON = new JSONObject();
+            essayJSON.put("essayID", essay.getEssayID());
+            essayJSON.put("prompt", essay.getEssayPrompt());
+            essayJSON.put("status", Essay.EssayStatus.NOT_STARTED);
+            essaysJSON.put(essayJSON);
+
+        }
+
+
+        return userJSON;
+    }
+
     public UserSchool(String name){
-        recommendations = "";
-        essays= "";
+        recommendations = new ArrayList<>();
         notes = new ArrayList<>();
         this.shortName = name;
+        essays = new ArrayList<>();
     }
 }

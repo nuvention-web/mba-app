@@ -1,7 +1,9 @@
 package mbaapp.mongoDB;
 
 import mbaapp.core.SchoolInfo;
+import mbaapp.core.SchoolInfoEssay;
 import mbaapp.providers.SchoolInfoDBProvider;
+import mbaapp.requests.SchoolInfoEssayRequest;
 import mbaapp.requests.SchoolInfoRequest;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,11 @@ public class MongoSchoolInfoDBProvider implements SchoolInfoDBProvider {
         String round4 = schoolInfoRequest.getRound4Deadline() == null ? "" : schoolInfoRequest.getRound4Deadline();
 
         SchoolInfo school = new SchoolInfo(schoolName, shortName, location, round1, round2, round3, round4);
+        for(SchoolInfoEssayRequest essayRequest : schoolInfoRequest.getEssays()) {
+            SchoolInfoEssay schoolInfoEssay = new SchoolInfoEssay(essayRequest.getEssayID(), essayRequest.getEssayPrompt());
+            school.addEssay(schoolInfoEssay);
+
+        }
         repository.save(school);
     }
 }

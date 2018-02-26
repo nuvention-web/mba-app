@@ -1,12 +1,12 @@
 package mbaapp.endpoints;
 
 import io.swagger.annotations.ApiOperation;
+import mbaapp.requests.AddRecommendersRequest;
 import mbaapp.requests.CreateUserRequest;
-import mbaapp.requests.UpdateUserRequest;
+import mbaapp.requests.AddSchoolsRequest;
 import mbaapp.core.User;
 import mbaapp.providers.SchoolInfoDBProvider;
 import mbaapp.providers.UserDBProvider;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -85,17 +85,17 @@ public class UsersEndpoint {
     }
 
 
-    @PutMapping("/{userEmail}")
+    @PutMapping("/{userEmail}/school")
     @CrossOrigin
-    @ApiOperation(value = "Update a user")
-    public ResponseEntity<String> updateUser(@RequestBody UpdateUserRequest userRequest, @PathVariable String userEmail) {
+    @ApiOperation(value = "Add schools to the list of schools the user is interested in ")
+    public ResponseEntity<String> addSchool(@RequestBody AddSchoolsRequest userRequest, @PathVariable String userEmail) {
 
         try {
             User user = userDBProvider.getUser(userEmail);
             if (user == null) {
                 return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
             }
-            userDBProvider.updateUser(userRequest, user);
+            userDBProvider.addSchools(userRequest, user);
             return new ResponseEntity<>("Updated user", HttpStatus.OK);
 
         } catch (Exception e) {
@@ -105,7 +105,50 @@ public class UsersEndpoint {
 
     }
 
+
+    @PutMapping("/{userEmail}/recommender")
+    @CrossOrigin
+    @ApiOperation(value = "Add recommenders for a user ")
+    public ResponseEntity<String> addRecommender(@RequestBody AddRecommendersRequest recommendersRequest, @PathVariable String userEmail) {
+
+        try {
+            User user = userDBProvider.getUser(userEmail);
+            if (user == null) {
+                return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
+            }
+            userDBProvider.addRecommenders(recommendersRequest, user);
+            return new ResponseEntity<>("Updated user", HttpStatus.OK);
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @DeleteMapping("/{userEmail}/recommender/{recommender}")
+    @ApiOperation(value = "Remove a particular recommender from the user's recommenders.")
+    public ResponseEntity<String> deleteRecommender(@PathVariable String userEmail, @PathVariable String recommender) {
+
+        try {
+            User user = userDBProvider.getUser(userEmail);
+            if (user == null) {
+                return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
+            }
+
+            userDBProvider.deleteRecommender(user, recommender);
+            return new ResponseEntity<>("Deleted recommender", HttpStatus.OK);
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+
     @DeleteMapping("/{userEmail}/school/{schoolName}")
+    @CrossOrigin
     @ApiOperation(value = "Remove a particular school from the user's list of schools ")
     public ResponseEntity<String> deleteSchool(@PathVariable String userEmail, @PathVariable String schoolName) {
 

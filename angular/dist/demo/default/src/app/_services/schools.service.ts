@@ -13,7 +13,8 @@ export class SchoolsService {
  }
  
  getAllSchools() {
-   return this.http.get("https://mba-application.appspot.com/mba/schools").map((response: Response) => response.json());
+   return this.http.get("https://mba-application.appspot.com/mba" +
+       "/schools").map((response: Response) => response.json());
  }
 
  userDeleteSchool(schoolName: string) {

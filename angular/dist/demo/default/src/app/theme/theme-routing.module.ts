@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { ThemeComponent } from './theme.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from "../auth/_guards/auth.guard";
-import {WidgetsBootstrapSelectComponent} from "./pages/default/components/forms/widgets/widgets-bootstrap-select/widgets-bootstrap-select.component";
-
 const routes: Routes = [
     {
         "path": "",
@@ -29,6 +27,14 @@ const routes: Routes = [
             {
                 "path": "profile/edit",
                 "loadChildren": ".\/pages\/default\/profile\/profile.module#ProfileModule"
+            },
+            {
+                "path": "addschool",
+                "loadChildren": ".\/pages\/default\/addschool\/addschool.module#AddSchoolModule"
+            },
+            {
+                "path": "information",
+                "loadChildren": ".\/pages\/default\/information\/information.module#InformationModule"
             },
             {
                 "path": "",

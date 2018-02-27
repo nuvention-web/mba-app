@@ -70,14 +70,14 @@ public class UsersEndpoint {
 
     @GetMapping(value = "/{userEmail:.+}", produces = "application/json")
     @CrossOrigin
-    @ApiOperation(value = "Retrieve a user")
+    @ApiOperation(value = "Retrieve a user - this will be used for the home page")
     public ResponseEntity getUser(@PathVariable String userEmail) {
         try {
             User user = userDBProvider.getUser(userEmail);
             if (user == null) {
                 return new ResponseEntity<>("User does not exist!", HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>(userDBProvider.getUserDetails(user).toString(), HttpStatus.OK);
+            return new ResponseEntity<>(userDBProvider.getUserSchoolDetails(user).toString(), HttpStatus.OK);
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -168,5 +168,6 @@ public class UsersEndpoint {
         }
 
     }
+
 
 }

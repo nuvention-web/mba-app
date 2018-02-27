@@ -1,7 +1,10 @@
 package mbaapp.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONObject;
 
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +16,16 @@ public class Essay {
 
     private String essayID;
     private EssayStatus status;
-    List<EssayDraft> drafts = new ArrayList<>();
+
+    public List<EssayDraft> getDrafts() {
+        return drafts;
+    }
+
+    private List<EssayDraft> drafts = new ArrayList<>();
 
     public enum EssayStatus{
         NOT_STARTED,
+        IN_PROGRESS,
         DRAFT1_IN_PROGRESS, DRAFT1_COMPLETE,
         DRAFT2_IN_PROGRESS, DRAFT2_COMPLETE,
         DRAFT3_IN_PROGRESS, DRAFT3_COMPLETE,
@@ -59,6 +68,7 @@ public class Essay {
     public void addDraft(String draftName, String contents){
         EssayDraft essayDraft = new EssayDraft();
         essayDraft.setContents(contents);
+        draftName = draftName == null ? "Draft "+ Integer.toString(drafts.size()+1) : draftName;
         essayDraft.setDraftName(draftName);
         this.drafts.add(essayDraft);
 
@@ -76,14 +86,14 @@ public class Essay {
         }
 
         if(draftToDelete==null) {
-            throw new Exception("Did not find a draft with essayID "+id);
+            throw new Exception("Did not find a draft with draft id "+id);
         }
 
         drafts.remove(draftToDelete);
 
     }
 
-    public void updateDraft(String id, String contents) throws Exception {
+    public void updateDraftContents(String id, String contents, String url) throws Exception {
         EssayDraft draftToUpdate = null;
 
         for(EssayDraft draft : drafts) {
@@ -96,9 +106,22 @@ public class Essay {
             throw new Exception("Did not find a draft with essayID "+id);
         }
 
-        draftToUpdate.setContents(contents);
-
+        if(contents!=null) {
+            draftToUpdate.setContents(contents);
+        }
+        else if(url!=null){
+            draftToUpdate.setUrl(url);
+        }
 
     }
+
+    public JSONObject toJSON() throws Exception{
+        ObjectMapper objectMapper = new ObjectMapper();
+        StringWriter stringWriter = new StringWriter();
+        objectMapper.writeValue(stringWriter, this);
+        JSONObject essayJSON = new JSONObject(stringWriter.toString());
+        return essayJSON;
+    }
+
 
 }

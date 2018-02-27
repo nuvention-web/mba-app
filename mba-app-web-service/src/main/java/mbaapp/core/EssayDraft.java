@@ -10,10 +10,10 @@ public class EssayDraft {
     private String draftName;
     private String id;
     private String contents;
+    private String url;
 
     public EssayDraft() {
          this.id = UUID.randomUUID().toString();
-
     }
 
     public String getDraftName() {
@@ -33,8 +33,12 @@ public class EssayDraft {
         this.draftName = draftName;
     }
 
-
     public void setContents(String contents) {
         this.contents = contents;
     }
+
+    public void setUrl(String url) { this.url = url; }
+
+    public String getUrl() { return url; }
+
 }

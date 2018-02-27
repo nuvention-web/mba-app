@@ -1,5 +1,6 @@
 package mbaapp.mongoDB;
 
+import mbaapp.core.SchoolInfoEssay;
 import mbaapp.requests.EssayDraftRequest;
 import mbaapp.core.Recommendation;
 import mbaapp.core.SchoolInfo;
@@ -10,6 +11,7 @@ import mbaapp.requests.AddSchoolsRequest;
 import mbaapp.core.User;
 import mbaapp.core.UserSchool;
 import mbaapp.providers.UserDBProvider;
+import mbaapp.requests.ProfileRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,7 @@ public class MongoUserDBProvider implements UserDBProvider {
     public User getUser(String email) {
         return userRepository.findByEmail(email);
     }
-
+    
     @Override
     public void addUser(CreateUserRequest createUserRequest) throws Exception {
 
@@ -49,12 +51,28 @@ public class MongoUserDBProvider implements UserDBProvider {
 
     }
 
-    public JSONObject getUserDetails(User user) throws Exception {
+    public JSONObject getUserProfile(User user) throws Exception {
+
+        JSONObject userJSON = user.toJSON();
+        if (userJSON.has("schools")) {
+            userJSON.remove("schools");
+        }
+        if (userJSON.has("userActivity")) {
+            userJSON.remove("userActivity");
+        }
+        return userJSON;
+
+    }
+
+
+    public JSONObject getUserSchoolDetails(User user) throws Exception {
 
         JSONObject userJSON = user.toJSON();
         JSONArray schoolsArray = userJSON.getJSONArray("schools");
         for (int i = 0; i < schoolsArray.length(); i++) {
             JSONObject school = schoolsArray.getJSONObject(i);
+            removeExtraJSONKey(school, "notes");
+            removeExtraJSONKey(school, "essays");
             String schoolName = school.getString("shortName");
             SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(schoolName);
             if (schoolInfo != null) {
@@ -67,8 +85,26 @@ public class MongoUserDBProvider implements UserDBProvider {
             }
         }
 
+        userJSON = removeExtraJSONKey(userJSON, "teamPlayerExperience");
+        userJSON = removeExtraJSONKey(userJSON, "whyMBA");
+        userJSON = removeExtraJSONKey(userJSON, "failureExperience");
+        userJSON = removeExtraJSONKey(userJSON, "leadershipExperience");
+        userJSON = removeExtraJSONKey(userJSON, "whatDoYouBring");
+        userJSON = removeExtraJSONKey(userJSON, "hobbiesOrInterests");
+        userJSON = removeExtraJSONKey(userJSON, "longTermGoals");
+        userJSON = removeExtraJSONKey(userJSON, "shortTermGoals");
+        userJSON = removeExtraJSONKey(userJSON, "accomplishments");
+
         return userJSON;
 
+    }
+
+
+    private JSONObject removeExtraJSONKey(JSONObject json, String key) {
+        if(json.has(key)){
+            json.remove(key);
+        }
+        return json;
     }
 
     public void deleteSchool(User user, String schoolName) throws Exception {
@@ -92,14 +128,13 @@ public class MongoUserDBProvider implements UserDBProvider {
     public void deleteRecommender(User user, String recommenderName) throws Exception {
 
         UserSchool userSchool = null;
-        if(user.getRecommenders().contains(recommenderName)){
+        if (user.getRecommenders().contains(recommenderName)) {
             user.getRecommenders().remove(recommenderName);
-        }
-        else {
-            throw new Exception("Did not find a recommender with the name "+recommenderName);
+        } else {
+            throw new Exception("Did not find a recommender with the name " + recommenderName);
         }
 
-        for(UserSchool school : user.getSchools()) {
+        for (UserSchool school : user.getSchools()) {
             Recommendation recommendationToDelete = null;
             for (Recommendation recommendation : school.getRecommendations()) {
                 if (recommendation.getRecommender().equalsIgnoreCase(recommenderName)) {
@@ -123,19 +158,77 @@ public class MongoUserDBProvider implements UserDBProvider {
 
     }
 
+    public void updateUserProfile(User user, ProfileRequest profileRequest) throws Exception {
 
-    public void updateEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID) throws Exception {
+        if (profileRequest.getWhyMBA() != null) {
+            user.setWhyMBA(profileRequest.getWhyMBA());
+        }
 
-        userSchool.updateEssayDraft(essayDraftRequest, essayID);
+        if (profileRequest.getShortTermGoals() != null) {
+            user.setShortTermGoals(profileRequest.getShortTermGoals());
+        }
+
+        if (profileRequest.getLongTermGoals() != null) {
+            user.setLongTermGoals(profileRequest.getLongTermGoals());
+        }
+
+        if (profileRequest.getAccomplishments() != null) {
+            user.setAccomplishments(profileRequest.getAccomplishments());
+        }
+
+        if (profileRequest.getLeadershipExperience() != null) {
+            user.setLeadershipExperience(profileRequest.getLeadershipExperience());
+        }
+
+        if (profileRequest.getTeamPlayerExperience() != null) {
+            user.setTeamPlayerExperience(profileRequest.getTeamPlayerExperience());
+        }
+
+        if (profileRequest.getFailureExperience() != null) {
+            user.setFailureExperience(profileRequest.getFailureExperience());
+        }
+
+        if (profileRequest.getAccomplishments() != null) {
+            user.setAccomplishments(profileRequest.getAccomplishments());
+        }
+
+        if (profileRequest.getHobbiesOrInterests() != null) {
+            user.setHobbiesOrInterests(profileRequest.getHobbiesOrInterests());
+        }
+
+        if (profileRequest.getWhatDoYouBring() != null) {
+            user.setWhatDoYouBring(profileRequest.getWhatDoYouBring());
+        }
+
         userRepository.save(user);
 
     }
 
-    public void deleteEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID) throws Exception {
-        userSchool.deleteEssayDraft(essayDraftRequest, essayID);
+
+    public void updateEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID, String draftID) throws Exception {
+
+        userSchool.updateEssayDraft(essayDraftRequest, essayID, draftID);
+        userRepository.save(user);
+
+    }
+
+    public void deleteEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID, String draftID) throws Exception {
+        userSchool.deleteEssayDraft(essayDraftRequest, essayID, draftID);
         userRepository.save(user);
     }
 
+
+    public JSONObject getEssay(User user, UserSchool userSchool, String essayID) throws Exception {
+        SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(userSchool.getShortName());
+        String essayPrompt = "";
+        for (SchoolInfoEssay essay : schoolInfo.getEssays()) {
+            if (essay.getEssayID().equalsIgnoreCase(essayID)) {
+                essayPrompt = essay.getEssayPrompt();
+            }
+        }
+        return userSchool.getEssay(essayID, essayPrompt);
+
+    }
 
     public void updateEssayStatus(User user, UserSchool userSchool, String essayID, EssayStatusRequest essayRequest) throws Exception {
         SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(userSchool.getShortName());
@@ -144,8 +237,8 @@ public class MongoUserDBProvider implements UserDBProvider {
     }
 
 
-    public JSONObject getUserSchoolDetail(User user, UserSchool userSchool) throws Exception{
-       SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(userSchool.getShortName());
+    public JSONObject getUserSchoolDetail(User user, UserSchool userSchool) throws Exception {
+        SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(userSchool.getShortName());
         return userSchool.toJSON(schoolInfo.getEssays());
     }
 
@@ -163,23 +256,21 @@ public class MongoUserDBProvider implements UserDBProvider {
     @Override
     public void addRecommenders(AddRecommendersRequest request, User user) throws Exception {
 
-        if(request.getRecommenders()!=null) {
-            for(String recommender : request.getRecommenders()){
-                if(user.getRecommenders().contains(recommender)) {
-                    throw new Exception("A recommender by the name " + recommender +" already exists - please use a " +
+        if (request.getRecommenders() != null) {
+            for (String recommender : request.getRecommenders()) {
+                if (user.getRecommenders().contains(recommender)) {
+                    throw new Exception("A recommender by the name " + recommender + " already exists - please use a " +
                             "different name");
                 }
                 user.getRecommenders().add(recommender);
                 //Update the schools with this recommender
-                for(UserSchool school : user.getSchools()) {
+                for (UserSchool school : user.getSchools()) {
                     school.addRecommendation(new Recommendation(recommender));
                 }
             }
         }
         userRepository.save(user);
     }
-
-
 
 
     private void updateSchools(AddSchoolsRequest userRequest, User user) throws Exception {

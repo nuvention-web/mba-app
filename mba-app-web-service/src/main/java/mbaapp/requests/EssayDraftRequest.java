@@ -11,8 +11,17 @@ public class EssayDraftRequest {
 
     private String draftName;
     private String contents;
-    private String draftID;
+    private String url;
     private Essay.EssayStatus essayStatus;
+    private String id;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getId() {
+        return id;
+    }
 
     public String getDraftName() {
         return draftName;
@@ -22,11 +31,9 @@ public class EssayDraftRequest {
         return contents;
     }
 
-    public String getDraftID(){
-        return draftID;
-    };
-
     public Essay.EssayStatus getEssayStatus() {
         return essayStatus;
     };
+
+
 }

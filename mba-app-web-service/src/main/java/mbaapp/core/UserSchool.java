@@ -114,15 +114,30 @@ public class UserSchool{
 
     }
 
-
-    public void deleteEssayDraft(EssayDraftRequest request, String essayID) throws Exception {
-        if(request.getDraftID()==null) {
-            throw new Exception("Missing draft ID from request");
+    public JSONObject getEssay(String essayID, String essayPrompt) throws Exception{
+        Essay essayRequested = null;
+        for (Essay essay : essays) {
+            if (essay.getEssayID().equalsIgnoreCase(essayID)) {
+                essayRequested = essay;
+            }
         }
+
+        if(essayRequested == null){
+            throw new Exception("Did not find an essay with the essayID "+essayID);
+        }
+
+        JSONObject essayJSON = essayRequested.toJSON();
+        essayJSON.put("prompt", essayPrompt);
+        return essayJSON;
+
+    }
+
+    public void deleteEssayDraft(EssayDraftRequest request, String essayID, String draftID) throws Exception {
         boolean essayNotFound = true;
         for (Essay essay : essays) {
             if (essay.getEssayID().equalsIgnoreCase(essayID)) {
-                essay.deleteDraft(request.getDraftID());
+                essayNotFound = false;
+                essay.deleteDraft(draftID);
             }
         }
 
@@ -133,14 +148,15 @@ public class UserSchool{
     }
 
 
-    public void updateEssayDraft(EssayDraftRequest request, String essayID) throws Exception {
-        if(request.getDraftID()==null) {
-            throw new Exception("Missing draft ID from request");
-        }
+    public void updateEssayDraft(EssayDraftRequest request, String essayID, String draftID) throws Exception {
         boolean essayNotFound = true;
         for (Essay essay : essays) {
             if (essay.getEssayID().equalsIgnoreCase(essayID)) {
-                essay.updateDraft(request.getDraftID(), request.getContents());
+                if(request.getContents()!=null) {
+                    essay.updateDraftContents(draftID, request.getContents(), request.getUrl());
+                    essayNotFound = false;
+                }
+
             }
         }
 
@@ -178,6 +194,9 @@ public class UserSchool{
             for(SchoolInfoEssay essay : schoolInfoEssays){
                 if(essayJSON.getString("essayID").equalsIgnoreCase(essay.getEssayID())){
                     essayJSON.put("prompt", essay.getEssayPrompt());
+                }
+                if(essayJSON.has("drafts")) {
+                    essayJSON.remove("drafts");
                 }
             }
         }

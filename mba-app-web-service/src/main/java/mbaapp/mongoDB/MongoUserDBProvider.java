@@ -82,6 +82,11 @@ public class MongoUserDBProvider implements UserDBProvider {
                 school.put("round2_deadline", schoolInfo.getRound2Deadline());
                 school.put("round3_deadline", schoolInfo.getRound3Deadline());
                 school.put("round4_deadline", schoolInfo.getRound4Deadline());
+                school.put("medianGMAT", schoolInfo.getMedianGMAT());
+                school.put("avgGMAT", schoolInfo.getAvgGMAT());
+                school.put("avgGPA", schoolInfo.getAvgGPA());
+                school.put("acceptanceRate", schoolInfo.getAcceptanceRate());
+                school.put("logoURL", schoolInfo.getLogoURL());
             }
         }
 
@@ -157,6 +162,13 @@ public class MongoUserDBProvider implements UserDBProvider {
         userRepository.save(user);
 
     }
+
+    public void setDeadlineForSchool(User user, UserSchool userSchool, String deadline) throws Exception {
+
+        userSchool.setDeadline(deadline);
+        userRepository.save(user);
+    }
+
 
     public void updateUserProfile(User user, ProfileRequest profileRequest) throws Exception {
 

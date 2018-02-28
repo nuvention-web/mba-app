@@ -21,6 +21,7 @@ public class UserSchool{
     private List<Essay> essays;
     private List<String> notes;
     private String shortName;
+    private String deadline;
 
     public String getShortName() {
         return shortName;
@@ -40,6 +41,14 @@ public class UserSchool{
 
     public List<String> getNotes() {
         return notes;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
+    public String getDeadline() {
+        return deadline;
     }
 
     public void setNotes(List<String> notes) {

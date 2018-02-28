@@ -31,6 +31,16 @@ public class SchoolInfo {
 
     private List<SchoolInfoEssay> essays;
 
+    private String medianGMAT;
+
+    private String avgGPA;
+
+    private String avgGMAT;
+
+    private String acceptanceRate;
+
+    private String logoURL;
+
     public SchoolInfo(){
 
     }
@@ -85,5 +95,25 @@ public class SchoolInfo {
 
     public List<SchoolInfoEssay> getEssays(){
         return essays;
+    }
+
+    public String getMedianGMAT() {
+        return medianGMAT;
+    }
+
+    public String getAvgGPA() {
+        return avgGPA;
+    }
+
+    public String getAvgGMAT() {
+        return avgGMAT;
+    }
+
+    public String getAcceptanceRate() {
+        return acceptanceRate;
+    }
+
+    public String getLogoURL() {
+        return logoURL;
     }
 }

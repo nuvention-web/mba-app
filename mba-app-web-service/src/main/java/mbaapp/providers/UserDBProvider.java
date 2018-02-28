@@ -45,4 +45,6 @@ public interface UserDBProvider {
 
     public void updateUserProfile(User user, ProfileRequest profileRequest) throws Exception;
 
+    public void setDeadlineForSchool(User user, UserSchool userSchool, String deadline) throws Exception;
+
 }

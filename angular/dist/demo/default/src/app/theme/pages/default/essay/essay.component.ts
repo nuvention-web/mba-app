@@ -25,10 +25,6 @@ export class EssayComponent implements OnInit {
             tabsize: 2,
             height: 200
         });
-        (<any>$)("#planning_editor").summernote({
-            placeholder: 'Start typing here...',
-            tabsize: 2,
-            height: 200
-        });
+        (<any>$)("#essay-draft-dropdown").select2();
     }
 }

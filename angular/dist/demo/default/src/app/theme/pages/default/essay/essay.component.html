@@ -31,13 +31,6 @@
                                     </a>
                                 </li>
                                 <li class="nav-item m-tabs__item">
-                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_2" role="tab"
-                                       ng-reflect-href="#m_tabs_6_2" aria-selected="false">
-                                        <i class="fa fa-sitemap"></i>
-                                        Planning
-                                    </a>
-                                </li>
-                                <li class="nav-item m-tabs__item">
                                     <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_3" role="tab"
                                        ng-reflect-href="#m_tabs_6_3" aria-selected="false">
                                         <i class="fa fa-copy"></i>
@@ -49,6 +42,13 @@
                                        ng-reflect-href="#m_tabs_6_4" aria-selected="false">
                                         <i class="fa fa-edit"></i>
                                         New Draft
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_5" role="tab"
+                                       ng-reflect-href="#m_tabs_6_5" aria-selected="false">
+                                        <i class="fa fa-edit"></i>
+                                        Feedback
                                     </a>
                                 </li>
                             </ul>
@@ -64,17 +64,6 @@
                                 remaining essentially unchanged. It was popularised in the 1960s with the release of
                                 Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
                                 publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                            </div>
-                            <div class="tab-pane" id="m_tabs_6_2" role="tabpanel">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <form method="post">
-                                            <textarea id="planning_editor" name="planning_editor"></textarea>
-                                        </form>
-                                    </div>
-
-                                </div>
-
                             </div>
                             <div class="tab-pane show" id="m_tabs_6_3" role="tabpanel">
                                 <div class="row">
@@ -105,7 +94,7 @@
                             </div>
                             <div class="tab-pane" id="m_tabs_6_4" role="tabpanel">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <form method="post">
                                             <div class="form-group m-form__group">
                                                 <input class="form-control m-input" id="draft-title" placeholder="Enter a title for your draft" type="text">
@@ -151,7 +140,43 @@
                                             <button type="button" class="btn m-btn--pill btn-primary">Save</button>
                                         </form>
                                     </div>
+                                    <div class="col-md-6">
+
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#reference_tabs" ng-reflect-href="#reference_tabs_1">
+                                                    Essays
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="reference_tabs_1" role="tabpanel">
+
+                                                <select id="essay-draft-dropdown" style="width:100%;">
+                                                    <optgroup label = "Booth">
+                                                        <option value="Essay1">Essay 1</option>
+                                                        <option value="Essay1">Essay 2</option>
+                                                        <option value="Essay1">Essay 3</option>
+                                                    </optgroup>
+                                                    <optgroup label = "Kellogg">
+                                                        <option value="Essay1">Essay 1</option>
+                                                        <option value="Essay1">Essay 2</option>
+                                                        <option value="Essay1">Essay 3</option>
+                                                    </optgroup>
+
+                                                </select>
+                                                <br>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non tortor dui. Sed a malesuada nulla. Fusce volutpat neque nunc, non luctus tortor dapibus in. Donec ultricies mi urna, ut luctus mauris varius sit amet. Maecenas non nisi quis metus maximus ultricies. Aenean luctus pellentesque ipsum in elementum. Mauris felis ante, consectetur sed velit id, tempus mollis neque. Curabitur libero odio, laoreet in velit id, cursus sodales augue. Morbi varius feugiat congue. Praesent finibus urna a magna consectetur, eget consequat mauris pretium. Maecenas fringilla tempor felis, a sollicitudin sapien luctus non.</p>
+                                                <p>Maecenas orci elit, scelerisque non justo a, suscipit tristique mi. Vivamus ultricies fermentum libero vel facilisis. Etiam tincidunt vel nulla vel placerat. Sed at est eu odio dignissim venenatis. Phasellus quis lorem nisl. Sed pellentesque velit eu odio facilisis fringilla. Nullam et velit quis erat ornare porta. Pellentesque euismod lectus sit amet fringilla gravida. Duis posuere lacus et lectus vehicula, vulputate iaculis enim sollicitudin. Aenean aliquam, tortor vel semper tempus, nisi nibh porta augue, vel pulvinar eros nulla in leo. Nulla ultricies ac elit vitae mattis. Cras dictum dui non diam sagittis porttitor. Proin eget eros nec quam euismod elementum. Curabitur pellentesque orci ut iaculis bibendum. Curabitur tortor felis, ultricies vel placerat a, mattis quis ipsum.</p>
+                                                <p>Sed efficitur elit vel dui semper, at pulvinar quam suscipit. Etiam quis eros odio. Nam consectetur, lectus pretium bibendum viverra, quam turpis imperdiet odio, in vestibulum enim eros non sem. Nulla eu porta lacus, id aliquam elit. Curabitur vel scelerisque libero, at gravida magna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam tempus est sit amet magna ultricies, eu sodales lectus pellentesque. Duis elementum magna mauris, eget convallis orci aliquam non. Fusce et rhoncus lacus. Maecenas ut molestie nunc. Integer efficitur vulputate dui, sit amet egestas purus elementum eu. Pellentesque non ex vestibulum, auctor neque id, malesuada dui.</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="tab-pane" id="m_tabs_6_5" role="tabpanel">
+
                             </div>
                         </div>
                     </div>

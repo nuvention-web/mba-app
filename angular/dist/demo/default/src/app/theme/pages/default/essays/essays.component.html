@@ -17,57 +17,129 @@
 <!-- END: Subheader -->
 <div class="m-content">
     <div>
-        <div class="row">
-            <div class="col-lg-6">
+        <ul class="nav nav-tabs  m-tabs-line m-tabs-line--2x m-tabs-line--primary" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#m_tabs_1_1" ng-reflect-href="#m_tabs_2_1">
+                    <strong>Essays</strong>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#m_tabs_1_2"  ng-reflect-href="#m_tabs_2_2">
+                    <strong>Notes</strong>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#m_tabs_1_3" ng-reflect-href="#m_tabs_2_3">
+                    <strong>Recommenders</strong>
+                </a>
+            </li>
+        </ul>
 
-                <div class="m-portlet">
-                    <div class="m-portlet__head">
-                        <div class="m-portlet__head-caption">
-                            <div class="m-portlet__head-title">
-                                <h3 class="m-portlet__head-text">
-                                    Essays
-                                </h3>
+        <div class="tab-content">
+            <div class="tab-pane active" id="m_tabs_1_1" role="tabpanel">
+                <div class="row">
+                    <div *ngFor="let essay of schoolDetails.essays" class="col-xl-5">
+                        <div class="m-portlet">
+                            <div class="m-portlet__body">
+                                {{ essay.prompt }}
+                            </div>
+                            <div class="m-portlet__foot">
+                                <div class="row align-items-center">
+                                    <button routerLink="/essays/{{school}}/{{ essay.essayID }}" class="btn btn-brand"
+                                            type="submit">
+                                        Work on This
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="m-portlet__body">
-                        Please share your short-term and long-term career goals. What skills/strengths do you have that will be relevant to your career goals? How will Ross prepare you for your goals? (300 words).
-                    </div>
-                    <div class="m-portlet__foot">
-                        <div class="row align-items-center">
-                            <button routerLink="/essays/{{school}}/1" class="btn btn-brand" type="submit">
-                                Work on This
-                            </button>
+                </div>
+            </div>
+            <div class="tab-pane" id="m_tabs_1_2" role="tabpanel">
+                <div class="row mt-3">
+                    <div *ngFor="let note of schoolDetails.notes" class="col-xl-4">
+                        <div class="m-portlet">
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon">
+								            <i class="la la-sticky-note"></i>
+                                        </span>
+                                        <h3 class="m-portlet__head-text">
+                                            {{ note.title }}
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__head-tools">
+                                    <ul class="m-portlet__nav">
+                                        <li class="m-portlet__nav-item">
+                                            <a class="m-portlet__nav-link m-portlet__nav-link--icon" href="" ng-reflect-href="">
+                                                <i class="la la-close"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                {{ note.contents }}
+                            </div>
+                            <div class="m-portlet__foot">
+                                <div class="row align-items-center">
+                                    <button routerLink="/notes/edit/{{school}}/{{ note.noteID }}" class="btn btn-brand"
+                                            type="submit">
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row align-items-right">
+                    <div class="col-xl-5 m--align-left">
+                        <a class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" routerLink="/notes/add/{{school}}/none" href="#" ng-reflect-href="#">
+				<span>
+					<i class="la la-plus"></i>
+					<span>
+						New note
+					</span>
+				</span>
+                        </a>
                     </div>
                 </div>
 
             </div>
-            <div class="col-lg-6">
-
-                <div class="m-portlet">
-                    <div class="m-portlet__head">
-                        <div class="m-portlet__head-caption">
-                            <div class="m-portlet__head-title">
-                                <h3 class="m-portlet__head-text">
-                                    Short Response
-                                </h3>
+            <div class="tab-pane" id="m_tabs_1_3" role="tabpanel">
+                <div class="row mt-3">
+                    <div *ngFor="let recommendation of schoolDetails.recommendations" class="col-xl-4">
+                        <div class="m-portlet">
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon">
+								            <i class="la la-user"></i>
+                                        </span>
+                                        <h3 class="m-portlet__head-text">
+                                            {{ recommendation.recommender }}
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                {{ recommendation.contents }}
+                            </div>
+                            <div class="m-portlet__foot">
+                                <div class="row align-items-center">
+                                    <button routerLink="/recommender/edit/{{school}}/{{recommendation.id}}/{{recommendation.recommender}}" class="btn btn-brand"
+                                            type="submit">
+                                        Update
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="m-portlet__body">
-                        Please share your short-term and long-term career goals. What skills/strengths do you have that will be relevant to your career goals? How will Ross prepare you for your goals? (300 words).
-                    </div>
-                    <div class="m-portlet__foot">
-                        <div class="row align-items-center">
-                            <button class="btn btn-brand" type="submit">
-                                Work on This
-                            </button>
-                        </div>
-                    </div>
                 </div>
-
             </div>
         </div>
+
     </div>
 </div>

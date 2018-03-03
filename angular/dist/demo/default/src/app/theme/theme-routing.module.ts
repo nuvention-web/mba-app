@@ -33,6 +33,18 @@ const routes: Routes = [
                 "loadChildren": ".\/pages\/default\/addschool\/addschool.module#AddSchoolModule"
             },
             {
+                "path": "notes/:action/:school/:noteID",
+                "loadChildren": ".\/pages\/default\/notes\/notes.module#NotesModule"
+            },
+            {
+                "path": "recommender/edit/:school/:recommenderID/:recommenderName",
+                "loadChildren": ".\/pages\/default\/recommender\/recommender.module#RecommenderModule"
+            },
+            {
+                "path": "notes/:action/:school/:noteID",
+                "loadChildren": ".\/pages\/default\/notes\/notes.module#NotesModule"
+            },
+            {
                 "path": "information",
                 "loadChildren": ".\/pages\/default\/information\/information.module#InformationModule"
             },

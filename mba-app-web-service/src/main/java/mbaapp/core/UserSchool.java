@@ -4,12 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import mbaapp.requests.EssayDraftRequest;
 import mbaapp.requests.EssayStatusRequest;
+import mbaapp.requests.NotesRequest;
+import mbaapp.requests.RecommenderRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by jnag on 2/15/18.
@@ -19,9 +25,10 @@ public class UserSchool{
 
     private List<Recommendation> recommendations;
     private List<Essay> essays;
-    private List<String> notes;
+    private List<Note> notes;
     private String shortName;
     private String deadline;
+    private Set<String> warningWords;
 
     public String getShortName() {
         return shortName;
@@ -39,7 +46,7 @@ public class UserSchool{
         return essays;
     }
 
-    public List<String> getNotes() {
+    public List<Note> getNotes() {
         return notes;
     }
 
@@ -51,7 +58,7 @@ public class UserSchool{
         return deadline;
     }
 
-    public void setNotes(List<String> notes) {
+    public void setNotes(List<Note> notes) {
         this.notes = notes;
     }
 
@@ -63,7 +70,6 @@ public class UserSchool{
     }
 
     public UserSchool(){
-
     }
 
 
@@ -95,14 +101,14 @@ public class UserSchool{
     }
 
 
-
-    public void addEssayDraft(EssayDraftRequest request, String essayID, SchoolInfo schoolInfo) throws Exception{
+    public void addEssayDraft(EssayDraftRequest request, String essayID, SchoolInfo schoolInfo, Keywords keywords) throws Exception{
 
         boolean essayNotFound = true;
         for(Essay essay : essays) {
             if(essay.getEssayID().equalsIgnoreCase(essayID)){
                 essayNotFound = false;
-                essay.addDraft(request.getDraftName(), request.getContents());
+                EssayDraft essayDraft = essay.addDraft(request.getDraftName(), request.getContents(), "", "", EssayDraft.DraftType.CONTENTS);
+                essayDraft.validateEssayDraftContents(this.shortName, keywords.schoolKeywords);
             }
         }
 
@@ -110,7 +116,7 @@ public class UserSchool{
             for(SchoolInfoEssay schoolInfoEssay : schoolInfo.getEssays()) {
                 if(essayID.equalsIgnoreCase(schoolInfoEssay.getEssayID())) {
                     Essay essay = new Essay(essayID, request.getEssayStatus());
-                    essay.addDraft(request.getDraftName(), request.getContents());
+                    essay.addDraft(request.getDraftName(), request.getContents(), "", "", EssayDraft.DraftType.CONTENTS);
                     essays.add(essay);
                     essayNotFound = false;
                 }
@@ -123,6 +129,12 @@ public class UserSchool{
 
     }
 
+    public void addEssayDraftUpload(String fileName, String uploadID, Essay essay, Keywords keywords, File file) throws Exception {
+        EssayDraft essayDraft = essay.addDraft(fileName, "", uploadID, "", EssayDraft.DraftType.UPLOAD);
+        essayDraft.validateEssayDraftUpload(shortName, keywords.schoolKeywords, file);
+
+    }
+
     public JSONObject getEssay(String essayID, String essayPrompt) throws Exception{
         Essay essayRequested = null;
         for (Essay essay : essays) {
@@ -132,13 +144,40 @@ public class UserSchool{
         }
 
         if(essayRequested == null){
-            throw new Exception("Did not find an essay with the essayID "+essayID);
+            essayRequested = new Essay();
+            essayRequested.setEssayID(essayID);
+            essayRequested.setStatus(Essay.EssayStatus.NOT_STARTED);
         }
 
         JSONObject essayJSON = essayRequested.toJSON();
         essayJSON.put("prompt", essayPrompt);
         return essayJSON;
 
+    }
+
+
+    public Essay getEssay(String essayID) throws Exception{
+        Essay essayRequested = null;
+        for (Essay essay : essays) {
+            if (essay.getEssayID().equalsIgnoreCase(essayID)) {
+                essayRequested = essay;
+                return essayRequested;
+            }
+        }
+
+        throw new Exception("Did not find essay with essayID "+essayID);
+    }
+
+    public EssayDraft getEssayDraft(String essayID, String draftID) throws Exception{
+
+        Essay essay = getEssay(essayID);
+        for(EssayDraft essayDraft : essay.getDrafts()){
+            if(draftID.equalsIgnoreCase(essayDraft.getId())){
+                return essayDraft;
+            }
+        }
+
+        throw new Exception("Did not find draft with ID " + draftID);
     }
 
     public void deleteEssayDraft(EssayDraftRequest request, String essayID, String draftID) throws Exception {
@@ -157,21 +196,121 @@ public class UserSchool{
     }
 
 
-    public void updateEssayDraft(EssayDraftRequest request, String essayID, String draftID) throws Exception {
+
+
+    public void updateEssayDraft(EssayDraftRequest request, String essayID, String draftID, HashMap<String, List<String>> schoolKeywords) throws Exception {
         boolean essayNotFound = true;
         for (Essay essay : essays) {
             if (essay.getEssayID().equalsIgnoreCase(essayID)) {
                 if(request.getContents()!=null) {
-                    essay.updateDraftContents(draftID, request.getContents(), request.getUrl());
+                    EssayDraft essayDraft = essay.updateDraftContents(draftID, request.getContents(), request.getUrl());
                     essayNotFound = false;
+                    essayDraft.validateEssayDraftContents(shortName, schoolKeywords);
                 }
-
             }
         }
 
         if(essayNotFound){
             throw new Exception("Did not find an essay with the essayID "+essayID);
         }
+
+    }
+
+    public void updateNote(NotesRequest notesRequest, String noteID) throws Exception {
+
+        boolean noteNotFound = true;
+
+        for(Note note : this.notes) {
+            if(note.getNoteID().equalsIgnoreCase(noteID)) {
+                note.setNoteContents(notesRequest.getContents());
+                if(note.getTitle()!=null) {
+                    note.setTitle(notesRequest.getTitle());
+                }
+                else{
+                    note.setTitle("");
+                }
+                note.setTitle(notesRequest.getTitle());
+                noteNotFound = false;
+            }
+        }
+
+        if(noteNotFound) {
+            throw new Exception("Did not find an essay with the noteID "+noteID);
+        }
+
+    }
+
+    public void deleteNote(String noteID) throws Exception {
+
+        Note deleteNote = null;
+
+        for(Note note : this.notes) {
+            if(note.getNoteID().equalsIgnoreCase(noteID)) {
+                deleteNote = note;
+            }
+        }
+
+        if(deleteNote == null) {
+            throw new Exception("Did not find an essay with the noteID "+noteID);
+        }
+
+        this.notes.remove(deleteNote);
+
+    }
+
+    public void updateRecommender(RecommenderRequest recommenderRequest, String recommenderID) throws Exception {
+
+        boolean recommendationFound = false;
+
+        for(Recommendation recommendation : this.recommendations){
+            if(recommendation.getId().equalsIgnoreCase(recommenderID)){
+                recommendation.setContents(recommenderRequest.getContents());
+                recommendationFound = true;
+            }
+        }
+
+        if(!recommendationFound) {
+            throw new Exception("Did not find recommendation ");
+        }
+
+    }
+
+
+    public Recommendation getRecommender(String recommenderID) throws Exception{
+
+        for(Recommendation recommendation : this.recommendations) {
+            if(recommendation.getId().equalsIgnoreCase(recommenderID)){
+                return recommendation;
+            }
+        }
+
+        throw new Exception("Did not find recommendation");
+    }
+
+    public Note getNote(String noteID) throws Exception {
+
+        Note foundNote = null;
+
+        for(Note note : this.notes) {
+            if(note.getNoteID().equalsIgnoreCase(noteID)) {
+                foundNote = note;
+            }
+        }
+
+        if(foundNote == null) {
+            throw new Exception("Did not find an essay with the noteID "+noteID);
+        }
+
+        return foundNote;
+
+    }
+
+
+
+    public void addNote(NotesRequest notesRequest) throws Exception {
+
+        Note note = new Note(notesRequest.getContents(), notesRequest.getTitle());
+        this.getNotes().add(note);
 
     }
 
@@ -229,4 +368,5 @@ public class UserSchool{
         this.shortName = name;
         essays = new ArrayList<>();
     }
+
 }

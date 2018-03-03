@@ -31,6 +31,8 @@ public class SchoolInfo {
 
     private List<SchoolInfoEssay> essays;
 
+    private List<String> keywords;
+
     private String medianGMAT;
 
     private String avgGPA;
@@ -75,6 +77,10 @@ public class SchoolInfo {
 
     public String getRound4Deadline() {
         return round4Deadline;
+    }
+
+    public List<String> getKeywords() {
+        return keywords;
     }
 
     public SchoolInfo(String name, String shortName, String location, String round1Deadline, String round2Deadline, String round3Deadline,

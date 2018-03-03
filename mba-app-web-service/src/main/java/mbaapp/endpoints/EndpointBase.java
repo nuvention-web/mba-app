@@ -1,5 +1,6 @@
 package mbaapp.endpoints;
 
+import mbaapp.core.Keywords;
 import mbaapp.core.User;
 import mbaapp.core.UserSchool;
 import mbaapp.providers.UserDBProvider;
@@ -17,6 +18,9 @@ public class EndpointBase {
     @Autowired
     @Qualifier("userMongoDB")
     UserDBProvider userDBProvider;
+
+    @Autowired
+    Keywords keywords;
 
     protected ResponseEntity<String> runValidations(String userEmail, String schoolShortName) {
         User user = userDBProvider.getUser(userEmail);

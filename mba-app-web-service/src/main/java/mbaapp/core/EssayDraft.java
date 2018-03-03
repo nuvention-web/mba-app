@@ -126,6 +126,12 @@ public class EssayDraft {
         warningWords = new HashSet<>();
         schoolKeyWordsFound = false;
         schoolKeywords = allSchoolKeywords.get(schoolShortName);
+
+        List<String> schoolKeywordsUpper = new ArrayList<>();
+        for(String word : schoolKeywords){
+            schoolKeywordsUpper.add(word.toUpperCase());
+        }
+
         List<String> keywordsList = getKeyWordsListApplicable(schoolShortName, allSchoolKeywords);
 
         InputStream targetStream = new FileInputStream(file);
@@ -136,7 +142,7 @@ public class EssayDraft {
             String text = paragraphs.get(i).getText().toUpperCase();
             warningWords.addAll(keywordsList.stream().parallel().filter(text::contains).collect(Collectors.toSet()));
             if(!schoolKeyWordsFound){
-                schoolKeyWordsFound = schoolKeywords.stream().parallel().anyMatch(text.toUpperCase()::contains);
+                schoolKeyWordsFound = schoolKeywordsUpper.stream().parallel().anyMatch(text.toUpperCase()::contains);
             }
         }
 

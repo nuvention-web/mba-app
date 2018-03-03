@@ -35,6 +35,10 @@ export class SchoolsService {
         return this.http.get("https://mba-application.appspot.com/mba/users/john.doe@gmail.com/school/" + schoolName + "/essay/" + essayID).map((response:Response) => response.json());
     }
 
+    deleteEssayDraft(schoolName:string, essayID:string, draftID:string) {
+        return this.http.delete("https://mba-application.appspot.com/mba/users/john.doe@gmail.com/school/" + schoolName + "/essay/" + essayID + "/draft/" + draftID).map((response:Response) => response.json());
+    }
+
     getNote(schoolName:string, noteID:string) {
         return this.http.get("https://mba-application.appspot.com/mba/users/john.doe@gmail.com/school/" + schoolName + "/notes/" + noteID).map((response:Response) => response.json());
     }

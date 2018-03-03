@@ -15,15 +15,15 @@ export class EssayComponent implements OnInit {
     params = {};
     content = "";
     essay: any = {};
-    school = ""
-    essayID = ""
+    school = "";
+    essayID = "";
 
     constructor(private route: ActivatedRoute, _script: ScriptLoaderService, private _schools:SchoolsService) {
 
         this.route.params.subscribe( params => {
-            this.params = params
-            this.school = params.school
-            this.essayID = params.id
+            this.params = params;
+            this.school = params.school;
+            this.essayID = params.id;
         }
     );
         this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
@@ -37,5 +37,9 @@ export class EssayComponent implements OnInit {
             height: 200
         });
         (<any>$)("#essay-draft-dropdown").select2();
+    }
+
+    public deleteDraft(draftID) {
+        this._schools.deleteEssayDraft(this.school, this.essayID, draftID);
     }
 }

@@ -80,19 +80,19 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="list-group">
-                                            <div class="list-group-item" *ngFor="let number of [0,1,2,3,4]">
+                                            <div class="list-group-item" *ngFor="let draft of essay.drafts">
                                                 <div class="row">
-                                                    <div class="col-md-6">Draft Name</div>
+                                                    <div class="col-md-6"><strong>{{ draft.draftName }}</strong><br>{{draft.draftType}}</div>
                                                     <div class="col-md-6 m--align-right">
                                                         <div class="btn-group m-btn-group m-btn-group--pill"
                                                              role="group">
                                                             <button class="m-btn btn-sm btn btn-outline-brand" type="button">
-                                                                <i class="fa fa-cloud-download"></i>
+                                                                <i class="fa fa-eye"></i>
                                                             </button>
                                                             <button class="m-btn btn btn-sm btn-outline-brand" type="button">
                                                                 <i class="fa fa-copy"></i>
                                                             </button>
-                                                            <button class="m-btn btn btn-sm btn-outline-brand" type="button">
+                                                            <button (click)="deleteDraft(draft.id)" class="m-btn btn btn-sm btn-outline-brand" type="button">
                                                                 <i class="fa fa-trash"></i>
                                                             </button>
                                                         </div>

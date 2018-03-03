@@ -155,8 +155,30 @@ public class UserSchool{
 
     }
 
+    public Essay getEssayForDraftUpload(String essayID, SchoolInfo schoolInfo) throws Exception{
 
-    public Essay getEssay(String essayID) throws Exception{
+        Essay essayRequested = getEssay(essayID);
+        boolean essayNotFound = true;
+        if(essayRequested == null) {
+            for(SchoolInfoEssay schoolInfoEssay : schoolInfo.getEssays()) {
+                if(essayID.equalsIgnoreCase(schoolInfoEssay.getEssayID())) {
+                    Essay essay = new Essay(essayID, Essay.EssayStatus.IN_PROGRESS);
+                    essays.add(essay);
+                    essayNotFound = false;
+                    return essay;
+                }
+            }
+        }
+
+        if(essayNotFound){
+            throw new Exception("Did not find an essay with the essayID "+essayID);
+        }
+
+        return essayRequested;
+    }
+
+
+    public Essay getEssay(String essayID){
         Essay essayRequested = null;
         for (Essay essay : essays) {
             if (essay.getEssayID().equalsIgnoreCase(essayID)) {
@@ -165,12 +187,15 @@ public class UserSchool{
             }
         }
 
-        throw new Exception("Did not find essay with essayID "+essayID);
+        return essayRequested;
     }
 
     public EssayDraft getEssayDraft(String essayID, String draftID) throws Exception{
 
         Essay essay = getEssay(essayID);
+        if(essay==null){
+            throw new Exception("Did not find essay with ID "+essayID);
+        }
         for(EssayDraft essayDraft : essay.getDrafts()){
             if(draftID.equalsIgnoreCase(essayDraft.getId())){
                 return essayDraft;

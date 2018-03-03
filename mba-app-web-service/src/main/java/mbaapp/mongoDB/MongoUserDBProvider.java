@@ -192,7 +192,8 @@ public class MongoUserDBProvider implements UserDBProvider {
 
     public void addEssayDraftUpload(User user, UserSchool userSchool, MultipartFile file, String essayID) throws Exception {
 
-        Essay essay = userSchool.getEssay(essayID);
+        SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(userSchool.getShortName());
+        Essay essay = userSchool.getEssayForDraftUpload(essayID, schoolInfo);
         if(essay == null) {
             throw new Exception("Did not find essay with ID "+essayID);
         }

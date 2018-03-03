@@ -4395,6 +4395,230 @@ jQuery.fn.extend({
         startStep: 1
     }; 
 }(jQuery));
+Chart.elements.Rectangle.prototype.draw = function() {    
+    var ctx = this._chart.ctx;
+    var vm = this._view;
+    var left, right, top, bottom, signX, signY, borderSkipped, radius;
+    var borderWidth = vm.borderWidth;
+
+    // Set Radius Here
+    // If radius is large enough to cause drawing errors a max radius is imposed
+    var cornerRadius = this._chart.options.barRadius ? this._chart.options.barRadius : 0;
+
+    if (!vm.horizontal) {
+        // bar
+        left = vm.x - vm.width / 2;
+        right = vm.x + vm.width / 2;
+
+        if (vm.y > 2 * cornerRadius) {
+        	top = vm.y - cornerRadius;        
+        } else {
+        	top = vm.y;        
+        }
+
+        bottom = vm.base;
+        signX = 1;
+        signY = bottom > top? 1: -1;
+        borderSkipped = vm.borderSkipped || 'bottom';
+        //console.log(vm.base + '-' + vm.y);
+    } else {
+        // horizontal bar
+        left = vm.base;
+        right = vm.x;
+        top = vm.y - vm.height / 2;
+        bottom = vm.y + vm.height / 2;
+        signX = right > left? 1: -1;
+        signY = 1;
+        borderSkipped = vm.borderSkipped || 'left';
+    }
+
+    // Canvas doesn't allow us to stroke inside the width so we can
+    // adjust the sizes to fit if we're setting a stroke on the line
+    if (borderWidth) {
+        // borderWidth shold be less than bar width and bar height.
+        var barSize = Math.min(Math.abs(left - right), Math.abs(top - bottom));
+        borderWidth = borderWidth > barSize? barSize: borderWidth;
+        var halfStroke = borderWidth / 2;
+        // Adjust borderWidth when bar top position is near vm.base(zero).
+        var borderLeft = left + (borderSkipped !== 'left'? halfStroke * signX: 0);
+        var borderRight = right + (borderSkipped !== 'right'? -halfStroke * signX: 0);
+        var borderTop = top + (borderSkipped !== 'top'? halfStroke * signY: 0);
+        var borderBottom = bottom + (borderSkipped !== 'bottom'? -halfStroke * signY: 0);
+        // not become a vertical line?
+        if (borderLeft !== borderRight) {
+            top = borderTop;
+            bottom = borderBottom;
+        }
+        // not become a horizontal line?
+        if (borderTop !== borderBottom) {
+            left = borderLeft;
+            right = borderRight;
+        }
+    }
+
+    ctx.beginPath();
+    ctx.fillStyle = vm.backgroundColor;
+    ctx.strokeStyle = vm.borderColor;
+    ctx.lineWidth = borderWidth;
+
+    // Corner points, from bottom-left to bottom-right clockwise
+    // | 1 2 |
+    // | 0 3 |
+    var corners = [
+        [left, bottom],
+        [left, top],
+        [right, top],
+        [right, bottom]
+    ];
+
+    // Find first (starting) corner with fallback to 'bottom'
+    var borders = ['bottom', 'left', 'top', 'right'];
+    var startCorner = borders.indexOf(borderSkipped, 0);
+    if (startCorner === -1) {
+        startCorner = 0;
+    }
+
+    function cornerAt(index) {
+        return corners[(startCorner + index) % 4];
+    }
+
+    // Draw rectangle from 'startCorner'
+    var corner = cornerAt(0);
+    ctx.moveTo(corner[0], corner[1]);
+
+    for (var i = 1; i < 4; i++) {
+        corner = cornerAt(i);
+        nextCornerId = i+1;
+        if(nextCornerId == 4){
+            nextCornerId = 0
+        }
+
+        nextCorner = cornerAt(nextCornerId);
+
+        width = corners[2][0] - corners[1][0];
+        height = corners[0][1] - corners[1][1];
+        x = corners[1][0];
+        y = corners[1][1];
+        
+        var radius = cornerRadius;
+        
+        // Fix radius being too large
+        if(radius > height/2){
+            radius = height/2;
+        }if(radius > width/2){
+            radius = width/2;
+        }
+
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+    }
+
+    ctx.fill();
+    if (borderWidth) {
+        ctx.stroke();
+    }
+}; 
+//== Set defaults
+
+$.notifyDefaults({
+	template: '' +
+	'<div data-notify="container" class="alert alert-{0} m-alert" role="alert">' +
+	'<button type="button" aria-hidden="true" class="close" data-notify="dismiss"></button>' +
+	'<span data-notify="icon"></span>' +
+	'<span data-notify="title">{1}</span>' +
+	'<span data-notify="message">{2}</span>' +
+	'<div class="progress" data-notify="progressbar">' +
+	'<div class="progress-bar progress-bar-animated bg-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+	'</div>' +
+	'<a href="{3}" target="{4}" data-notify="url"></a>' +
+	'</div>'
+});
+//== Set defaults
+swal.setDefaults({
+	width: 400,
+	padding: '2.5rem',
+	buttonsStyling: false,
+	confirmButtonClass: 'btn btn-success m-btn m-btn--custom',
+	confirmButtonColor: null,
+	cancelButtonClass: 'btn btn-secondary m-btn m-btn--custom',
+	cancelButtonColor: null
+});
+
+  $.fn.markdown.defaults.iconlibrary = 'fa';
+//$.fn.bootstrapSwitch.defaults.size = 'large';
+//$.fn.bootstrapSwitch.defaults.onColor = 'success';
+$.fn.timepicker.defaults = $.extend(true, {}, $.fn.timepicker.defaults, {
+    icons: {
+        up: 'la la-angle-up',
+        down: 'la la-angle-down'  
+    }
+});
+jQuery.validator.setDefaults({
+    errorElement: 'div', //default input error message container
+    errorClass: 'form-control-feedback', // default input error message class
+    focusInvalid: false, // do not focus the last invalid input
+    ignore: "",  // validate all fields including form hidden input
+
+    errorPlacement: function(error, element) { // render error placement for each input type
+        var group = $(element).closest('.m-form__group-sub').length > 0 ? $(element).closest('.m-form__group-sub') : $(element).closest('.m-form__group');
+        var help = group.find('.m-form__help');
+
+        if (group.find('.form-control-feedback').length !== 0) {
+            return;
+        }
+
+        if (help.length > 0) {
+            help.before(error);
+        } else {
+            if ($(element).closest('.input-group').length > 0) {
+                $(element).closest('.input-group').after(error);
+            } else {
+                if ($(element).is(':checkbox')) {
+                    $(element).closest('.m-checkbox').find('>span').after(error);
+                } else {
+                    $(element).after(error);
+                }                
+            }            
+        }
+    },
+
+    highlight: function(element) { // hightlight error inputs
+        var group = $(element).closest('.m-form__group-sub').length > 0  ? $(element).closest('.m-form__group-sub') : $(element).closest('.m-form__group');
+
+        console.log('add' + group.attr('class'));
+
+        group.addClass('has-danger'); // set error class to the control groupx
+    },
+
+    unhighlight: function(element) { // revert the change done by hightlight
+        var group = $(element).closest('.m-form__group-sub').length > 0  ? $(element).closest('.m-form__group-sub') : $(element).closest('.m-form__group');
+
+        group.removeClass('has-danger'); // set error class to the control group
+    },
+
+    success: function(label, element) {
+        var group = $(label).closest('.m-form__group-sub').length > 0  ? $(label).closest('.m-form__group-sub') : $(label).closest('.m-form__group');
+
+        //group.addClass('has-success').removeClass('has-danger'); // set success class and hide error class
+        group.removeClass('has-danger'); // hide error class
+        group.find('.form-control-feedback').remove();
+    }
+});
+
+jQuery.validator.addMethod("email", function(value, element) {
+    if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)) {
+        return true;
+    } else {
+        return false;
+    }
+}, "Please enter a valid Email.");
 (function($) {
 
 	$.fn.mDatatable = $.fn.mDatatable || {};
@@ -4600,230 +4824,6 @@ jQuery.fn.extend({
 	};
 
 }(jQuery));
-//== Set defaults
-
-$.notifyDefaults({
-	template: '' +
-	'<div data-notify="container" class="alert alert-{0} m-alert" role="alert">' +
-	'<button type="button" aria-hidden="true" class="close" data-notify="dismiss"></button>' +
-	'<span data-notify="icon"></span>' +
-	'<span data-notify="title">{1}</span>' +
-	'<span data-notify="message">{2}</span>' +
-	'<div class="progress" data-notify="progressbar">' +
-	'<div class="progress-bar progress-bar-animated bg-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
-	'</div>' +
-	'<a href="{3}" target="{4}" data-notify="url"></a>' +
-	'</div>'
-});
-//== Set defaults
-swal.setDefaults({
-	width: 400,
-	padding: '2.5rem',
-	buttonsStyling: false,
-	confirmButtonClass: 'btn btn-success m-btn m-btn--custom',
-	confirmButtonColor: null,
-	cancelButtonClass: 'btn btn-secondary m-btn m-btn--custom',
-	cancelButtonColor: null
-});
-Chart.elements.Rectangle.prototype.draw = function() {    
-    var ctx = this._chart.ctx;
-    var vm = this._view;
-    var left, right, top, bottom, signX, signY, borderSkipped, radius;
-    var borderWidth = vm.borderWidth;
-
-    // Set Radius Here
-    // If radius is large enough to cause drawing errors a max radius is imposed
-    var cornerRadius = this._chart.options.barRadius ? this._chart.options.barRadius : 0;
-
-    if (!vm.horizontal) {
-        // bar
-        left = vm.x - vm.width / 2;
-        right = vm.x + vm.width / 2;
-
-        if (vm.y > 2 * cornerRadius) {
-        	top = vm.y - cornerRadius;        
-        } else {
-        	top = vm.y;        
-        }
-
-        bottom = vm.base;
-        signX = 1;
-        signY = bottom > top? 1: -1;
-        borderSkipped = vm.borderSkipped || 'bottom';
-        //console.log(vm.base + '-' + vm.y);
-    } else {
-        // horizontal bar
-        left = vm.base;
-        right = vm.x;
-        top = vm.y - vm.height / 2;
-        bottom = vm.y + vm.height / 2;
-        signX = right > left? 1: -1;
-        signY = 1;
-        borderSkipped = vm.borderSkipped || 'left';
-    }
-
-    // Canvas doesn't allow us to stroke inside the width so we can
-    // adjust the sizes to fit if we're setting a stroke on the line
-    if (borderWidth) {
-        // borderWidth shold be less than bar width and bar height.
-        var barSize = Math.min(Math.abs(left - right), Math.abs(top - bottom));
-        borderWidth = borderWidth > barSize? barSize: borderWidth;
-        var halfStroke = borderWidth / 2;
-        // Adjust borderWidth when bar top position is near vm.base(zero).
-        var borderLeft = left + (borderSkipped !== 'left'? halfStroke * signX: 0);
-        var borderRight = right + (borderSkipped !== 'right'? -halfStroke * signX: 0);
-        var borderTop = top + (borderSkipped !== 'top'? halfStroke * signY: 0);
-        var borderBottom = bottom + (borderSkipped !== 'bottom'? -halfStroke * signY: 0);
-        // not become a vertical line?
-        if (borderLeft !== borderRight) {
-            top = borderTop;
-            bottom = borderBottom;
-        }
-        // not become a horizontal line?
-        if (borderTop !== borderBottom) {
-            left = borderLeft;
-            right = borderRight;
-        }
-    }
-
-    ctx.beginPath();
-    ctx.fillStyle = vm.backgroundColor;
-    ctx.strokeStyle = vm.borderColor;
-    ctx.lineWidth = borderWidth;
-
-    // Corner points, from bottom-left to bottom-right clockwise
-    // | 1 2 |
-    // | 0 3 |
-    var corners = [
-        [left, bottom],
-        [left, top],
-        [right, top],
-        [right, bottom]
-    ];
-
-    // Find first (starting) corner with fallback to 'bottom'
-    var borders = ['bottom', 'left', 'top', 'right'];
-    var startCorner = borders.indexOf(borderSkipped, 0);
-    if (startCorner === -1) {
-        startCorner = 0;
-    }
-
-    function cornerAt(index) {
-        return corners[(startCorner + index) % 4];
-    }
-
-    // Draw rectangle from 'startCorner'
-    var corner = cornerAt(0);
-    ctx.moveTo(corner[0], corner[1]);
-
-    for (var i = 1; i < 4; i++) {
-        corner = cornerAt(i);
-        nextCornerId = i+1;
-        if(nextCornerId == 4){
-            nextCornerId = 0
-        }
-
-        nextCorner = cornerAt(nextCornerId);
-
-        width = corners[2][0] - corners[1][0];
-        height = corners[0][1] - corners[1][1];
-        x = corners[1][0];
-        y = corners[1][1];
-        
-        var radius = cornerRadius;
-        
-        // Fix radius being too large
-        if(radius > height/2){
-            radius = height/2;
-        }if(radius > width/2){
-            radius = width/2;
-        }
-
-        ctx.moveTo(x + radius, y);
-        ctx.lineTo(x + width - radius, y);
-        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-        ctx.lineTo(x + width, y + height - radius);
-        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-        ctx.lineTo(x + radius, y + height);
-        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-        ctx.lineTo(x, y + radius);
-        ctx.quadraticCurveTo(x, y, x + radius, y);
-    }
-
-    ctx.fill();
-    if (borderWidth) {
-        ctx.stroke();
-    }
-}; 
-
-  $.fn.markdown.defaults.iconlibrary = 'fa';
-//$.fn.bootstrapSwitch.defaults.size = 'large';
-//$.fn.bootstrapSwitch.defaults.onColor = 'success';
-$.fn.timepicker.defaults = $.extend(true, {}, $.fn.timepicker.defaults, {
-    icons: {
-        up: 'la la-angle-up',
-        down: 'la la-angle-down'  
-    }
-});
-jQuery.validator.setDefaults({
-    errorElement: 'div', //default input error message container
-    errorClass: 'form-control-feedback', // default input error message class
-    focusInvalid: false, // do not focus the last invalid input
-    ignore: "",  // validate all fields including form hidden input
-
-    errorPlacement: function(error, element) { // render error placement for each input type
-        var group = $(element).closest('.m-form__group-sub').length > 0 ? $(element).closest('.m-form__group-sub') : $(element).closest('.m-form__group');
-        var help = group.find('.m-form__help');
-
-        if (group.find('.form-control-feedback').length !== 0) {
-            return;
-        }
-
-        if (help.length > 0) {
-            help.before(error);
-        } else {
-            if ($(element).closest('.input-group').length > 0) {
-                $(element).closest('.input-group').after(error);
-            } else {
-                if ($(element).is(':checkbox')) {
-                    $(element).closest('.m-checkbox').find('>span').after(error);
-                } else {
-                    $(element).after(error);
-                }                
-            }            
-        }
-    },
-
-    highlight: function(element) { // hightlight error inputs
-        var group = $(element).closest('.m-form__group-sub').length > 0  ? $(element).closest('.m-form__group-sub') : $(element).closest('.m-form__group');
-
-        console.log('add' + group.attr('class'));
-
-        group.addClass('has-danger'); // set error class to the control groupx
-    },
-
-    unhighlight: function(element) { // revert the change done by hightlight
-        var group = $(element).closest('.m-form__group-sub').length > 0  ? $(element).closest('.m-form__group-sub') : $(element).closest('.m-form__group');
-
-        group.removeClass('has-danger'); // set error class to the control group
-    },
-
-    success: function(label, element) {
-        var group = $(label).closest('.m-form__group-sub').length > 0  ? $(label).closest('.m-form__group-sub') : $(label).closest('.m-form__group');
-
-        //group.addClass('has-success').removeClass('has-danger'); // set success class and hide error class
-        group.removeClass('has-danger'); // hide error class
-        group.find('.form-control-feedback').remove();
-    }
-});
-
-jQuery.validator.addMethod("email", function(value, element) {
-    if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)) {
-        return true;
-    } else {
-        return false;
-    }
-}, "Please enter a valid Email.");
 var mLayout = function() {
     var horMenu;
     var asideMenu;

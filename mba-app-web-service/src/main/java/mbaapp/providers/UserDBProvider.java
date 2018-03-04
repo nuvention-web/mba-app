@@ -26,6 +26,8 @@ public interface UserDBProvider {
 
     public User getUser(String email);
 
+    public JSONObject getAllUserEssays(User user) throws Exception;
+
     public void addUser(CreateUserRequest createUserRequest) throws Exception;
 
     public void addSchools(AddSchoolsRequest request, User user) throws Exception;

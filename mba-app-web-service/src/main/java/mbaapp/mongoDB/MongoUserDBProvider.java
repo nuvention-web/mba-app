@@ -61,7 +61,43 @@ public class MongoUserDBProvider implements UserDBProvider {
     public User getUser(String email) {
         return userRepository.findByEmail(email);
     }
-    
+
+    @Override
+    public JSONObject getAllUserEssays(User user) throws Exception{
+
+        JSONObject userEssays = new JSONObject();
+
+        for(UserSchool userSchool : user.getSchools()) {
+            JSONObject schoolEssayJSON = new JSONObject();
+            userEssays.put(userSchool.getShortName(), schoolEssayJSON);
+            for(Essay essay : userSchool.getEssays()) {
+                int totalDrafts = essay.getDrafts().size();
+                if(totalDrafts>0) {
+                    EssayDraft lastDraft = essay.getDrafts().get(totalDrafts - 1);
+                    JSONObject draftJSON = lastDraft.toJSON();
+                    draftJSON.put("essayID", essay.getEssayID());
+                    draftJSON.put("prompt", getEssayPrompt(essay.getEssayID(), userSchool.getShortName()));
+                    schoolEssayJSON.put(essay.getEssayID(), draftJSON);
+                }
+
+            }
+        }
+
+        return userEssays;
+    }
+
+
+    private String getEssayPrompt(String essayID, String schoolName) {
+        SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(schoolName);
+        for(SchoolInfoEssay essay : schoolInfo.getEssays()) {
+            if(essay.getEssayID().equalsIgnoreCase(essayID)) {
+                return essay.getEssayPrompt();
+            }
+        }
+
+        return "";
+    }
+
     @Override
     public void addUser(CreateUserRequest createUserRequest) throws Exception {
 
@@ -338,6 +374,11 @@ public class MongoUserDBProvider implements UserDBProvider {
 
 
     public void deleteEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID, String draftID) throws Exception {
+        EssayDraft essayDraft = userSchool.getEssayDraft(essayID, draftID);
+        if(essayDraft.getUploadID()!=null && !essayDraft.getUploadID().isEmpty() &&
+                essayDraft.getDraftType()== EssayDraft.DraftType.UPLOAD){
+            gridFsTemplate.delete(new Query(Criteria.where("_id").is(essayDraft.getUploadID())));
+        }
         userSchool.deleteEssayDraft(essayDraftRequest, essayID, draftID);
         userRepository.save(user);
     }

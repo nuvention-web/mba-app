@@ -158,9 +158,9 @@ public class UsersEndpoint {
                 return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
             }
 
-            userDBProvider.deleteSchool(user, schoolName);
+            //userDBProvider.deleteSchool(user, schoolName);
 
-            return new ResponseEntity<>("Deleted school", HttpStatus.OK);
+            return new ResponseEntity<>("Did not delete school - for demo!", HttpStatus.OK);
 
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);

@@ -25,18 +25,18 @@
 				</ul>
 			</div>
 		</div>
-		<div [ngSwitch]="id">
-			<app-goals  *ngSwitchCase="0" [profile]="profile"></app-goals>
-			<app-experiences  *ngSwitchCase="1" [profile]="profile"></app-experiences>
-			<app-interests  *ngSwitchCase="2" [profile]="profile"></app-interests>
-		</div>
+		<!-- <div [ngSwitch]="id"> -->
+			<app-goals  [class.hidden]="id == 0" [profile]="profile"></app-goals>
+			<app-experiences  [class.hidden]="id == 1" [profile]="profile"></app-experiences>
+			<app-interests  [class.hidden]="id == 2" [profile]="profile"></app-interests>
+		<!-- </div> -->
 
 		<div class="m-portlet__foot m-portlet__foot--fit">
 			<div class="m-form__actions m-form__actions">
 				<div class="row">
 					<div class="col-lg-8 ml-lg-auto">
 						<button type="reset" class="btn btn-brand">Submit</button>
-						<button style="margin-left: 100px" type="reset" class="btn btn-secondary">Cancel</button>
+						<button style="margin-left: 100px" routerLink="/index.html" type="reset" class="btn btn-secondary">Cancel</button>
 					</div>
 				</div>
 			</div>

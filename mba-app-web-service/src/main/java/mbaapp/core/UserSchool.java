@@ -158,6 +158,9 @@ public class UserSchool{
     public Essay getEssayForDraftUpload(String essayID, SchoolInfo schoolInfo) throws Exception{
 
         Essay essayRequested = getEssay(essayID);
+        if(essayRequested!=null){
+            return essayRequested;
+        }
         boolean essayNotFound = true;
         if(essayRequested == null) {
             for(SchoolInfoEssay schoolInfoEssay : schoolInfo.getEssays()) {

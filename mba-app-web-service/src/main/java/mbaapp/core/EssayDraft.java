@@ -1,8 +1,10 @@
 package mbaapp.core;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import mbaapp.providers.SchoolInfoDBProvider;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -12,6 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -138,15 +141,22 @@ public class EssayDraft {
         XWPFDocument document = new XWPFDocument(targetStream);
         List<XWPFParagraph> paragraphs = document.getParagraphs();
 
+        StringBuilder contentsBuilder = new StringBuilder();
+
         for(int i=0;i<paragraphs.size();i++){
+            contentsBuilder.append("<p>");
             String text = paragraphs.get(i).getText().toUpperCase();
-            warningWords.addAll(keywordsList.stream().parallel().filter(text::contains).collect(Collectors.toSet()));
+            String[] words = text.split("\\W+");
+            for(String word : words) {
+                warningWords.addAll(keywordsList.stream().parallel().filter(word::equalsIgnoreCase).collect(Collectors.toSet()));
+            }
             if(!schoolKeyWordsFound){
                 schoolKeyWordsFound = schoolKeywordsUpper.stream().parallel().anyMatch(text.toUpperCase()::contains);
             }
+            contentsBuilder.append(paragraphs.get(i).getText()).append("</p>");
         }
 
-
+        contents = contentsBuilder.toString();
     }
 
     public List<String> getSchoolKeywords() {
@@ -159,5 +169,13 @@ public class EssayDraft {
 
     public Set<String> getWarningWords() {
         return warningWords;
+    }
+
+    public JSONObject toJSON() throws Exception{
+        ObjectMapper objectMapper = new ObjectMapper();
+        StringWriter stringWriter = new StringWriter();
+        objectMapper.writeValue(stringWriter, this);
+        JSONObject essayJSON = new JSONObject(stringWriter.toString());
+        return essayJSON;
     }
 }

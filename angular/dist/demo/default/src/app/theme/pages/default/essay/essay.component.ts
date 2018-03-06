@@ -15,6 +15,7 @@ export class EssayComponent implements OnInit {
     params = {};
     content = "";
     essay: any = {};
+    allEssays = [];
     school = "";
     essayID = "";
 
@@ -24,9 +25,10 @@ export class EssayComponent implements OnInit {
             this.params = params;
             this.school = params.school;
             this.essayID = params.id;
-        }
-    );
+        });
         this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
+        this._schools.getAllEssays().subscribe(d => this.allEssays = this.transformJSON(d));
+
     }
 
     ngOnInit() {
@@ -41,5 +43,35 @@ export class EssayComponent implements OnInit {
 
     public deleteDraft(draftID) {
         this._schools.deleteEssayDraft(this.school, this.essayID, draftID);
+    }
+
+    transformJSON(d) {
+        var list = [];
+        Object.keys(d).forEach(function(key) {
+            if(Object.keys(d[key]).length !== 0) {
+                d[key].essays = [];
+                Object.keys(d[key]).forEach(function (k) {
+                    if (k !== "essays") {
+                        d[key].essays.push(d[key][k]);
+                    }
+                });
+                d[key].school = key;
+                list.push(d[key]);
+            }
+        });
+        return list;
+    }
+
+    public findEssay(draft) {
+        var theEssay = {};
+        this.allEssays.forEach(function(school) {
+            school.essays.forEach(function(essay) {
+               if (essay.draftName == draft) {
+                   theEssay = essay;
+                   return;
+               }
+            });
+        });
+        return theEssay;
     }
 }

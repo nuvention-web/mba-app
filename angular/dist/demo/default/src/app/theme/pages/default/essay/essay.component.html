@@ -162,31 +162,154 @@
                                         </ul>
                                         <div class="tab-content">
                                             <div class="tab-pane active" id="reference_tabs_1" role="tabpanel">
-
-                                                <select id="essay-draft-dropdown" style="width:100%;">
-                                                    <optgroup label = "Booth">
-                                                        <option value="Essay1">Essay 1</option>
-                                                        <option value="Essay1">Essay 2</option>
-                                                        <option value="Essay1">Essay 3</option>
+                                                <select id="essay-draft-dropdown" (change)="valueChange()" style="width:100%;" #selectedEssay>
+                                                    <option value="test">Select an Essay...</option>
+                                                    <optgroup *ngFor="let s of allEssays" label = "{{s.school}}">
+                                                        <option *ngFor="let e of s.essays" [value]="e.draftName">{{e.draftName}}</option>
                                                     </optgroup>
-                                                    <optgroup label = "Kellogg">
-                                                        <option value="Essay1">Essay 1</option>
-                                                        <option value="Essay1">Essay 2</option>
-                                                        <option value="Essay1">Essay 3</option>
-                                                    </optgroup>
-
                                                 </select>
                                                 <br>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non tortor dui. Sed a malesuada nulla. Fusce volutpat neque nunc, non luctus tortor dapibus in. Donec ultricies mi urna, ut luctus mauris varius sit amet. Maecenas non nisi quis metus maximus ultricies. Aenean luctus pellentesque ipsum in elementum. Mauris felis ante, consectetur sed velit id, tempus mollis neque. Curabitur libero odio, laoreet in velit id, cursus sodales augue. Morbi varius feugiat congue. Praesent finibus urna a magna consectetur, eget consequat mauris pretium. Maecenas fringilla tempor felis, a sollicitudin sapien luctus non.</p>
-                                                <p>Maecenas orci elit, scelerisque non justo a, suscipit tristique mi. Vivamus ultricies fermentum libero vel facilisis. Etiam tincidunt vel nulla vel placerat. Sed at est eu odio dignissim venenatis. Phasellus quis lorem nisl. Sed pellentesque velit eu odio facilisis fringilla. Nullam et velit quis erat ornare porta. Pellentesque euismod lectus sit amet fringilla gravida. Duis posuere lacus et lectus vehicula, vulputate iaculis enim sollicitudin. Aenean aliquam, tortor vel semper tempus, nisi nibh porta augue, vel pulvinar eros nulla in leo. Nulla ultricies ac elit vitae mattis. Cras dictum dui non diam sagittis porttitor. Proin eget eros nec quam euismod elementum. Curabitur pellentesque orci ut iaculis bibendum. Curabitur tortor felis, ultricies vel placerat a, mattis quis ipsum.</p>
-                                                <p>Sed efficitur elit vel dui semper, at pulvinar quam suscipit. Etiam quis eros odio. Nam consectetur, lectus pretium bibendum viverra, quam turpis imperdiet odio, in vestibulum enim eros non sem. Nulla eu porta lacus, id aliquam elit. Curabitur vel scelerisque libero, at gravida magna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam tempus est sit amet magna ultricies, eu sodales lectus pellentesque. Duis elementum magna mauris, eget convallis orci aliquam non. Fusce et rhoncus lacus. Maecenas ut molestie nunc. Integer efficitur vulputate dui, sit amet egestas purus elementum eu. Pellentesque non ex vestibulum, auctor neque id, malesuada dui.</p>
-
-                                            </div>
+                                                <br>
+                                                <div [innerHTML]="findEssay(selectedEssay.value).contents"></div>
+                                         </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane" id="m_tabs_6_5" role="tabpanel">
+                                <div class="form-group m-form__group">
+                                    <label for="example_input_full_name">
+                                        Choose Advice Type:
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label class="m-option">
+											<span class="m-option__control">
+												<span class="m-radio m-radio--brand m-radio--check-bold">
+													<input name="m_option_1" type="radio" value="1" checked="checked">
+													<span></span>
+												</span>
+											</span>
+                                                <span class="m-option__label">
+												<span class="m-option__head">
+													<span class="m-option__title">
+														MBA Student Advice
+													</span>
+													<span class="m-option__focus">
+														$20-$60
+													</span>
+												</span>
+												<span class="m-option__body">
+													Get advice from a current student in a top MBA program.
+												</span>
+											</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label class="m-option">
+											<span class="m-option__control">
+												<span class="m-radio m-radio--brand m-radio--check-bold">
+													<input name="m_option_1" type="radio" value="1">
+													<span></span>
+												</span>
+											</span>
+                                                <span class="m-option__label">
+												<span class="m-option__head">
+													<span class="m-option__title">
+														Professional Consultant
+													</span>
+													<span class="m-option__focus">
+														$220
+													</span>
+												</span>
+												<span class="m-option__body">
+													Get advice from a current student in a top MBA program.
+												</span>
+											</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label class="m-option">
+											<span class="m-option__control">
+												<span class="m-radio m-radio--brand m-radio--check-bold">
+													<input name="m_option_1" type="radio" value="1">
+													<span></span>
+												</span>
+											</span>
+                                                <span class="m-option__label">
+												<span class="m-option__head">
+													<span class="m-option__title">
+														Your Network
+													</span>
+													<span class="m-option__focus">
+														Free
+													</span>
+												</span>
+												<span class="m-option__body">
+													Send an email asking for advice on your essay.
+												</span>
+											</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>
+                                            School
+                                        </th>
+                                        <th>
+                                            Rating
+                                        </th>
+                                        <th>
+                                            Charge
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">
+                                            Max Joseph
+                                        </th>
+                                        <td>
+                                            Kellogg (Year 2)
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-brand">Buy for $50</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            CJ Smith
+                                        </th>
+                                        <td>
+                                            Booth (Year 1)
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-brand">Buy for $20</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
 
                             </div>
                         </div>

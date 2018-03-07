@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  */
 @RestController
 @RequestMapping("/mba/users/{userEmail}/school/{schoolShortName}")
-public class UsersSchoolEndpoint extends EndpointBase{
+public class UsersSchoolEndpoint extends EndpointBase {
 
     Logger logger = Logger.getLogger(UsersEndpoint.class.getName());
 
@@ -36,7 +36,7 @@ public class UsersSchoolEndpoint extends EndpointBase{
     @CrossOrigin
     @ApiOperation(value = "Get school specific information")
     public ResponseEntity getUserSchool(@PathVariable String userEmail,
-                                        @PathVariable String schoolShortName){
+                                        @PathVariable String schoolShortName) {
 
         try {
             if (runValidations(userEmail, schoolShortName) != null) {
@@ -47,16 +47,36 @@ public class UsersSchoolEndpoint extends EndpointBase{
             UserSchool userSchool = schoolExistsForUser(user, schoolShortName);
 
             return new ResponseEntity<>(userDBProvider.getUserSchoolDetail(user, userSchool).toString(), HttpStatus.OK);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
-
     }
 
+    @PutMapping("/deadline")
+    @CrossOrigin
+    @ApiOperation(value = "Set deadline")
+    public ResponseEntity setDeadline(@PathVariable String userEmail,
+                                      @PathVariable String schoolShortName,
+                                      @RequestBody String deadline) {
 
+
+        try {
+            if (runValidations(userEmail, schoolShortName) != null) {
+                return runValidations(userEmail, schoolShortName);
+            }
+
+            User user = userDBProvider.getUser(userEmail);
+            UserSchool userSchool = schoolExistsForUser(user, schoolShortName);
+            userDBProvider.setDeadlineForSchool(user, userSchool, deadline);
+
+            return new ResponseEntity<>("Added deadline", HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
 
 
 }

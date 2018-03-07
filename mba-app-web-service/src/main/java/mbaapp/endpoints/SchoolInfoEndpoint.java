@@ -1,6 +1,7 @@
 package mbaapp.endpoints;
 
 import io.swagger.annotations.ApiOperation;
+import mbaapp.core.Keywords;
 import mbaapp.core.SchoolInfo;
 import mbaapp.providers.SchoolInfoDBProvider;
 import mbaapp.requests.SchoolInfoRequest;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.*;
 
@@ -55,5 +58,14 @@ public class SchoolInfoEndpoint {
         return schoolInfoDBProvider.getAllSchools();
 
     }
+
+    @PostMapping("/load")
+    @CrossOrigin
+    @ApiOperation(value = "Retrieves all the schools from the DB")
+    public void load(){
+//        Keywords keywords = Keywords.getInstance();
+//        keywords.loadKeyWords();
+    }
+
 }
 

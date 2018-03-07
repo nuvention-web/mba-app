@@ -1,4 +1,3 @@
-
 <div class="m-content">
 	<!--begin::Portlet-->
 	<div class="m-portlet">
@@ -6,125 +5,49 @@
 			<div class="m-portlet__head-caption">
 				<div class="m-portlet__head-title">
 					<h3 class="m-portlet__head-text">
-						User Profile
+						Application Preparation
 					</h3>
 				</div>
 			</div>
 		</div>
-		<!--begin::Form-->
-		<form class="m-form m-form--fit m-form--label-align-right" id="m_form_1">
+		<div>
 			<div class="m-portlet__body">
-				<div class="m-form__content">
-					<div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="m_form_1_msg">
-						<div class="m-alert__icon">
-							<i class="la la-warning"></i>
-						</div>
-						<div class="m-alert__text">
-							Oh snap! Change a few things up and try submitting again.
-						</div>
-						<div class="m-alert__close">
-							<button type="button" class="close" data-close="alert" aria-label="Close"></button>
+
+					<div class="m-portlet">
+						<div class="m-portlet__body">
+							<p>Let us help you get started on your application process by having you answer the following questions about yourself. </p>
+							<p>These questions will help you brainstorm ideas and experiences that you would like to highlight in your essays and interviews</p>
 						</div>
 					</div>
-				</div>
-				<div class="form-group m-form__group row">
-					<label class="col-form-label col-lg-3 col-sm-12">
-						Firstname *
-					</label>
-					<div class="col-lg-4 col-md-9 col-sm-12">
-						<input type="text" [(ngModel)]="userInformation.firstName" class="form-control m-input" value="{{userInformation.firstName}}" name="firstname" placeholder="Enter your firstname" data-toggle="m-tooltip" title="Tooltip description">
-					</div>
-				</div>
-				<div class="form-group m-form__group row">
-					<label class="col-form-label col-lg-3 col-sm-12">
-						Lastname *
-					</label>
-					<div class="col-lg-4 col-md-9 col-sm-12">
-						<input type="text"[(ngModel)]="userInformation.lastName" class="form-control m-input" value="{{userInformation.lastName}}" name="lastname" placeholder="Enter your lastname" data-toggle="m-tooltip" title="Tooltip description">
-					</div>
-				</div>
-				<div class="form-group m-form__group row">
-					<label class="col-form-label col-lg-3 col-sm-12">
-						Email *
-					</label>
-					<div class="col-lg-4 col-md-9 col-sm-12">
-						<input type="text" [(ngModel)]="userInformation.email" class="form-control m-input" name="email" value="{{userInformation.email}}" placeholder="Enter your email" data-toggle="m-tooltip" title="Tooltip description">
-						<span class="m-form__help">
-							We'll never share your email with anyone else.
-						</span>
-					</div>
-				</div>
-				<div class="form-group m-form__group row">
-					<label class="col-form-label col-lg-3 col-sm-12">
-						Phone Number *
-					</label>
-					<div class="col-lg-4 col-md-9 col-sm-12">
-						<div class="input-group">
-							<input type="text" class="form-control m-input" name="phone-number" placeholder="Enter phone number">
-							<div class="input-group-append">
-								<a href="#" class="btn btn-brand">
-									<i class="la la-phone"></i>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="form-group m-form__group row">
-					<label class="col-form-label col-lg-3 col-sm-12">
-						Address 1 *:
-					</label>
-					<div class="col-lg-4 col-md-9 col-sm-12">
-						<input type="text" name="address_1" class="form-control m-input" placeholder="Enter your address" value="">
-					</div>
-				</div>
-				<div class="form-group m-form__group row">
-					<label class="col-form-label col-lg-3 col-sm-12">
-						Address 2:
-					</label>
-					<div class="col-lg-4 col-md-9 col-sm-12">
-						<input type="text" name="address_2" class="form-control m-input" placeholder="Enter your secondary address">	
-					</div>
-				</div>
-				<div class="form-group m-form__group row">
-					<label class="col-form-label col-lg-3 col-sm-12">
-						City *:
-					</label>
-					<div class="col-lg-4 col-md-9 col-sm-12">
-						<input type="text" class="form-control m-input" name="city" placeholder="Enter your city" value="">
-					</div>
-				</div>
-				<div class="form-group m-form__group row">
-					<label class="col-form-label col-lg-3 col-sm-12">
-						State *:
-					</label>
-					<div class="col-lg-4 col-md-9 col-sm-12">
-						<input type="text" class="form-control m-input" name="state" placeholder="Enter your state" value="">
-					</div>
-				</div>
-				<div class="form-group m-form__group row">
-					<label class="col-form-label col-lg-3 col-sm-12">
-						ZIP *:
-					</label>
-					<div class="col-lg-4 col-md-9 col-sm-12">
-						<input type="text" class="form-control m-input" name="zip" placeholder="Enter your zip" value="">
-					</div>
-				</div>	
+
+				<ul class="nav nav-tabs  m-tabs-line m-tabs-line--brand" role="tablist">
+					<li class="nav-item m-tabs__item">
+						<a class="nav-link m-tabs__link active" data-toggle="tab" (click)="id = 0;" role="tab"><h5>Goals</h5></a>
+					</li>
+					<li class="nav-item m-tabs__item">
+						<a class="nav-link m-tabs__link" data-toggle="tab" (click)="id = 1;" role="tab"><h5>Experiences</h5></a>
+					</li>
+					<li class="nav-item m-tabs__item">
+						<a class="nav-link m-tabs__link" data-toggle="tab" (click)="id = 2;" role="tab"><h5>Interests</h5></a>
+					</li>
+				</ul>
 			</div>
-			<div class="m-portlet__foot m-portlet__foot--fit">
-				<div class="m-form__actions m-form__actions">
-					<div class="row">
-						<div class="col-lg-9 ml-lg-auto">
-							<button type="submit" (click)="userInformationUpdate()"routerLink="/information" class="btn btn-success">
-								Next
-							</button>
-							<button type="reset" routerLink="/" class="btn btn-secondary" style="margin-left:150px">
-								Cancel
-							</button>
-						</div>
+		</div>
+		<div [ngSwitch]="id">
+			<app-goals  *ngSwitchCase="0" [profile]="profile"></app-goals>
+			<app-experiences  *ngSwitchCase="1" [profile]="profile"></app-experiences>
+			<app-interests  *ngSwitchCase="2" [profile]="profile"></app-interests>
+		</div>
+
+		<div class="m-portlet__foot m-portlet__foot--fit">
+			<div class="m-form__actions m-form__actions">
+				<div class="row">
+					<div class="col-lg-8 ml-lg-auto">
+						<button type="reset" class="btn btn-brand">Submit</button>
+						<button style="margin-left: 100px" type="reset" class="btn btn-secondary">Cancel</button>
 					</div>
 				</div>
 			</div>
-		</form>
-		<!--end::Form-->
+		</div>
 	</div>
 </div>

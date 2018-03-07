@@ -1,5 +1,13 @@
 package mbaapp.mongoDB;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.gridfs.GridFSDBFile;
+import com.mongodb.gridfs.GridFSFile;
+import mbaapp.core.Essay;
+import mbaapp.core.EssayDraft;
+import mbaapp.core.Keywords;
+import mbaapp.core.Note;
 import mbaapp.core.SchoolInfoEssay;
 import mbaapp.requests.EssayDraftRequest;
 import mbaapp.core.Recommendation;
@@ -11,11 +19,23 @@ import mbaapp.requests.AddSchoolsRequest;
 import mbaapp.core.User;
 import mbaapp.core.UserSchool;
 import mbaapp.providers.UserDBProvider;
+import mbaapp.requests.NotesRequest;
 import mbaapp.requests.ProfileRequest;
+import mbaapp.requests.RecommenderRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by jnag on 2/15/18.
@@ -29,12 +49,55 @@ public class MongoUserDBProvider implements UserDBProvider {
     @Autowired
     private SchoolInfoRepository schoolInfoRepository;
 
+    @Autowired
+    GridFsTemplate gridFsTemplate;
+
+    @Autowired
+    Keywords keywords;
+
+
 
     @Override
     public User getUser(String email) {
         return userRepository.findByEmail(email);
     }
-    
+
+    @Override
+    public JSONObject getAllUserEssays(User user) throws Exception{
+
+        JSONObject userEssays = new JSONObject();
+
+        for(UserSchool userSchool : user.getSchools()) {
+            JSONObject schoolEssayJSON = new JSONObject();
+            userEssays.put(userSchool.getShortName(), schoolEssayJSON);
+            for(Essay essay : userSchool.getEssays()) {
+                int totalDrafts = essay.getDrafts().size();
+                if(totalDrafts>0) {
+                    EssayDraft lastDraft = essay.getDrafts().get(totalDrafts - 1);
+                    JSONObject draftJSON = lastDraft.toJSON();
+                    draftJSON.put("essayID", essay.getEssayID());
+                    draftJSON.put("prompt", getEssayPrompt(essay.getEssayID(), userSchool.getShortName()));
+                    schoolEssayJSON.put(essay.getEssayID(), draftJSON);
+                }
+
+            }
+        }
+
+        return userEssays;
+    }
+
+
+    private String getEssayPrompt(String essayID, String schoolName) {
+        SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(schoolName);
+        for(SchoolInfoEssay essay : schoolInfo.getEssays()) {
+            if(essay.getEssayID().equalsIgnoreCase(essayID)) {
+                return essay.getEssayPrompt();
+            }
+        }
+
+        return "";
+    }
+
     @Override
     public void addUser(CreateUserRequest createUserRequest) throws Exception {
 
@@ -82,6 +145,11 @@ public class MongoUserDBProvider implements UserDBProvider {
                 school.put("round2_deadline", schoolInfo.getRound2Deadline());
                 school.put("round3_deadline", schoolInfo.getRound3Deadline());
                 school.put("round4_deadline", schoolInfo.getRound4Deadline());
+                school.put("medianGMAT", schoolInfo.getMedianGMAT());
+                school.put("avgGMAT", schoolInfo.getAvgGMAT());
+                school.put("avgGPA", schoolInfo.getAvgGPA());
+                school.put("acceptanceRate", schoolInfo.getAcceptanceRate());
+                school.put("logoURL", schoolInfo.getLogoURL());
             }
         }
 
@@ -150,13 +218,62 @@ public class MongoUserDBProvider implements UserDBProvider {
 
     }
 
-    public void addEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID) throws Exception {
+    public void addEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID, Keywords keywords) throws Exception {
 
         SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(userSchool.getShortName());
-        userSchool.addEssayDraft(essayDraftRequest, essayID, schoolInfo);
+        userSchool.addEssayDraft(essayDraftRequest, essayID, schoolInfo, keywords);
         userRepository.save(user);
 
     }
+
+    public void addEssayDraftUpload(User user, UserSchool userSchool, MultipartFile file, String essayID) throws Exception {
+
+        SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(userSchool.getShortName());
+        Essay essay = userSchool.getEssayForDraftUpload(essayID, schoolInfo);
+        if(essay == null) {
+            throw new Exception("Did not find essay with ID "+essayID);
+        }
+
+        File convFile = new File(file.getOriginalFilename());
+        convFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+
+        DBObject dbObject = new BasicDBObject();
+        GridFSFile gridFSID = gridFsTemplate.store(file.getInputStream(), dbObject);
+        userSchool.addEssayDraftUpload(file.getOriginalFilename(), gridFSID.getId().toString(), essay, keywords, convFile);
+
+        convFile.delete();
+        userRepository.save(user);
+
+    }
+
+    public ByteArrayOutputStream downloadDraft(User user, UserSchool userSchool, String essayID, String draftID) throws Exception {
+
+        EssayDraft draft = userSchool.getEssayDraft(essayID, draftID);
+
+        if(draft.getUploadID()==null) {
+            throw new Exception("This draft was not uploaded - does not have an upload ID");
+        }
+
+        GridFSDBFile gridfsfile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(draft.getUploadID())));
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        gridfsfile.writeTo(outputStream);
+
+        return outputStream;
+    }
+
+
+    public void setDeadlineForSchool(User user, UserSchool userSchool, String deadline) throws Exception {
+
+        userSchool.setDeadline(deadline);
+        userRepository.save(user);
+    }
+
+
+
 
     public void updateUserProfile(User user, ProfileRequest profileRequest) throws Exception {
 
@@ -205,15 +322,64 @@ public class MongoUserDBProvider implements UserDBProvider {
     }
 
 
-    public void updateEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID, String draftID) throws Exception {
+    public void updateEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID, String draftID, HashMap<String, List<String>> schoolKeywords) throws Exception {
 
-        userSchool.updateEssayDraft(essayDraftRequest, essayID, draftID);
+        userSchool.updateEssayDraft(essayDraftRequest, essayID, draftID, schoolKeywords);
         userRepository.save(user);
 
     }
 
-    public void deleteEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID, String draftID) throws Exception {
-        userSchool.deleteEssayDraft(essayDraftRequest, essayID, draftID);
+    public void addNote(User user, UserSchool userSchool, NotesRequest notesRequest) throws Exception {
+
+        userSchool.addNote(notesRequest);
+        userRepository.save(user);
+    }
+
+    public void updateNote(User user, UserSchool userSchool, NotesRequest notesRequest, String noteID) throws Exception {
+
+        userSchool.updateNote(notesRequest, noteID);
+        userRepository.save(user);
+    }
+
+    public JSONObject getRecommender(User user, UserSchool userSchool,
+                               String recommenderID) throws Exception {
+
+        return userSchool.getRecommender(recommenderID).toJSON();
+
+    }
+
+    public void updateRecommender(User user, UserSchool userSchool, RecommenderRequest recommenderRequest,
+                                  String recommenderID) throws Exception {
+
+
+        userSchool.updateRecommender(recommenderRequest, recommenderID);
+        userRepository.save(user);
+
+    }
+
+
+    public void deleteNote(User user, UserSchool userSchool, String noteID) throws Exception {
+
+        userSchool.deleteNote(noteID);
+        userRepository.save(user);
+
+    }
+
+    public JSONObject getNote(User user, UserSchool userSchool, String noteID) throws Exception {
+
+        Note note = userSchool.getNote(noteID);
+
+        return note.toJSON();
+    }
+
+
+    public void deleteEssayDraft(User user, UserSchool userSchool, String essayID, String draftID) throws Exception {
+        EssayDraft essayDraft = userSchool.getEssayDraft(essayID, draftID);
+        if(essayDraft.getUploadID()!=null && !essayDraft.getUploadID().isEmpty() &&
+                essayDraft.getDraftType()== EssayDraft.DraftType.UPLOAD){
+            gridFsTemplate.delete(new Query(Criteria.where("_id").is(essayDraft.getUploadID())));
+        }
+        userSchool.deleteEssayDraft(essayID, draftID);
         userRepository.save(user);
     }
 
@@ -239,7 +405,14 @@ public class MongoUserDBProvider implements UserDBProvider {
 
     public JSONObject getUserSchoolDetail(User user, UserSchool userSchool) throws Exception {
         SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(userSchool.getShortName());
-        return userSchool.toJSON(schoolInfo.getEssays());
+
+        JSONObject userSchoolJSON = userSchool.toJSON(schoolInfo.getEssays());
+        userSchoolJSON.put("logoURL", schoolInfo.getLogoURL());
+        userSchoolJSON.put("name", schoolInfo.getName());
+        userSchoolJSON.put("location", schoolInfo.getLocation());
+
+        return userSchoolJSON;
+
     }
 
 

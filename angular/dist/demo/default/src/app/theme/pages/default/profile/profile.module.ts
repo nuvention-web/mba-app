@@ -6,6 +6,10 @@ import { LayoutModule } from '../../../layouts/layout.module';
 import { FormsModule } from '@angular/forms';
 import { UsersSerivce } from '../../../../_services/users.service';
 import { DefaultComponent } from '../default.component';
+import { GoalsComponent } from './goals/goals.component';
+import { ExperiencesComponent } from './experiences/experiences.component';
+import { ProfileService } from '../../../../_services/profile.service';
+import { InterestsComponent } from './interests/interests.component';
 
 const routes: Routes = [
     {
@@ -28,9 +32,12 @@ const routes: Routes = [
     ], exports: [
         RouterModule
     ], declarations: [
-        ProfileComponent
+        ProfileComponent,
+        GoalsComponent,
+        ExperiencesComponent,
+        InterestsComponent
     ], providers: [
-        UsersSerivce
+        UsersSerivce, ProfileService
     ]
 })
 export class ProfileModule {

@@ -65,13 +65,17 @@ public class Essay {
         this.essayID = essayID;
     }
 
-    public void addDraft(String draftName, String contents){
+    public EssayDraft addDraft(String draftName, String contents, String uploadID, String url, EssayDraft.DraftType draftType){
+
         EssayDraft essayDraft = new EssayDraft();
         essayDraft.setContents(contents);
+        essayDraft.setUrl(url);
+        essayDraft.setUploadID(uploadID);
+        essayDraft.setDraftType(draftType);
         draftName = draftName == null ? "Draft "+ Integer.toString(drafts.size()+1) : draftName;
         essayDraft.setDraftName(draftName);
         this.drafts.add(essayDraft);
-
+        return essayDraft;
     }
 
 
@@ -93,7 +97,7 @@ public class Essay {
 
     }
 
-    public void updateDraftContents(String id, String contents, String url) throws Exception {
+    public EssayDraft updateDraftContents(String id, String contents, String url) throws Exception {
         EssayDraft draftToUpdate = null;
 
         for(EssayDraft draft : drafts) {
@@ -112,6 +116,8 @@ public class Essay {
         else if(url!=null){
             draftToUpdate.setUrl(url);
         }
+
+        return draftToUpdate;
 
     }
 

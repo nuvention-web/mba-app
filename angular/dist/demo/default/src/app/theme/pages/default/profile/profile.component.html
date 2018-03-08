@@ -34,9 +34,9 @@
 			</div>
 		</div>
 		<!-- <div [ngSwitch]="id"> -->
-			<app-goals  [class.hidden]="id == 0" [profile]="profile"></app-goals>
-			<app-experiences  [class.hidden]="id == 1" [profile]="profile"></app-experiences>
-			<app-interests  [class.hidden]="id == 2" [profile]="profile"></app-interests>
+			<app-goals  [hidden]="id != 0" [profile]="profile"></app-goals>
+			<app-experiences  [hidden]="id != 1" [profile]="profile"></app-experiences>
+			<app-interests  [hidden]="id != 2" [profile]="profile"></app-interests>
 		<!-- </div> -->
 
 		<div class="m-portlet__foot m-portlet__foot--fit">

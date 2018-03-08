@@ -29,10 +29,6 @@ const routes: Routes = [
                 "loadChildren": ".\/pages\/default\/profile\/profile.module#ProfileModule"
             },
             {
-                "path": "addschool",
-                "loadChildren": ".\/pages\/default\/addschool\/addschool.module#AddSchoolModule"
-            },
-            {
                 "path": "notes/:action/:school/:noteID",
                 "loadChildren": ".\/pages\/default\/notes\/notes.module#NotesModule"
             },

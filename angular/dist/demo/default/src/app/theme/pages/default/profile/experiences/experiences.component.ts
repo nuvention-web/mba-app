@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { ProfileService } from '../../../../../_services/profile.service';
 import { SimpleChanges } from '@angular/core/src/metadata/lifecycle_hooks';
+import { ScriptLoaderService } from '../../../../../_services/script-loader.service';
 
 @Component({
     selector: 'app-experiences',
-    templateUrl: '../questions.component.html',
+    templateUrl: './experiences.component.html',
     encapsulation: ViewEncapsulation.None,
 })
 export class ExperiencesComponent implements OnInit {
@@ -19,11 +20,17 @@ export class ExperiencesComponent implements OnInit {
     questionNames = ["leadershipExperience", "teamPlayerExperience", "failureExperience", "accomplishments"];
     datas:any = [[],[],[],[]];
     types = [1,1,1,1];
-    constructor(private _profile: ProfileService) {
+    constructor(private _script: ScriptLoaderService) {
 
     }
 
     ngOnInit() {
+    }
+    ngAfterViewInit() {
+        //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+        //Add 'implements AfterViewInit' to the class.
+        this._script.loadScripts('app-portlets-tools',
+            ['assets/demo/default/custom/components/portlets/tools.js']);
     }
 
     ngOnChanges(changes: SimpleChanges) {

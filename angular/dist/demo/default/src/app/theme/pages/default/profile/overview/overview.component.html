@@ -1,0 +1,36 @@
+<div class="m-portlet__body">
+    <div *ngFor="let question of questions; let i = index;" class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        {{question}}
+                    </h3>
+                </div>			
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div *ngIf="types[i] == 1">
+                <div *ngFor="let content of datas[i]" class="m-portlet">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="m-portlet__body">
+                                <!--begin::Section-->
+                                <div class="m-section m-section--last">
+                                    <span class="m-section__sub">
+                                        {{content}}
+                                    </span>                 
+                                </div>
+                                <!--end::Section-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="types[i] == 0">
+                {{datas[i]}}
+            </div>
+        </div>    
+    </div>
+</div>
+

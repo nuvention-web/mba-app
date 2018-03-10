@@ -4,22 +4,28 @@ import { SimpleChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { ScriptLoaderService } from '../../../../../_services/script-loader.service';
 
 @Component({
-    selector: 'app-experiences',
-    templateUrl: './experiences.component.html',
+    selector: 'app-overview',
+    templateUrl: './overview.component.html',
     encapsulation: ViewEncapsulation.None,
 })
-export class ExperiencesComponent implements OnInit {
+export class OverviewComponent implements OnInit {
 
     id = 1;
     @Input() profile:any;
-    count:number = 4;
-    questions = ["List some of your experiences that demonstrate your leadership capabilities.",
+    count:number = 9;
+    questions = ["Firstly, why are you interested in pursuing an MBA at this point of your career?",
+                "What are your short term goals, following the completion of your MBA?",
+                "What are your long term goals, following the completion of your MBA?",
+                "List some of your experiences that demonstrate your leadership capabilities.",
                 "List some of your experiences that demonstrate you are a team player and you work well in a collaborative environment.",
                 "List some of your experiences where you failed you achieve what you set out to. What did you learn from these failures?",
-                "What are some of your accomplishments that you are most proud of, and why?"];
-    questionNames = ["leadershipExperience", "teamPlayerExperience", "failureExperience", "accomplishments"];
-    datas:any = [[],[],[],[]];
-    types = [1,1,1,1];
+                "What are some of your accomplishments that you are most proud of, and why?",
+                "What are your hobbies / interests outside of work/school?",
+                "What are you going to bring to the MBA program you are admitted to?",
+                ];
+    questionNames = ["whyMBA", "shortTermGoals", "longTermGoals","leadershipExperience", "teamPlayerExperience", "failureExperience", "accomplishments","hobbiesOrInterests", "whatDoYouBring"];
+    datas:any = [[],[],[],[],[],[],[],[],[]];
+    types = [0,0,0,1,1,1,1,1,0];
     constructor(private _script: ScriptLoaderService) {
 
     }

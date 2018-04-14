@@ -22,29 +22,33 @@
 
 				<ul class="nav nav-tabs  m-tabs-line m-tabs-line--brand" role="tablist">
 					<li class="nav-item m-tabs__item">
-						<a class="nav-link m-tabs__link active" data-toggle="tab" (click)="id = 0;" role="tab"><h5>Goals</h5></a>
+						<a class="nav-link m-tabs__link active" data-toggle="tab" (click)="id = 0;" role="tab"><h5>Overview</h5></a>
 					</li>
 					<li class="nav-item m-tabs__item">
-						<a class="nav-link m-tabs__link" data-toggle="tab" (click)="id = 1;" role="tab"><h5>Experiences</h5></a>
+						<a class="nav-link m-tabs__link" data-toggle="tab" (click)="id = 1;" role="tab"><h5>Goals</h5></a>
 					</li>
 					<li class="nav-item m-tabs__item">
-						<a class="nav-link m-tabs__link" data-toggle="tab" (click)="id = 2;" role="tab"><h5>Interests</h5></a>
+						<a class="nav-link m-tabs__link" data-toggle="tab" (click)="id = 2;" role="tab"><h5>Experiences</h5></a>
+					</li>
+					<li class="nav-item m-tabs__item">
+						<a class="nav-link m-tabs__link" data-toggle="tab" (click)="id = 3;" role="tab"><h5>Interests</h5></a>
 					</li>
 				</ul>
 			</div>
 		</div>
-		<div [ngSwitch]="id">
-			<app-goals  *ngSwitchCase="0" [profile]="profile"></app-goals>
-			<app-experiences  *ngSwitchCase="1" [profile]="profile"></app-experiences>
-			<app-interests  *ngSwitchCase="2" [profile]="profile"></app-interests>
-		</div>
+		
+		<app-overview [hidden]="id != 0" [profile]="profile"></app-overview>
+		<app-goals  [hidden]="id != 1" [profile]="profile"></app-goals>
+		<app-experiences  [hidden]="id != 2" [profile]="profile"></app-experiences>
+		<app-interests  [hidden]="id != 3" [profile]="profile"></app-interests>
+		
 
 		<div class="m-portlet__foot m-portlet__foot--fit">
 			<div class="m-form__actions m-form__actions">
 				<div class="row">
 					<div class="col-lg-8 ml-lg-auto">
 						<button type="reset" class="btn btn-brand">Submit</button>
-						<button style="margin-left: 100px" type="reset" class="btn btn-secondary">Cancel</button>
+						<button style="margin-left: 100px" routerLink="/index.html" type="reset" class="btn btn-secondary">Cancel</button>
 					</div>
 				</div>
 			</div>

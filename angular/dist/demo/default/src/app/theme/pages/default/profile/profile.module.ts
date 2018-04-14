@@ -10,6 +10,8 @@ import { GoalsComponent } from './goals/goals.component';
 import { ExperiencesComponent } from './experiences/experiences.component';
 import { ProfileService } from '../../../../_services/profile.service';
 import { InterestsComponent } from './interests/interests.component';
+import { PortletsToolsComponent } from '../components/portlets/portlets-tools/portlets-tools.component';
+import { OverviewComponent } from './overview/overview.component';
 
 const routes: Routes = [
     {
@@ -35,7 +37,9 @@ const routes: Routes = [
         ProfileComponent,
         GoalsComponent,
         ExperiencesComponent,
-        InterestsComponent
+        InterestsComponent,
+        PortletsToolsComponent,
+        OverviewComponent
     ], providers: [
         UsersSerivce, ProfileService
     ]

@@ -4,24 +4,10 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSFile;
-import mbaapp.core.Essay;
-import mbaapp.core.EssayDraft;
-import mbaapp.core.Keywords;
-import mbaapp.core.Note;
-import mbaapp.core.SchoolInfoEssay;
-import mbaapp.requests.EssayDraftRequest;
-import mbaapp.core.Recommendation;
-import mbaapp.core.SchoolInfo;
-import mbaapp.requests.EssayStatusRequest;
-import mbaapp.requests.AddRecommendersRequest;
-import mbaapp.requests.CreateUserRequest;
-import mbaapp.requests.AddSchoolsRequest;
-import mbaapp.core.User;
-import mbaapp.core.UserSchool;
+import mbaapp.core.*;
+import mbaapp.requests.*;
 import mbaapp.providers.UserDBProvider;
-import mbaapp.requests.NotesRequest;
-import mbaapp.requests.ProfileRequest;
-import mbaapp.requests.RecommenderRequest;
+import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +72,10 @@ public class MongoUserDBProvider implements UserDBProvider {
         return userEssays;
     }
 
+    public void saveUser(User user) throws Exception
+    {
+        userRepository.save(user);
+    }
 
     private String getEssayPrompt(String essayID, String schoolName) {
         SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(schoolName);
@@ -241,7 +231,7 @@ public class MongoUserDBProvider implements UserDBProvider {
         fos.close();
 
         DBObject dbObject = new BasicDBObject();
-        GridFSFile gridFSID = gridFsTemplate.store(file.getInputStream(), dbObject);
+        GridFSFile gridFSID = gridFsTemplate.store(file.getInputStream(), file.getOriginalFilename(), dbObject);
         userSchool.addEssayDraftUpload(file.getOriginalFilename(), gridFSID.getId().toString(), essay, keywords, convFile);
 
         convFile.delete();
@@ -249,7 +239,33 @@ public class MongoUserDBProvider implements UserDBProvider {
 
     }
 
-    public ByteArrayOutputStream downloadDraft(User user, UserSchool userSchool, String essayID, String draftID) throws Exception {
+
+    public void addReviewDraft(User user, UserSchool userSchool, MultipartFile file, ReviewComments reviewComments) throws Exception {
+
+        String gridFSID = addFileToMongo(file);
+        reviewComments.setUploadID(gridFSID);
+        userRepository.save(user);
+
+    }
+
+
+    private String addFileToMongo(MultipartFile file) throws Exception{
+        File convFile = new File(file.getOriginalFilename());
+        convFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+        DBObject dbObject = new BasicDBObject();
+        GridFSFile gridFSID = gridFsTemplate.store(file.getInputStream(), dbObject);
+        convFile.delete();
+        return gridFSID.getId().toString();
+
+    }
+
+
+
+
+    public ByteArrayOutputStream getEssayDraftUploaded(User user, UserSchool userSchool, String essayID, String draftID) throws Exception {
 
         EssayDraft draft = userSchool.getEssayDraft(essayID, draftID);
 
@@ -263,6 +279,34 @@ public class MongoUserDBProvider implements UserDBProvider {
         gridfsfile.writeTo(outputStream);
 
         return outputStream;
+    }
+
+
+    public ByteArrayOutputStream getFileUploaded(String id) throws Exception{
+        GridFSDBFile gridfsfile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        gridfsfile.writeTo(outputStream);
+        return outputStream;
+    }
+
+
+    public File getDraft(User user, UserSchool userSchool, String essayID, String draftID) throws Exception {
+
+        EssayDraft draft = userSchool.getEssayDraft(essayID, draftID);
+
+        File draftFile = new File(draft.getDraftName());
+
+        if(draft.getUploadID()==null) {
+            String contents = draft.getContents();
+            FileUtils.writeStringToFile(draftFile, contents, "UTF-8");
+            return draftFile;
+        }
+        else {
+            ByteArrayOutputStream contentsStream = getEssayDraftUploaded(user, userSchool, essayID, draftID);
+            FileOutputStream outputStream = new FileOutputStream(draftFile);
+            contentsStream.writeTo(outputStream);
+            return draftFile;
+        }
     }
 
 

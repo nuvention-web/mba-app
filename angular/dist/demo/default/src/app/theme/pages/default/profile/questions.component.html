@@ -11,11 +11,27 @@
         </div>
         <div *ngIf="datas != undefined" class="m-portlet__body">
             <div *ngIf="types[i] == 0">
-                <textarea-editor [(ngModel)]="datas[i].content" maxheight="200px" (onSave)="save()"></textarea-editor>
+                <textarea-editor [(ngModel)]="datas[i].content" maxheight="200px" (onSave)="save()" placeholder="empty"></textarea-editor>
             </div>
             <div *ngIf="types[i] == 1">
                 <div *ngFor="let data of datas[i]; let j = index;">
-                    <textarea-editor [(ngModel)]="datas[i][j].content" maxheight="100px" (onSave)="save()"></textarea-editor>
+                    <div class="m-section__content">
+                        <div class="m-stack m-stack--ver m-stack--general">
+                            <div class="m-stack__item m-stack__item--middle m-stack__item--fluid " >
+                                <textarea-editor [(ngModel)]="datas[i][j].content" maxheight="100px" (onSave)="save()" placeholder="empty"></textarea-editor>
+                            </div>
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle" style="width: 35px">
+                                <a href="#" class="btn btn-outline-brand m-btn m-btn--icon m-btn--icon-only m-btn--pill" style="height: 25px; width: 25px" (click)="add(i)">
+                                    <i class="la la-plus"></i>
+                                </a>
+                            </div>
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle" style="width: 10px;">
+                                <a href="#" class="btn btn-outline-brand m-btn m-btn--icon m-btn--icon-only m-btn--pill" style="height: 25px; width: 25px" (click)="remove(i,j)">
+                                    <i class="la la-remove"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

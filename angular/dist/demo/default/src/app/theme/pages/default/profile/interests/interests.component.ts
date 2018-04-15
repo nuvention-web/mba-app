@@ -38,6 +38,20 @@ export class InterestsComponent implements OnInit {
         }
     }
 
+    add(i) {
+        if (i >= 0 && i < this.count) {
+            this.datas[i].push(ProfileData.wrap(""));
+        }
+        this.save();
+    }
+
+    remove(i, j) {
+        if (i >= 0 && i < this.count && j >=0 && j < this.datas[i].length) {
+            this.datas[i].splice(j, 1);
+        }
+        this.save();
+    }
+
     save() {
         for (let i = 0; i < this.count; i++) {
             this.profile[this.questionNames[i]] = ProfileData.unwrap(this.datas[i]);

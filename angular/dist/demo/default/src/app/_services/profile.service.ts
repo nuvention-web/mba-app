@@ -12,4 +12,8 @@ export class ProfileService {
  getProfile() {
     return this.http.get(URL+"/mba/users/"+user+"/profile").map((response: Response) => response.json());
  }
+
+ updateProfile(profile) {
+     this.http.put(URL+"/mba/users/" + user + "/profile", profile, {headers: header})
+ }
 }

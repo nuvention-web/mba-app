@@ -13,7 +13,6 @@ export class UsersSerivce {
  }
 
  modifyUser(data) {
-    console.log(data); 
     this.http.put(URL+"/mba/users/"+user+"/", data, {headers: header});
  }
 

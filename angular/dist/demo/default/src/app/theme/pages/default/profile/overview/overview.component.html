@@ -1,0 +1,24 @@
+<div class="m-portlet__body">
+    <div *ngFor="let question of questions; let i = index" class="m-portlet" data-portlet="true">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        {{question}}
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div *ngIf="types[i] == 0">
+                <textarea-editor [(ngModel)]="datas[i]" maxheight="200px" disabled="true"></textarea-editor>
+            </div>
+            <div *ngIf="types[i] == 1">
+                <div *ngFor="let data of datas[i]; let j = index">
+                    <textarea-editor [(ngModel)]="datas[i][j]" maxheight="100px" disabled="true"></textarea-editor>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    

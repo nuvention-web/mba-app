@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { catchError } from 'rxjs/operators/catchError';
+import { URL, user} from './url-infos'
 
 @Injectable()
 export class AddSchool {
 
-    private url:string = "https://mba-application.appspot.com/mba/users/john.doe@gmail.com";
+    private url:string = URL+"/mba/users/"+user;
     constructor(private http: Http) {}
 
     handleError(msg, value) {

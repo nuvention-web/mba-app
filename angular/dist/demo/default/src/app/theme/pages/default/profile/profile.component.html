@@ -36,22 +36,11 @@
 				</ul>
 			</div>
 		</div>
-		
-		<app-overview [hidden]="id != 0" [profile]="profile"></app-overview>
-		<app-goals  [hidden]="id != 1" [profile]="profile"></app-goals>
-		<app-experiences  [hidden]="id != 2" [profile]="profile"></app-experiences>
-		<app-interests  [hidden]="id != 3" [profile]="profile"></app-interests>
-		
-
-		<div class="m-portlet__foot m-portlet__foot--fit">
-			<div class="m-form__actions m-form__actions">
-				<div class="row">
-					<div class="col-lg-8 ml-lg-auto">
-						<button type="reset" class="btn btn-brand">Submit</button>
-						<button style="margin-left: 100px" routerLink="/index.html" type="reset" class="btn btn-secondary">Cancel</button>
-					</div>
-				</div>
-			</div>
+		<div [ngSwitch]="id">
+			<app-overview *ngSwitchCase="0" [profile]="profile"></app-overview>
+			<app-goals  *ngSwitchCase="1" [profile]="profile"></app-goals>
+			<app-experiences  *ngSwitchCase="2" [profile]="profile"></app-experiences>
+			<app-interests  *ngSwitchCase="3" [profile]="profile"></app-interests>
 		</div>
 	</div>
 </div>

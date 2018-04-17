@@ -44,9 +44,13 @@ public class EssayDraft {
     private List<String> schoolKeywords;
     private boolean schoolKeyWordsFound;
 
+    private List<Review> reviews;
+
     public static enum DraftType{
         CONTENTS, URL, UPLOAD
     }
+
+
 
     @Autowired
     @Qualifier("mongoSchoolDB")
@@ -54,6 +58,21 @@ public class EssayDraft {
 
     public EssayDraft() {
          this.id = UUID.randomUUID().toString();
+         reviews = new ArrayList<>();
+    }
+
+    public void addReview(Review review){
+        if(reviews==null) {
+            reviews = new ArrayList<>();
+        }
+        reviews.add(review);
+    }
+
+    public List<Review> getReviews() {
+        if(reviews == null) {
+            reviews = new ArrayList<>();
+        }
+        return reviews;
     }
 
     public void setDraftType(DraftType draftType) {

@@ -4,7 +4,7 @@ import { SimpleChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { ProfileData } from '../profiledata'
 @Component({
     selector: 'app-experiences',
-    templateUrl: './experiences.component.html',
+    templateUrl: '../questions.component.html',
     encapsulation: ViewEncapsulation.None,
 })
 export class ExperiencesComponent implements OnInit {
@@ -26,12 +26,6 @@ export class ExperiencesComponent implements OnInit {
 
     ngOnInit() {
         console.log('on-constructor');
-    }
-    ngAfterViewInit() {
-        //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-        //Add 'implements AfterViewInit' to the class.
-        this._script.loadScripts('app-portlets-tools',
-            ['assets/demo/default/custom/components/portlets/tools.js']);
     }
 
     ngOnChanges(changes: SimpleChanges) {

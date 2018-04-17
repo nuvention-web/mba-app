@@ -1,190 +1,24 @@
 <div class="m-portlet__body">
-        <div class="m-portlet m-portlet--collapsed m-portlet--primary m-portlet--head-solid-bg m-portlet--head-sm" data-portlet="true">
-            <div class="m-portlet__head">
-                <div class="m-portlet__head-caption">
-                    <div class="m-portlet__head-title">
-                        <h3 class="m-portlet__head-text">
-                            {{questions[0]}}
-                        </h3>
-                    </div>			
-                </div>
-                <div class="m-portlet__head-tools">
-                    <ul class="m-portlet__nav">
-                        <li class="m-portlet__nav-item">
-                            <a href="" data-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Collapse"><i class="la la-angle-down"></i></a>	
-                        </li>
-                        <li class="m-portlet__nav-item">
-                            <a href="#" data-portlet-tool="plus" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Plus"><i class="la la-plus"></i></a>	
-                        </li>		
-                    </ul>
+    <div *ngFor="let question of questions; let i = index" class="m-portlet" data-portlet="true">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        {{question}}
+                    </h3>
                 </div>
             </div>
-            
-            <div class="m-portlet__body">
-                    <div *ngFor="let content of datas[0]" class="m-portlet">
-                        <div class="row">
-                            <div class="col-md-11">
-                                <div class="m-portlet__body">
-                                    <!--begin::Section-->
-                                    <div class="m-section m-section--last">
-                                        <span class="m-section__sub">
-                                            {{content}}
-                                        </span>                 
-                                    </div>
-                                    <!--end::Section-->
-                                </div>
-                            </div>
-                            <div class="col-md-1">
-                                <div class="m-portlet__body">
-                                    <div class="m-section m-section--last">
-                                        <a href="#" data-portlet-tool="remove" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Remove"><i class="la la-close"></i></a>         
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>    
         </div>
-
-        <div class="m-portlet m-portlet--collapsed m-portlet--primary m-portlet--head-solid-bg m-portlet--head-sm" data-portlet="true">
-                <div class="m-portlet__head">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-title">
-                            <h3 class="m-portlet__head-text">
-                                {{questions[1]}}
-                            </h3>
-                        </div>			
-                    </div>
-                    <div class="m-portlet__head-tools">
-                        <ul class="m-portlet__nav">
-                            <li class="m-portlet__nav-item">
-                                <a href="" data-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Collapse"><i class="la la-angle-down"></i></a>	
-                            </li>
-                            <li class="m-portlet__nav-item">
-                                <a href="#" data-portlet-tool="plus" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Plus"><i class="la la-plus"></i></a>	
-                            </li>		
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="m-portlet__body">
-                        <div *ngFor="let content of datas[1]" class="m-portlet">
-                            <div class="row">
-                                <div class="col-md-11">
-                                    <div class="m-portlet__body">
-                                        <!--begin::Section-->
-                                        <div class="m-section m-section--last">
-                                            <span class="m-section__sub">
-                                                {{content}}
-                                            </span>                 
-                                        </div>
-                                        <!--end::Section-->
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="m-portlet__body">
-                                        <div class="m-section m-section--last">
-                                            <a href="#" data-portlet-tool="remove" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Remove"><i class="la la-close"></i></a>         
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </div>    
+        <div class="m-portlet__body">
+            <div *ngIf="types[i] == 0">
+                <textarea-editor [(ngModel)]="datas[i]" maxheight="200px"></textarea-editor>
             </div>
-
-            <div class="m-portlet m-portlet--collapsed m-portlet--primary m-portlet--head-solid-bg m-portlet--head-sm" data-portlet="true">
-                <div class="m-portlet__head">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-title">
-                            <h3 class="m-portlet__head-text">
-                                {{questions[2]}}
-                            </h3>
-                        </div>			
-                    </div>
-                    <div class="m-portlet__head-tools">
-                        <ul class="m-portlet__nav">
-                            <li class="m-portlet__nav-item">
-                                <a href="" data-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Collapse"><i class="la la-angle-down"></i></a>	
-                            </li>
-                            <li class="m-portlet__nav-item">
-                                <a href="#" data-portlet-tool="plus" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Plus"><i class="la la-plus"></i></a>	
-                            </li>		
-                        </ul>
-                    </div>
+            <div *ngIf="types[i] == 1">
+                <div *ngFor="let data of datas[i]; let j = index">
+                    <textarea-editor [(ngModel)]="datas[i][j]" maxheight="100px"></textarea-editor>
                 </div>
-                
-                <div class="m-portlet__body">
-                        <div *ngFor="let content of datas[2]" class="m-portlet">
-                            <div class="row">
-                                <div class="col-md-11">
-                                    <div class="m-portlet__body">
-                                        <!--begin::Section-->
-                                        <div class="m-section m-section--last">
-                                            <span class="m-section__sub">
-                                                {{content}}
-                                            </span>                 
-                                        </div>
-                                        <!--end::Section-->
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="m-portlet__body">
-                                        <div class="m-section m-section--last">
-                                            <a href="#" data-portlet-tool="remove" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Remove"><i class="la la-close"></i></a>         
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </div>    
             </div>
-
-            <div class="m-portlet m-portlet--collapsed m-portlet--primary m-portlet--head-solid-bg m-portlet--head-sm" data-portlet="true">
-                <div class="m-portlet__head">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-title">
-                            <h3 class="m-portlet__head-text">
-                                {{questions[3]}}
-                            </h3>
-                        </div>			
-                    </div>
-                    <div class="m-portlet__head-tools">
-                        <ul class="m-portlet__nav">
-                            <li class="m-portlet__nav-item">
-                                <a href="" data-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Collapse"><i class="la la-angle-down"></i></a>	
-                            </li>
-                            <li class="m-portlet__nav-item">
-                                <a href="#" data-portlet-tool="plus" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Plus"><i class="la la-plus"></i></a>	
-                            </li>		
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="m-portlet__body">
-                        <div *ngFor="let content of datas[3]" class="m-portlet">
-                            <div class="row">
-                                <div class="col-md-11">
-                                    <div class="m-portlet__body">
-                                        <!--begin::Section-->
-                                        <div class="m-section m-section--last">
-                                            <span class="m-section__sub">
-                                                {{content}}
-                                            </span>                 
-                                        </div>
-                                        <!--end::Section-->
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="m-portlet__body">
-                                        <div class="m-section m-section--last">
-                                            <a href="#" data-portlet-tool="remove" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Remove"><i class="la la-close"></i></a>         
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </div>    
-            </div>
-
+        </div>
     </div>
+</div>
+    

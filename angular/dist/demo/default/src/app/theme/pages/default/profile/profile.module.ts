@@ -10,8 +10,9 @@ import { GoalsComponent } from './goals/goals.component';
 import { ExperiencesComponent } from './experiences/experiences.component';
 import { ProfileService } from '../../../../_services/profile.service';
 import { InterestsComponent } from './interests/interests.component';
-import { PortletsToolsComponent } from '../components/portlets/portlets-tools/portlets-tools.component';
-import { OverviewComponent } from './overview/overview.component';
+import { InputEditorModule } from 'angular-inline-editors';
+import { TextAreaEditorModule } from 'angular-inline-editors';
+import {OverviewComponent} from "./overview/overview.component";
 
 const routes: Routes = [
     {
@@ -30,16 +31,15 @@ const routes: Routes = [
 @NgModule({
     imports: [
         CommonModule, RouterModule.forChild(routes), LayoutModule
-        , FormsModule
+        , FormsModule, InputEditorModule.forRoot(), TextAreaEditorModule.forRoot()
     ], exports: [
         RouterModule
     ], declarations: [
         ProfileComponent,
         GoalsComponent,
         ExperiencesComponent,
-        InterestsComponent,
-        PortletsToolsComponent,
-        OverviewComponent
+        OverviewComponent,
+        InterestsComponent
     ], providers: [
         UsersSerivce, ProfileService
     ]

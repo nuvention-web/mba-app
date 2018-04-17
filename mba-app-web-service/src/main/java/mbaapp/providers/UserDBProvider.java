@@ -1,21 +1,13 @@
 package mbaapp.providers;
 
-import mbaapp.core.Keywords;
-import mbaapp.requests.EssayDraftRequest;
-import mbaapp.core.UserSchool;
-import mbaapp.requests.EssayStatusRequest;
-import mbaapp.requests.AddRecommendersRequest;
-import mbaapp.requests.CreateUserRequest;
-import mbaapp.requests.AddSchoolsRequest;
-import mbaapp.core.User;
-import mbaapp.requests.NotesRequest;
-import mbaapp.requests.ProfileRequest;
-import mbaapp.requests.RecommenderRequest;
+import mbaapp.core.*;
+import mbaapp.requests.*;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
@@ -72,5 +64,15 @@ public interface UserDBProvider {
 
     public void setDeadlineForSchool(User user, UserSchool userSchool, String deadline) throws Exception;
 
-    public ByteArrayOutputStream downloadDraft(User user, UserSchool school, String essayID, String draftID) throws Exception;
+    public ByteArrayOutputStream getEssayDraftUploaded(User user, UserSchool school, String essayID, String draftID) throws Exception;
+
+    public ByteArrayOutputStream getFileUploaded(String id) throws Exception;
+
+    public File getDraft(User user, UserSchool userSchool, String essayID, String draftID) throws Exception;
+
+    public void saveUser(User user) throws Exception;
+
+    public void addReviewDraft(User user, UserSchool userSchool, MultipartFile file, ReviewComments reviewComments) throws Exception;
+
+
 }

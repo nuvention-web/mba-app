@@ -1,6 +1,7 @@
 package mbaapp.endpoints;
 
 import mbaapp.core.Keywords;
+import mbaapp.core.Review;
 import mbaapp.core.User;
 import mbaapp.core.UserSchool;
 import mbaapp.providers.UserDBProvider;
@@ -8,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by jnag on 2/27/18.
@@ -48,5 +53,11 @@ public class EndpointBase {
         }
 
         return null;
+    }
+
+    protected String getDate(){
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        return dateFormat.format(date);
     }
 }

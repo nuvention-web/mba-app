@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { ProfileService } from '../../../../../_services/profile.service';
 import { SimpleChanges } from '@angular/core/src/metadata/lifecycle_hooks';
-import { ScriptLoaderService } from '../../../../../_services/script-loader.service';
 
 @Component({
     selector: 'app-overview',
@@ -10,7 +9,7 @@ import { ScriptLoaderService } from '../../../../../_services/script-loader.serv
 })
 export class OverviewComponent implements OnInit {
 
-    id = 1;
+    id = 0;
     @Input() profile:any;
     count:number = 9;
     questions = ["Firstly, why are you interested in pursuing an MBA at this point of your career?",
@@ -21,22 +20,15 @@ export class OverviewComponent implements OnInit {
                 "List some of your experiences where you failed you achieve what you set out to. What did you learn from these failures?",
                 "What are some of your accomplishments that you are most proud of, and why?",
                 "What are your hobbies / interests outside of work/school?",
-                "What are you going to bring to the MBA program you are admitted to?",
-                ];
-    questionNames = ["whyMBA", "shortTermGoals", "longTermGoals","leadershipExperience", "teamPlayerExperience", "failureExperience", "accomplishments","hobbiesOrInterests", "whatDoYouBring"];
-    datas:any = [[],[],[],[],[],[],[],[],[]];
-    types = [0,0,0,1,1,1,1,1,0];
-    constructor(private _script: ScriptLoaderService) {
+                "What are you going to bring to the MBA program you are admitted to?"];
+    questionNames = ["whyMBA", "shortTermGoals", "longTermGoals", "leadershipExperience", "teamPlayerExperience", "failureExperience", "accomplishments","hobbiesOrInterests", "whatDoYouBring"];
+    datas:any = ["", "", "", [], [], [], [], [], ""];
+    types = [0, 0, 0, 1, 1, 1, 1, 1, 0];
+    constructor(private _profile: ProfileService) {
 
     }
 
     ngOnInit() {
-    }
-    ngAfterViewInit() {
-        //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-        //Add 'implements AfterViewInit' to the class.
-        this._script.loadScripts('app-portlets-tools',
-            ['assets/demo/default/custom/components/portlets/tools.js']);
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -47,7 +39,6 @@ export class OverviewComponent implements OnInit {
             for (var i = 0; i < this.count; i++) {
                 this.datas[i] = this.profile[this.questionNames[i]];
             }
-        
         }
     }
 }

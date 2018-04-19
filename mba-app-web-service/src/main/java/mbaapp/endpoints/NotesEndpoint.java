@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  */
 
 @RestController
-@RequestMapping("/mba/users/{userEmail}/school/{schoolShortName}/notes")
+@RequestMapping("/mba/users/{id}/school/{schoolShortName}/notes")
 public class NotesEndpoint extends EndpointBase {
 
     Logger logger = Logger.getLogger(NotesEndpoint.class.getName());
@@ -33,15 +33,15 @@ public class NotesEndpoint extends EndpointBase {
     @PostMapping()
     @CrossOrigin
     @ApiOperation(value = "Add a new draft of an essay")
-    public ResponseEntity<String> addNote(@RequestBody NotesRequest notesRequest, @PathVariable String userEmail,
+    public ResponseEntity<String> addNote(@RequestBody NotesRequest notesRequest, @PathVariable String id,
                                           @PathVariable String schoolShortName) {
 
         try {
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
 
             userDBProvider.addNote(user, school, notesRequest);
@@ -60,14 +60,14 @@ public class NotesEndpoint extends EndpointBase {
     @CrossOrigin
     @ApiOperation(value = "Add a new draft of an essay")
     public ResponseEntity<String> updateNote(@RequestBody NotesRequest notesRequest,@PathVariable String noteID,
-                                             @PathVariable String userEmail, @PathVariable String schoolShortName) {
+                                             @PathVariable String id, @PathVariable String schoolShortName) {
 
         try {
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
 
             userDBProvider.updateNote(user, school, notesRequest, noteID);
@@ -85,14 +85,14 @@ public class NotesEndpoint extends EndpointBase {
     @CrossOrigin
     @ApiOperation(value = "Add a new draft of an essay")
     public ResponseEntity<String> deleteNote(@PathVariable String noteID,
-                                             @PathVariable String userEmail, @PathVariable String schoolShortName) {
+                                             @PathVariable String id, @PathVariable String schoolShortName) {
 
         try {
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
 
             userDBProvider.deleteNote(user, school, noteID);
@@ -111,14 +111,14 @@ public class NotesEndpoint extends EndpointBase {
     @CrossOrigin
     @ApiOperation(value = "Add a new draft of an essay")
     public ResponseEntity<String> getNote(@PathVariable String noteID,
-                                             @PathVariable String userEmail, @PathVariable String schoolShortName) {
+                                             @PathVariable String id, @PathVariable String schoolShortName) {
 
         try {
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
             return new ResponseEntity<>(userDBProvider.getNote(user, school, noteID).toString(), HttpStatus.OK);
 

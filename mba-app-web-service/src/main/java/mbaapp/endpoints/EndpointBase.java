@@ -27,8 +27,8 @@ public class EndpointBase {
     @Autowired
     Keywords keywords;
 
-    protected ResponseEntity<String> runValidations(String userEmail, String schoolShortName) {
-        User user = userDBProvider.getUser(userEmail);
+    protected ResponseEntity<String> runValidations(String id, String schoolShortName) {
+        User user = userDBProvider.getUser(id);
         if (user == null) {
             return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
         }
@@ -37,7 +37,7 @@ public class EndpointBase {
 
         if (school == null) {
             return new ResponseEntity<String>("The school " + schoolShortName + " is not a part of the list of schools " +
-                    "for " + userEmail, HttpStatus.NOT_ACCEPTABLE);
+                    "for " + id, HttpStatus.NOT_ACCEPTABLE);
         }
 
         return null;

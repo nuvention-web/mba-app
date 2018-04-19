@@ -34,7 +34,7 @@ import java.util.logging.Logger;
  * Created by jnag on 2/27/18.
  */
 @RestController
-@RequestMapping("/mba/users/{userEmail}/school/{schoolShortName}/essay/{essayID}")
+@RequestMapping("/mba/users/{id}/school/{schoolShortName}/essay/{essayID}")
 public class EssaysEndpoint extends EndpointBase{
 
     Logger logger = Logger.getLogger(EssaysEndpoint.class.getName());
@@ -46,16 +46,16 @@ public class EssaysEndpoint extends EndpointBase{
     @PutMapping()
     @CrossOrigin
     @ApiOperation(value = "Update essay status")
-    public ResponseEntity<String> updateEssayStatus(@RequestBody EssayStatusRequest essayStatusRequest, @PathVariable String userEmail,
+    public ResponseEntity<String> updateEssayStatus(@RequestBody EssayStatusRequest essayStatusRequest, @PathVariable String id,
                                            @PathVariable String schoolShortName, @PathVariable String essayID) {
 
         try {
 
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
 
             userDBProvider.updateEssayStatus(user, school, essayID, essayStatusRequest);
@@ -73,15 +73,15 @@ public class EssaysEndpoint extends EndpointBase{
     @GetMapping(produces = "application/json")
     @CrossOrigin
     @ApiOperation(value = "Get essay details of a particular essay")
-    public ResponseEntity<String> getEssay(@PathVariable String userEmail,
+    public ResponseEntity<String> getEssay(@PathVariable String id,
                                            @PathVariable String schoolShortName, @PathVariable String essayID) {
 
         try {
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
 
             return new ResponseEntity<>(userDBProvider.getEssay(user, school, essayID).toString(), HttpStatus.OK);
@@ -97,16 +97,16 @@ public class EssaysEndpoint extends EndpointBase{
     @PostMapping("/draft")
     @CrossOrigin
     @ApiOperation(value = "Add a new draft of an essay")
-    public ResponseEntity<String> addDraft(@RequestBody EssayDraftRequest essayDraftRequest, @PathVariable String userEmail,
+    public ResponseEntity<String> addDraft(@RequestBody EssayDraftRequest essayDraftRequest, @PathVariable String id,
                                            @PathVariable String schoolShortName, @PathVariable String essayID) {
 
         try {
 
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
 
             userDBProvider.addEssayDraft(user, school, essayDraftRequest, essayID, keywords);
@@ -125,17 +125,17 @@ public class EssaysEndpoint extends EndpointBase{
     @PutMapping("/draft/{draftID}")
     @CrossOrigin
     @ApiOperation(value = "Update an essay draft")
-    public ResponseEntity<String> updateDraft(@RequestBody EssayDraftRequest essayDraftRequest, @PathVariable String userEmail,
+    public ResponseEntity<String> updateDraft(@RequestBody EssayDraftRequest essayDraftRequest, @PathVariable String id,
                                               @PathVariable String schoolShortName, @PathVariable String essayID,
                                               @PathVariable String draftID) {
 
         try {
 
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
 
             userDBProvider.updateEssayDraft(user, school, essayDraftRequest, essayID, draftID, keywords.schoolKeywords);
@@ -154,17 +154,17 @@ public class EssaysEndpoint extends EndpointBase{
     @DeleteMapping("/draft/{draftID}")
     @CrossOrigin
     @ApiOperation(value = "Delete an essay draft")
-    public ResponseEntity<String> deleteDraft(@PathVariable String userEmail,
+    public ResponseEntity<String> deleteDraft(@PathVariable String id,
                                               @PathVariable String schoolShortName, @PathVariable String essayID,
                                               @PathVariable String draftID) {
 
         try {
 
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
 
             userDBProvider.deleteEssayDraft(user, school, essayID, draftID);
@@ -184,15 +184,15 @@ public class EssaysEndpoint extends EndpointBase{
     @CrossOrigin
     @ApiOperation(value = "Upload an essay draft")
     public ResponseEntity<String> uploadDraft(@RequestParam("file") MultipartFile file,
-                                              @PathVariable String userEmail, @PathVariable String schoolShortName,
+                                              @PathVariable String id, @PathVariable String schoolShortName,
                                               @PathVariable String essayID) {
 
         try {
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
 
             userDBProvider.addEssayDraftUpload(user,school,file, essayID);
@@ -211,15 +211,15 @@ public class EssaysEndpoint extends EndpointBase{
     @GetMapping(value = "/download/draft/{draftID}", produces = "application/octet-stream")
     @CrossOrigin
     @ApiOperation(value = "Download an essay draft")
-    public ResponseEntity downloadDraft(@PathVariable String userEmail, @PathVariable String schoolShortName,
+    public ResponseEntity downloadDraft(@PathVariable String id, @PathVariable String schoolShortName,
                                                 @PathVariable String essayID, @PathVariable String draftID) {
 
         try {
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
 
             EssayDraft draft = school.getEssayDraft(essayID, draftID);
@@ -244,17 +244,17 @@ public class EssaysEndpoint extends EndpointBase{
     @PostMapping(value = "/draft/{draftID}/email/")
     @CrossOrigin
     @ApiOperation(value = "Send an essay draft")
-    public ResponseEntity sendDraft(@PathVariable String userEmail, @PathVariable String schoolShortName,
+    public ResponseEntity sendDraft(@PathVariable String id, @PathVariable String schoolShortName,
                                     @PathVariable String essayID, @PathVariable String draftID,
                                     @RequestBody EmailDraftRequest emailDraftRequest) {
 
 
         try {
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
 
             File draftFile = userDBProvider.getDraft(user, school, essayID, draftID);

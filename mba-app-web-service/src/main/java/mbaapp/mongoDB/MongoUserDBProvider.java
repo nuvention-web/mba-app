@@ -44,8 +44,8 @@ public class MongoUserDBProvider implements UserDBProvider {
 
 
     @Override
-    public User getUser(String email) {
-        return userRepository.findByEmail(email);
+    public User getUser(String id) {
+        return userRepository.findByUserID(id);
     }
 
     @Override

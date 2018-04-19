@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  * Created by jnag on 2/20/18.
  */
 @RestController
-@RequestMapping("/mba/users/{userEmail}/school/{schoolShortName}")
+@RequestMapping("/mba/users/{id}/school/{schoolShortName}")
 public class UsersSchoolEndpoint extends EndpointBase {
 
     Logger logger = Logger.getLogger(UsersEndpoint.class.getName());
@@ -35,15 +35,15 @@ public class UsersSchoolEndpoint extends EndpointBase {
     @GetMapping(produces = "application/json")
     @CrossOrigin
     @ApiOperation(value = "Get school specific information")
-    public ResponseEntity getUserSchool(@PathVariable String userEmail,
+    public ResponseEntity getUserSchool(@PathVariable String id,
                                         @PathVariable String schoolShortName) {
 
         try {
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool userSchool = schoolExistsForUser(user, schoolShortName);
 
             return new ResponseEntity<>(userDBProvider.getUserSchoolDetail(user, userSchool).toString(), HttpStatus.OK);
@@ -56,17 +56,17 @@ public class UsersSchoolEndpoint extends EndpointBase {
     @PutMapping("/deadline")
     @CrossOrigin
     @ApiOperation(value = "Set deadline")
-    public ResponseEntity setDeadline(@PathVariable String userEmail,
+    public ResponseEntity setDeadline(@PathVariable String id,
                                       @PathVariable String schoolShortName,
                                       @RequestBody String deadline) {
 
 
         try {
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool userSchool = schoolExistsForUser(user, schoolShortName);
             userDBProvider.setDeadlineForSchool(user, userSchool, deadline);
 

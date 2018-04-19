@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by jnag on 2/15/18.
@@ -20,6 +21,7 @@ public class User {
     public String id;
     public String name;
     public String email;
+    public String userID;
     public List<String> recommenders;
     public List<UserSchool> schools;
     public List<Activity> userActivity;
@@ -39,6 +41,7 @@ public class User {
 
 
     public User(String name, String email) {
+        userID = UUID.randomUUID().toString();
         this.name = name;
         this.email = email;
         schools = new ArrayList<>();
@@ -106,6 +109,8 @@ public class User {
     public String getName() {
         return name;
     }
+
+    public String getUserID() { return userID; }
 
     public void setName(String name) {
         this.name = name;

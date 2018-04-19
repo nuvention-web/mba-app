@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface UserDBProvider {
 
-    public User getUser(String email);
+    public User getUser(String id);
 
     public JSONObject getAllUserEssays(User user) throws Exception;
 

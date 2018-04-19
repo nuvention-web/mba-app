@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  */
 
 @RestController
-@RequestMapping("/mba/users/{userEmail}/school/{schoolShortName}/recommender")
+@RequestMapping("/mba/users/{id}/school/{schoolShortName}/recommender")
 public class RecommenderEndpoint extends EndpointBase {
 
     Logger logger = Logger.getLogger(NotesEndpoint.class.getName());
@@ -33,15 +33,15 @@ public class RecommenderEndpoint extends EndpointBase {
     @CrossOrigin
     @ApiOperation(value = "Update recommender notes")
     public ResponseEntity<String> getRecommendation(@PathVariable String recommenderID,
-                                                         @PathVariable String userEmail,
+                                                         @PathVariable String id,
                                                          @PathVariable String schoolShortName) {
 
         try {
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
             return new ResponseEntity<String>(userDBProvider.getRecommender(user, school, recommenderID).toString(),HttpStatus.OK) ;
 
@@ -57,15 +57,15 @@ public class RecommenderEndpoint extends EndpointBase {
     @ApiOperation(value = "Update recommender notes")
     public ResponseEntity<String> updateRecommenderNotes(@RequestBody RecommenderRequest recommenderRequest,
                                                          @PathVariable String recommenderID,
-                                                         @PathVariable String userEmail,
+                                                         @PathVariable String id,
                                                          @PathVariable String schoolShortName) {
 
         try {
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
             userDBProvider.updateRecommender(user, school, recommenderRequest, recommenderID);
             return new ResponseEntity<>("Update recommender", HttpStatus.CREATED);

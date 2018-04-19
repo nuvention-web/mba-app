@@ -68,12 +68,12 @@ public class UsersEndpoint {
         }
     }
 
-    @GetMapping(value = "/{userEmail:.+}", produces = "application/json")
+    @GetMapping(value = "/{id:.+}", produces = "application/json")
     @CrossOrigin
     @ApiOperation(value = "Retrieve a user - this will be used for the home page")
-    public ResponseEntity getUser(@PathVariable String userEmail) {
+    public ResponseEntity getUser(@PathVariable String id) {
         try {
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             if (user == null) {
                 return new ResponseEntity<>("User does not exist!", HttpStatus.BAD_REQUEST);
             }
@@ -85,13 +85,13 @@ public class UsersEndpoint {
     }
 
 
-    @PutMapping("/{userEmail}/school")
+    @PutMapping("/{id}/school")
     @CrossOrigin
     @ApiOperation(value = "Add schools to the list of schools the user is interested in ")
-    public ResponseEntity<String> addSchool(@RequestBody AddSchoolsRequest userRequest, @PathVariable String userEmail) {
+    public ResponseEntity<String> addSchool(@RequestBody AddSchoolsRequest userRequest, @PathVariable String id) {
 
         try {
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             if (user == null) {
                 return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
             }
@@ -106,13 +106,13 @@ public class UsersEndpoint {
     }
 
 
-    @PutMapping("/{userEmail}/recommender")
+    @PutMapping("/{id}/recommender")
     @CrossOrigin
     @ApiOperation(value = "Add recommenders for a user ")
-    public ResponseEntity<String> addRecommender(@RequestBody AddRecommendersRequest recommendersRequest, @PathVariable String userEmail) {
+    public ResponseEntity<String> addRecommender(@RequestBody AddRecommendersRequest recommendersRequest, @PathVariable String id) {
 
         try {
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             if (user == null) {
                 return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
             }
@@ -126,12 +126,12 @@ public class UsersEndpoint {
 
     }
 
-    @DeleteMapping("/{userEmail}/recommender/{recommender}")
+    @DeleteMapping("/{id}/recommender/{recommender}")
     @ApiOperation(value = "Remove a particular recommender from the user's recommenders.")
-    public ResponseEntity<String> deleteRecommender(@PathVariable String userEmail, @PathVariable String recommender) {
+    public ResponseEntity<String> deleteRecommender(@PathVariable String id, @PathVariable String recommender) {
 
         try {
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             if (user == null) {
                 return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
             }
@@ -147,13 +147,13 @@ public class UsersEndpoint {
     }
 
 
-    @DeleteMapping("/{userEmail}/school/{schoolName}")
+    @DeleteMapping("/{id}/school/{schoolName}")
     @CrossOrigin
     @ApiOperation(value = "Remove a particular school from the user's list of schools ")
-    public ResponseEntity<String> deleteSchool(@PathVariable String userEmail, @PathVariable String schoolName) {
+    public ResponseEntity<String> deleteSchool(@PathVariable String id, @PathVariable String schoolName) {
 
         try {
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             if (user == null) {
                 return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
             }
@@ -170,12 +170,12 @@ public class UsersEndpoint {
     }
 
 
-    @GetMapping(value = "/{userEmail}/essays", produces = "application/json")
+    @GetMapping(value = "/{id}/essays", produces = "application/json")
     @CrossOrigin
     @ApiOperation(value = "Retrieve a user - this will be used for the home page")
-    public ResponseEntity getUserEssays(@PathVariable String userEmail) {
+    public ResponseEntity getUserEssays(@PathVariable String id) {
         try {
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             if (user == null) {
                 return new ResponseEntity<>("User does not exist!", HttpStatus.BAD_REQUEST);
             }

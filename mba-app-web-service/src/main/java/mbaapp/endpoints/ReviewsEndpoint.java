@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  * Created by jnag on 4/14/18.
  */
 @RestController
-@RequestMapping("/mba/users/{userEmail}/school/{schoolShortName}/essay/{essayID}/draft/{draftID}/review/{reviewID}")
+@RequestMapping("/mba/users/{id}/school/{schoolShortName}/essay/{essayID}/draft/{draftID}/review/{reviewID}")
 public class ReviewsEndpoint extends EndpointBase {
 
     Logger logger = Logger.getLogger(EssaysEndpoint.class.getName());
@@ -33,16 +33,16 @@ public class ReviewsEndpoint extends EndpointBase {
     @GetMapping(produces = "application/json")
     @CrossOrigin
     @ApiOperation(value = "View a review request")
-    public ResponseEntity<String> getReview(@PathVariable String userEmail, @PathVariable String schoolShortName,
+    public ResponseEntity<String> getReview(@PathVariable String id, @PathVariable String schoolShortName,
                                             @PathVariable String essayID, @PathVariable String draftID, @PathVariable String reviewID) {
 
         try {
 
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
 
             Essay essay = school.getEssay(essayID);
@@ -89,16 +89,16 @@ public class ReviewsEndpoint extends EndpointBase {
     @PostMapping()
     @CrossOrigin
     @ApiOperation(value = "View a review request")
-    public ResponseEntity<String> addComments(@RequestBody ReviewRequest reviewRequest, @PathVariable String userEmail, @PathVariable String schoolShortName,
+    public ResponseEntity<String> addComments(@RequestBody ReviewRequest reviewRequest, @PathVariable String id, @PathVariable String schoolShortName,
                                               @PathVariable String essayID, @PathVariable String draftID, @PathVariable String reviewID) {
 
         try {
 
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
 
             Essay essay = school.getEssay(essayID);
@@ -137,17 +137,17 @@ public class ReviewsEndpoint extends EndpointBase {
     @PostMapping("/upload")
     @CrossOrigin
     @ApiOperation(value = "View a review request")
-    public ResponseEntity<String> uploadReviewDraft(@PathVariable String userEmail, @PathVariable String schoolShortName,
+    public ResponseEntity<String> uploadReviewDraft(@PathVariable String id, @PathVariable String schoolShortName,
                                                     @PathVariable String essayID, @PathVariable String draftID, @PathVariable String reviewID,
                                                     @RequestParam("file") MultipartFile file) {
 
         try {
 
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
 
             Essay essay = school.getEssay(essayID);
@@ -187,16 +187,16 @@ public class ReviewsEndpoint extends EndpointBase {
     @GetMapping("/download")
     @CrossOrigin
     @ApiOperation(value = "View a review request")
-    public ResponseEntity<String> downloadReviewDraft(@PathVariable String userEmail, @PathVariable String schoolShortName,
+    public ResponseEntity<String> downloadReviewDraft(@PathVariable String id, @PathVariable String schoolShortName,
                                                       @PathVariable String essayID, @PathVariable String draftID, @PathVariable String reviewID) {
 
         try {
 
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
+            if (runValidations(id, schoolShortName) != null) {
+                return runValidations(id, schoolShortName);
             }
 
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             UserSchool school = schoolExistsForUser(user, schoolShortName);
 
             Essay essay = school.getEssay(essayID);

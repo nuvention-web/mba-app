@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  * Created by jnag on 2/26/18.
  */
 @RestController
-@RequestMapping("/mba/users/{userEmail}/profile")
+@RequestMapping("/mba/users/{id}/profile")
 public class ProfileEndpoint {
 
 
@@ -36,10 +36,10 @@ public class ProfileEndpoint {
     @PutMapping()
     @CrossOrigin
     @ApiOperation(value = "Update the user's profile")
-    public ResponseEntity<String> updateProfile(@PathVariable String userEmail, @RequestBody ProfileRequest profileRequest) {
+    public ResponseEntity<String> updateProfile(@PathVariable String id, @RequestBody ProfileRequest profileRequest) {
 
         try {
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             if (user == null) {
                 return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
             }
@@ -57,10 +57,10 @@ public class ProfileEndpoint {
     @GetMapping(produces = "application/json")
     @CrossOrigin
     @ApiOperation(value = "Returns the user's profile")
-    public ResponseEntity<String> getUserProfile(@PathVariable String userEmail) {
+    public ResponseEntity<String> getUserProfile(@PathVariable String id) {
 
         try {
-            User user = userDBProvider.getUser(userEmail);
+            User user = userDBProvider.getUser(id);
             if (user == null) {
                 return new ResponseEntity<>("User does not exist!", HttpStatus.BAD_REQUEST);
             }

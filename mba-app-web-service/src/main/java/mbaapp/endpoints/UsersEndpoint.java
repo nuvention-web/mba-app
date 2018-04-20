@@ -9,9 +9,11 @@ import mbaapp.providers.SchoolInfoDBProvider;
 import mbaapp.providers.UserDBProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,32 +43,6 @@ public class UsersEndpoint {
     @Autowired
     @Qualifier("mongoSchoolDB")
     SchoolInfoDBProvider schoolInfoDBProvider;
-
-
-    @PostMapping("/create")
-    @CrossOrigin
-    @ApiOperation(value = "Create a new user")
-    public ResponseEntity<String> addUser(@RequestBody CreateUserRequest createUserRequest) {
-        try {
-
-            if (createUserRequest.getEmail().isEmpty()) {
-                return new ResponseEntity<String>("Missing email", HttpStatus.BAD_REQUEST);
-            }
-
-            if (userDBProvider.getUser(createUserRequest.getEmail()) != null) {
-                return new ResponseEntity<String>("User exists", HttpStatus.NOT_ACCEPTABLE);
-            }
-
-            userDBProvider.addUser(createUserRequest);
-
-            return new ResponseEntity<>("Added user", HttpStatus.CREATED);
-
-
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
 
     @GetMapping(value = "/{id:.+}", produces = "application/json")
     @CrossOrigin

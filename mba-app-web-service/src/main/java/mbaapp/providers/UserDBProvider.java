@@ -18,6 +18,10 @@ public interface UserDBProvider {
 
     public User getUser(String id);
 
+    public User getUserByEmail(String email);
+
+    public boolean authenticateUser(User user, LoginRequest loginRequest);
+
     public JSONObject getAllUserEssays(User user) throws Exception;
 
     public void addUser(CreateUserRequest createUserRequest) throws Exception;

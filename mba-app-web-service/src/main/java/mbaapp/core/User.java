@@ -22,6 +22,7 @@ public class User {
     public String name;
     public String email;
     public String userID;
+    public String password;
     public List<String> recommenders;
     public List<UserSchool> schools;
     public List<Activity> userActivity;
@@ -39,9 +40,13 @@ public class User {
 
     public String whatDoYouBring;
 
+    public User(){
 
-    public User(String name, String email) {
+    }
+
+    public User(String name, String email, String password) {
         userID = UUID.randomUUID().toString();
+        this.password = password;
         this.name = name;
         this.email = email;
         schools = new ArrayList<>();
@@ -134,6 +139,10 @@ public class User {
 
     public List<UserSchool> getSchools() {
         return schools;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setSchools(List<UserSchool> schools) {

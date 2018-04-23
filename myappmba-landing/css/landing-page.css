@@ -8585,6 +8585,10 @@ a.text-dark:hover, a.text-dark:focus {
   border: 2px solid #bd2130;
 }
 
+.features-icons {
+  color: #fff;
+}
+
 .features-icons h3 {
   font-weight: 800;
 }

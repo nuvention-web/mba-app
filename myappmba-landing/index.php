@@ -133,13 +133,13 @@
     </header>
 
     <!-- Icons Grid -->
-    <section class="features-icons bg-light text-center">
+    <section class="features-icons bg-dark text-center">
       <div class="container">
         <div class="row">
           <div class="col-lg-4">
             <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
               <div class="features-icons-icon d-flex">
-                <i class="fa fa-edit m-auto text-primary"></i>
+                <i class="fa fa-edit m-auto"></i>
               </div>
               <h3>Essay Drafts, Wrangled</h3>
               <p class="lead mb-0">Write, manage, and get feedback on your essays all in one place.</p>
@@ -148,7 +148,7 @@
           <div class="col-lg-4">
             <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
               <div class="features-icons-icon d-flex">
-                <i class="fa fa-calendar m-auto text-primary"></i>
+                <i class="fa fa-calendar m-auto"></i>
               </div>
               <h3>Deadlines, Managed</h3>
               <p class="lead mb-0">Keep track of all your application deadlines in one place</p>
@@ -157,7 +157,7 @@
           <div class="col-lg-4">
             <div class="features-icons-item mx-auto mb-0 mb-lg-3">
               <div class="features-icons-icon d-flex">
-                <i class="fa fa-comments m-auto text-primary"></i>
+                <i class="fa fa-comments m-auto"></i>
               </div>
               <h3>Advice, On-Demand</h3>
               <p class="lead mb-0">Specialists will review you application for a small fee.</p>

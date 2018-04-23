@@ -58,69 +58,77 @@
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
-          <div class="col-xl-9 mx-auto">
-            <h1 class="mb-5">Considering an MBA?<br><small>Focus on your story, we'll take care of the rest.</small></h1>
-          </div>
-          <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-            <form id="signup">
-              <div class="form-row">
-                <div class="col-12">
-                  <div id="error" class="hidden alert alert-danger" role="alert">
+          <div class="col-md-6">
+          <div id="action-box" class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-xl-9 mx-auto">
+                  <h2 class="mb-3">Considering an MBA?<br><small>Focus on your story, we'll take care of the rest.</small></h1>
+                </div>
+                <div class="col-md-11 mx-auto">
+                  <form id="signup">
+                    <div class="form-row">
+                      <div class="col-12">
+                        <div id="error" class="hidden alert alert-danger" role="alert">
 
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-row" style="margin-bottom: 10px;">
+                      <div class="col-12">
+                        <input id="email" name="email" autocomplete="email" type="email" class="form-control form-control-lg" placeholder="Enter your email...">
+                      </div>
+                    </div>
+                    <div id="form-hidden" class="hidden">
+                      <div class="form-row">
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="fname">First Name *</label>
+                            <input id="fname" autocomplete="given-name" type="text" class="form-control form-control-lg" placeholder="First Name">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="lname">Last Name *</label>
+                            <input id="lname" autocomplete="family-name" type="text" class="form-control form-control-lg" placeholder="Last Name">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="dob">Date of Birth *</label>
+                            <input id="dob" type="date" autocomplete="bday" class="form-control form-control-lg">
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label for="occ">Occupation *</label>
+                            <input id="occ" type="text" class="form-control form-control-lg" placeholder="Occupation">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <input id="utm_source" type="hidden" value="<?=$_GET['utm_source']?>">
+                    <input id="utm_medium" type="hidden" value="<?=$_GET['utm_medium']?>">
+                    <input id="utm_campaign" type="hidden" value="<?=$_GET['utm_campaign']?>">
+                    <input id="utm_term" type="hidden" value="<?=$_GET['utm_term']?>">
+                    <input id="utm_content" type="hidden" value="<?=$_GET['utm_content']?>">
+                    <div class="form-row">
+                      <div class="col-12">
+                        <button id="submit" type="submit" class="btn btn-block btn-lg btn-dark">Reserve Your Invite</button>
+                      </div>
+                    </div>
+                  </form>
+                  <div id="success" class="hidden alert alert-success" role="alert">
+                    Thank you for adding your name. We will be in touch shortly.
                   </div>
                 </div>
               </div>
-              <div class="form-row" style="margin-bottom: 10px;">
-                <div class="col-12">
-                  <input id="email" name="email" autocomplete="email" type="email" class="form-control form-control-lg" placeholder="Enter your email...">
-                </div>
-              </div>
-              <div id="form-hidden" class="hidden">
-                <div class="form-row">
-                  <div class="col-6">
-                    <div class="form-group">
-                      <label for="fname">First Name *</label>
-                      <input id="fname" autocomplete="given-name" type="text" class="form-control form-control-lg" placeholder="First Name">
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="form-group">
-                      <label for="lname">Last Name *</label>
-                      <input id="lname" autocomplete="family-name" type="text" class="form-control form-control-lg" placeholder="Last Name">
-                    </div>
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col-6">
-                    <div class="form-group">
-                      <label for="dob">Date of Birth *</label>
-                      <input id="dob" type="date" autocomplete="bday" class="form-control form-control-lg">
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="form-group">
-                      <label for="occ">Occupation *</label>
-                      <input id="occ" type="text" class="form-control form-control-lg" placeholder="Occupation">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <input id="utm_source" type="hidden" value="<?=$_GET['utm_source']?>">
-              <input id="utm_medium" type="hidden" value="<?=$_GET['utm_medium']?>">
-              <input id="utm_campaign" type="hidden" value="<?=$_GET['utm_campaign']?>">
-              <input id="utm_term" type="hidden" value="<?=$_GET['utm_term']?>">
-              <input id="utm_content" type="hidden" value="<?=$_GET['utm_content']?>">
-              <div class="form-row">
-                <div class="col-12">
-                  <button id="submit" type="submit" class="btn btn-block btn-lg btn-primary">Reserve Your Invite</button>
-                </div>
-              </div>
-            </form>
-            <div id="success" class="hidden alert alert-success" role="alert">
-              Thank you for adding your name. We will be in touch shortly.
             </div>
           </div>
         </div>
+      </div>
       </div>
     </header>
 

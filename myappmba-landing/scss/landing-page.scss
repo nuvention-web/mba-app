@@ -11,8 +11,17 @@
 @import "call-to-action.scss";
 @import "footer.scss";
 
-@import "../vendor/bootstrap-4.0.0/scss/bootstrap.scss";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 .hidden {
   display: none;
+}
+
+#action-box {
+  background: $red;
+  border: 2px solid darken($red, 10%);
+}
+
+.features-icons h3 {
+  font-weight: 800;
 }

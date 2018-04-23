@@ -3,7 +3,7 @@ header.masthead {
   background-color: $gray-800;
   background: url('../img/bg-masthead.jpg') no-repeat center center;
   @include background-cover;
-  padding-top: 8rem;
+  padding-top: 5rem;
   padding-bottom: 8rem;
   .overlay {
     position: absolute;
@@ -15,13 +15,13 @@ header.masthead {
     opacity: 0.3;
     box-shadow: inset 0 20px 150px #000000;
   }
-  h1 {
-    font-size: 2rem;
+  h2 {
+    //font-size: 2rem;
     font-weight: 800;
     text-shadow: 1px 2px 0px #4e4e4e;
   }
   @media (min-width: 768px) {
-    padding-top: 10rem;
+    padding-top: 7rem;
     padding-bottom: 10rem;
     h1 {
       font-size: 3rem;

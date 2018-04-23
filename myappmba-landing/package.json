@@ -4,6 +4,7 @@
   "description": "myapp.MBA landing page",
   "main": "gulpfile.js",
   "dependencies": {
+    "bootstrap": "^4.1.0",
     "browser-sync": "^2.23.6",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^3.9.3",

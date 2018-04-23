@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Social Sharing -->
-    <meta name="description" content="Considering an MBA? We've got your back. All for free.">
+    <meta name="description" content="Considering an MBA? Focus on your story, we'll take care of the rest.">
     <meta name="author" content="myapp.MBA">
     <meta property="og:url" content="https://myapp.mba" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="myapp.MBA" />
-    <meta property="og:description" content="Considering an MBA? We've got your back. All for free." />
+    <meta property="og:description" content="Considering an MBA? Focus on your story, we'll take care of the rest." />
     <meta property="og:image" content="https://myapp.mba/img/fb-share.png" />
     <link rel="shortcut icon" href="img/favicon.png" />
 

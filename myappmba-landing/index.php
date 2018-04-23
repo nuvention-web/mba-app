@@ -63,7 +63,7 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-xl-9 mx-auto">
-                  <h2 class="mb-3">Considering an MBA?<br><small>Focus on your story, we'll take care of the rest.</small></h1>
+                  <h2 class="mb-3">Considering an MBA?<br><small>Focus on your story,<br>we'll take care of the rest.</small></h1>
                 </div>
                 <div class="col-md-11 mx-auto">
                   <form id="signup">

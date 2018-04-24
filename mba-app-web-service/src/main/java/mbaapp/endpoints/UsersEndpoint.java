@@ -9,9 +9,14 @@ import mbaapp.providers.SchoolInfoDBProvider;
 import mbaapp.providers.UserDBProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +35,7 @@ import java.util.logging.Logger;
  */
 @RestController
 @RequestMapping("/mba/users")
-public class UsersEndpoint {
+public class UsersEndpoint extends EndpointBase{
 
     Logger logger = Logger.getLogger(UsersEndpoint.class.getName());
 
@@ -42,42 +47,25 @@ public class UsersEndpoint {
     @Qualifier("mongoSchoolDB")
     SchoolInfoDBProvider schoolInfoDBProvider;
 
+    @Autowired
+    public JavaMailSender emailSender;
 
-    @PostMapping("/create")
-    @CrossOrigin
-    @ApiOperation(value = "Create a new user")
-    public ResponseEntity<String> addUser(@RequestBody CreateUserRequest createUserRequest) {
-        try {
-
-            if (createUserRequest.getEmail().isEmpty()) {
-                return new ResponseEntity<String>("Missing email", HttpStatus.BAD_REQUEST);
-            }
-
-            if (userDBProvider.getUser(createUserRequest.getEmail()) != null) {
-                return new ResponseEntity<String>("User exists", HttpStatus.NOT_ACCEPTABLE);
-            }
-
-            userDBProvider.addUser(createUserRequest);
-
-            return new ResponseEntity<>("Added user", HttpStatus.CREATED);
-
-
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
 
     @GetMapping(value = "/{userEmail:.+}", produces = "application/json")
     @CrossOrigin
     @ApiOperation(value = "Retrieve a user - this will be used for the home page")
     public ResponseEntity getUser(@PathVariable String userEmail) {
         try {
-            User user = userDBProvider.getUser(userEmail);
-            if (user == null) {
+
+            if(runValidations(userEmail, null)!=null){
+                return runValidations(userEmail, null);
+            }
+
+            User mbaUser = userDBProvider.getUser(userEmail);
+            if (mbaUser == null) {
                 return new ResponseEntity<>("User does not exist!", HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>(userDBProvider.getUserSchoolDetails(user).toString(), HttpStatus.OK);
+            return new ResponseEntity<>(userDBProvider.getUserSchoolDetails(mbaUser).toString(), HttpStatus.OK);
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -91,6 +79,11 @@ public class UsersEndpoint {
     public ResponseEntity<String> addSchool(@RequestBody AddSchoolsRequest userRequest, @PathVariable String userEmail) {
 
         try {
+
+            if(runValidations(userEmail, null)!=null){
+                return runValidations(userEmail, null);
+            }
+
             User user = userDBProvider.getUser(userEmail);
             if (user == null) {
                 return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
@@ -112,6 +105,11 @@ public class UsersEndpoint {
     public ResponseEntity<String> addRecommender(@RequestBody AddRecommendersRequest recommendersRequest, @PathVariable String userEmail) {
 
         try {
+
+            if(runValidations(userEmail, null)!=null){
+                return runValidations(userEmail, null);
+            }
+
             User user = userDBProvider.getUser(userEmail);
             if (user == null) {
                 return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
@@ -131,6 +129,11 @@ public class UsersEndpoint {
     public ResponseEntity<String> deleteRecommender(@PathVariable String userEmail, @PathVariable String recommender) {
 
         try {
+
+            if(runValidations(userEmail, null)!=null){
+                return runValidations(userEmail, null);
+            }
+
             User user = userDBProvider.getUser(userEmail);
             if (user == null) {
                 return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
@@ -153,12 +156,17 @@ public class UsersEndpoint {
     public ResponseEntity<String> deleteSchool(@PathVariable String userEmail, @PathVariable String schoolName) {
 
         try {
+
+            if(runValidations(userEmail, schoolName)!=null){
+                return runValidations(userEmail, schoolName);
+            }
+
             User user = userDBProvider.getUser(userEmail);
             if (user == null) {
                 return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
             }
 
-            //userDBProvider.deleteSchool(user, schoolName);
+            userDBProvider.deleteSchool(user, schoolName);
 
             return new ResponseEntity<>("Did not delete school - for demo!", HttpStatus.OK);
 
@@ -175,6 +183,11 @@ public class UsersEndpoint {
     @ApiOperation(value = "Retrieve a user - this will be used for the home page")
     public ResponseEntity getUserEssays(@PathVariable String userEmail) {
         try {
+
+            if(runValidations(userEmail, null)!=null){
+                return runValidations(userEmail, null);
+            }
+
             User user = userDBProvider.getUser(userEmail);
             if (user == null) {
                 return new ResponseEntity<>("User does not exist!", HttpStatus.BAD_REQUEST);

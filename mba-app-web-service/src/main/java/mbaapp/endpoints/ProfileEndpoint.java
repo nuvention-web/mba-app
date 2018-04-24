@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  */
 @RestController
 @RequestMapping("/mba/users/{userEmail}/profile")
-public class ProfileEndpoint {
+public class ProfileEndpoint extends EndpointBase{
 
 
     Logger logger = Logger.getLogger(ProfileEndpoint.class.getName());
@@ -39,6 +39,11 @@ public class ProfileEndpoint {
     public ResponseEntity<String> updateProfile(@PathVariable String userEmail, @RequestBody ProfileRequest profileRequest) {
 
         try {
+
+            if(runValidations(userEmail, null)!=null){
+                return runValidations(userEmail, null);
+            }
+
             User user = userDBProvider.getUser(userEmail);
             if (user == null) {
                 return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
@@ -60,6 +65,11 @@ public class ProfileEndpoint {
     public ResponseEntity<String> getUserProfile(@PathVariable String userEmail) {
 
         try {
+
+            if(runValidations(userEmail, null)!=null){
+                return runValidations(userEmail, null);
+            }
+
             User user = userDBProvider.getUser(userEmail);
             if (user == null) {
                 return new ResponseEntity<>("User does not exist!", HttpStatus.BAD_REQUEST);

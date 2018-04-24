@@ -1,5 +1,6 @@
 package mbaapp.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
@@ -20,6 +21,8 @@ public class User {
     public String id;
     public String name;
     public String email;
+    //@JsonIgnore
+    public String password;
     public List<String> recommenders;
     public List<UserSchool> schools;
     public List<Activity> userActivity;
@@ -37,8 +40,13 @@ public class User {
 
     public String whatDoYouBring;
 
+    public User(){
 
-    public User(String name, String email) {
+    }
+
+    public User(String name, String email, String password) {
+//        userID = UUID.randomUUID().toString();
+        this.password = password;
         this.name = name;
         this.email = email;
         schools = new ArrayList<>();
@@ -131,6 +139,10 @@ public class User {
         return schools;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setSchools(List<UserSchool> schools) {
         this.schools = schools;
     }
@@ -144,6 +156,9 @@ public class User {
         StringWriter stringWriter = new StringWriter();
         objectMapper.writeValue(stringWriter, this);
         JSONObject userJSON = new JSONObject(stringWriter.toString());
+        if(userJSON.has("password")){
+            userJSON.remove("password");
+        }
         return userJSON;
 
     }

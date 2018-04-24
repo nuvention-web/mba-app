@@ -39,7 +39,12 @@ $("#email").change(function() {
         utm_term: utm_term,
         utm_content: utm_content
       }
-    ).done();
+    ).done(function () {
+      gtag("event", "Email Capture", {
+        "event_category": "Form",
+        "event_label": "Homepage Signup"
+      });
+    });
   }
 });
 
@@ -82,6 +87,10 @@ $("#signup").submit(function(e) {
   ).done(function(data) {
     $("#signup").slideUp();
     $("#success").slideDown();
+    gtag("event", "Subscribe", {
+      "event_category": "Form",
+      "event_label": "Homepage Signup"
+    });
   }).fail(function(data) {
     showError("Unable to sign you up. Please check your information and try again.");
   });

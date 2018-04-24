@@ -14,6 +14,9 @@
     <meta property="og:title" content="myapp.MBA" />
     <meta property="og:description" content="Considering an MBA? Focus on your story, we'll take care of the rest." />
     <meta property="og:image" content="https://myapp.mba/img/fb-share.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
     <link rel="shortcut icon" href="img/favicon.png" />
 
     <title>myapp.MBA</title>
@@ -49,7 +52,7 @@
     <nav class="navbar navbar-dark bg-dark static-top">
       <div class="container">
         <a class="navbar-brand" href="#"><img src="img/logo_default_dark.png"></img></a>
-        <a class="btn btn-primary" href="mailto:hello@myapp.mba">Get in Touch</a>
+        <a class="btn btn-primary d-none d-sm-block" href="mailto:hello@myapp.mba">Get in Touch</a>
       </div>
     </nav>
 

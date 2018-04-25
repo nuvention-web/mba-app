@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,10 +29,22 @@ public class EndpointBase {
     @Autowired
     Keywords keywords;
 
+
+
     protected ResponseEntity<String> runValidations(String userEmail, String schoolShortName) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(!auth.getPrincipal().equals(userEmail)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
         User user = userDBProvider.getUser(userEmail);
         if (user == null) {
             return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        if(schoolShortName==null) {
+            return null;
         }
 
         UserSchool school = schoolExistsForUser(user, schoolShortName);

@@ -5,12 +5,29 @@
       <div class="m-stack__item m-stack__item--middle m-stack__item--fluid">
         <div class="m-content">
           <div class="row">
-            <div *ngIf='content != undefined && !submitted' class="content col-6">
-              <h3>Hi, {{reviewer}}!</h3>
-              <p>{{content['review']['personalMessage']}}</p><br>
+            <div *ngIf='content != undefined && !submitted' class="content col-10">
               <div class="m-portlet m-portlet--mobile">
                 <div class="m-portlet__body">
-                  <div>{{content['draft']}}</div>
+                  <div><h4><p style="color:#ab3233">Hi, {{reviewer}}!</p></h4></div>
+                  <div>
+                    <p class="lead">You have received an essay from {{content['user']}} to review. Please leave some feedback for {{user}} below. You can also upload a draft with any suggested edits.</p>
+                  </div>
+                </div>
+              </div>
+              <!--&lt;!&ndash;<h3>Hi, {{reviewer}}!</h3>&ndash;&gt;-->
+              <!--<p>{{content['review']['personalMessage']}}</p><br>-->
+              <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__head">
+                  <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                      <h6 class="m-portlet__head-text">
+                      <br>{{content['prompt']}}
+                      </h6>
+                  </div>
+                  </div>
+                </div>
+                <div class="m-portlet__body">
+                  <div innerHTML="{{content['draft']}}"></div>
                 </div>
               </div>
 

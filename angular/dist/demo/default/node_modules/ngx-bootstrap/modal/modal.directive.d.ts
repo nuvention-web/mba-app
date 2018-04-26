@@ -40,7 +40,7 @@ export declare class ModalDirective implements OnDestroy, OnInit {
     private isNested;
     constructor(_element: ElementRef, _viewContainerRef: ViewContainerRef, _renderer: Renderer2, clf: ComponentLoaderFactory);
     onClick(event: any): void;
-    onEsc(): void;
+    onEsc(event: any): void;
     ngOnDestroy(): any;
     ngOnInit(): any;
     /** Allows to manually toggle modal visibility */

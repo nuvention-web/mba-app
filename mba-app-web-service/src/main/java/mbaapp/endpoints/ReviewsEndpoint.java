@@ -11,6 +11,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +23,7 @@ import java.util.logging.Logger;
  * Created by jnag on 4/14/18.
  */
 @RestController
-@RequestMapping("/mba/users/{userEmail}/school/{schoolShortName}/essay/{essayID}/draft/{draftID}/review/{reviewID}")
+@RequestMapping("/feedback/users/{userEmail}/school/{schoolShortName}/essay/{essayID}/draft/{draftID}/review/{reviewID}")
 public class ReviewsEndpoint extends EndpointBase {
 
     Logger logger = Logger.getLogger(EssaysEndpoint.class.getName());
@@ -235,6 +237,29 @@ public class ReviewsEndpoint extends EndpointBase {
 
     }
 
+    
+
+    protected ResponseEntity<String> runValidations(String userEmail, String schoolShortName) {
+
+        User user = userDBProvider.getUser(userEmail);
+        if (user == null) {
+            return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        if(schoolShortName==null) {
+            return null;
+        }
+
+        UserSchool school = schoolExistsForUser(user, schoolShortName);
+
+        if (school == null) {
+            return new ResponseEntity<String>("The school " + schoolShortName + " is not a part of the list of schools " +
+                    "for " + userEmail, HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        return null;
+
+    }
 
 }
 

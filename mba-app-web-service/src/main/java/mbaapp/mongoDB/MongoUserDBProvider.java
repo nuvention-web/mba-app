@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,9 +43,13 @@ public class MongoUserDBProvider implements UserDBProvider {
     Keywords keywords;
 
 
-
     @Override
     public User getUser(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
@@ -99,8 +104,30 @@ public class MongoUserDBProvider implements UserDBProvider {
             throw new Exception("The email is missing");
         }
 
-        User user = new User(createUserRequest.getName(), createUserRequest.getEmail());
+        if (createUserRequest.getPassword() == null || createUserRequest.getPassword().length==0) {
+            throw new Exception("The password is missing");
+        }
+
+        String hashedPassword = new BCryptPasswordEncoder().encode(java.nio.CharBuffer.wrap(createUserRequest.getPassword()));
+
+        User user = new User(createUserRequest.getName(), createUserRequest.getEmail(), hashedPassword);
         userRepository.save(user);
+
+    }
+
+
+    @Override
+    public void activateUser(InactiveUser inactiveUser) throws Exception {
+
+        User user = new User(inactiveUser.getName(), inactiveUser.getEmail(), inactiveUser.getPassword());
+        userRepository.save(user);
+
+    }
+
+
+    public boolean authenticateUser(User user, LoginRequest loginRequest) {
+
+        return new BCryptPasswordEncoder().matches(java.nio.CharBuffer.wrap(loginRequest.getPassword()), user.getPassword());
 
     }
 

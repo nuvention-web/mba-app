@@ -1,0 +1,27 @@
+.showcase {
+  background: $red;
+  color: #fff;
+  h2 {
+    font-weight: 800;
+  }
+  .showcase-text {
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+    padding: 3rem !important;
+  }
+  .showcase-img {
+    height: 200px;
+    background-size: cover;
+  }
+  @media (min-width: 768px) {
+    .showcase-text {
+      padding-left: 7rem !important;
+      padding-right: 7rem !important;
+      padding: 7rem !important;
+    }
+    .showcase-img {
+      min-height: 30rem;
+      background-size: cover;
+    }
+  }
+}

@@ -10,6 +10,7 @@ public class CreateUserRequest {
 
     String name;
     String email;
+    char[] password;
 
     public String getName() {
         return name;
@@ -18,4 +19,7 @@ public class CreateUserRequest {
     public String getEmail() {
         return email;
     }
+
+    public char[] getPassword() { return password; }
+
 }

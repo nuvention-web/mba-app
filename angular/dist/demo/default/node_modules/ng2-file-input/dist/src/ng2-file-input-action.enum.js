@@ -1,0 +1,9 @@
+export var Ng2FileInputAction;
+(function (Ng2FileInputAction) {
+    Ng2FileInputAction[Ng2FileInputAction["Removed"] = 0] = "Removed";
+    Ng2FileInputAction[Ng2FileInputAction["Added"] = 1] = "Added";
+    Ng2FileInputAction[Ng2FileInputAction["InvalidDenied"] = 2] = "InvalidDenied";
+    Ng2FileInputAction[Ng2FileInputAction["CouldNotRemove"] = 3] = "CouldNotRemove";
+    Ng2FileInputAction[Ng2FileInputAction["CouldNotAdd"] = 4] = "CouldNotAdd";
+})(Ng2FileInputAction || (Ng2FileInputAction = {}));
+//# sourceMappingURL=ng2-file-input-action.enum.js.map

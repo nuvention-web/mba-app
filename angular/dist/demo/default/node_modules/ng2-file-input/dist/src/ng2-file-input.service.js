@@ -1,0 +1,30 @@
+import { FileInputHandlerService } from './file-input-handler.service';
+import { forwardRef, Inject, Injectable } from '@angular/core';
+var Ng2FileInputService = (function () {
+    function Ng2FileInputService(fileInputHandlerService) {
+        this.fileInputHandlerService = fileInputHandlerService;
+    }
+    Ng2FileInputService.prototype.reset = function (id) {
+        return this.fileInputHandlerService.reset(id);
+    };
+    Ng2FileInputService.prototype.remove = function (id, files) {
+        return this.fileInputHandlerService.removeFiles(id, files);
+    };
+    Ng2FileInputService.prototype.add = function (id, files) {
+        return this.fileInputHandlerService.addFiles(id, files);
+    };
+    Ng2FileInputService.prototype.getCurrentFiles = function (id) {
+        var fileInput = this.fileInputHandlerService.getFileInput(id);
+        return fileInput ? fileInput.currentFiles : [];
+    };
+    Ng2FileInputService.decorators = [
+        { type: Injectable },
+    ];
+    /** @nocollapse */
+    Ng2FileInputService.ctorParameters = function () { return [
+        { type: FileInputHandlerService, decorators: [{ type: Inject, args: [forwardRef(function () { return FileInputHandlerService; }),] },] },
+    ]; };
+    return Ng2FileInputService;
+}());
+export { Ng2FileInputService };
+//# sourceMappingURL=ng2-file-input.service.js.map

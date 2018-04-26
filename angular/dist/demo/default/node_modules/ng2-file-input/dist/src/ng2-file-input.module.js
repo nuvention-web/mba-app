@@ -1,0 +1,47 @@
+import { FileInputHandlerService } from './file-input-handler.service';
+import { Ng2FileInputService } from './ng2-file-input.service';
+import { NgModule, InjectionToken } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FileDropModule } from 'bergben-angular2-file-drop';
+import { Ng2FileInputComponent } from './ng2-file-input.component';
+import { Ng2FileInputOptions } from './ng2-file-input-options.class';
+export var USER_OPTIONS = new InjectionToken('ng2 file input custom user options');
+export function optionsFactory(userOptions) {
+    var options = new Ng2FileInputOptions();
+    Object.assign(options, userOptions);
+    return options;
+}
+var Ng2FileInputModule = (function () {
+    function Ng2FileInputModule() {
+    }
+    Ng2FileInputModule.forRoot = function (options) {
+        if (options === void 0) { options = {}; }
+        return {
+            ngModule: Ng2FileInputModule,
+            providers: [{
+                    provide: USER_OPTIONS,
+                    useValue: options
+                }, {
+                    provide: Ng2FileInputOptions,
+                    useFactory: optionsFactory,
+                    deps: [USER_OPTIONS]
+                }]
+        };
+    };
+    Ng2FileInputModule.decorators = [
+        { type: NgModule, args: [{
+                    imports: [
+                        CommonModule,
+                        FileDropModule
+                    ],
+                    providers: [Ng2FileInputService, FileInputHandlerService],
+                    declarations: [Ng2FileInputComponent],
+                    exports: [Ng2FileInputComponent]
+                },] },
+    ];
+    /** @nocollapse */
+    Ng2FileInputModule.ctorParameters = function () { return []; };
+    return Ng2FileInputModule;
+}());
+export { Ng2FileInputModule };
+//# sourceMappingURL=ng2-file-input.module.js.map

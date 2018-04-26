@@ -1,0 +1,39 @@
+<div data-code-preview="true" data-code-html="true" data-code-js="false">
+  <div>
+    <div class="m-stack m-stack--ver m-stack--general">
+      <div class="m-stack__item m-stack__item--center m-stack__item--middle" style="width: 40px;"></div>
+      <div class="m-stack__item m-stack__item--middle m-stack__item--fluid">
+        <div class="m-content">
+          <div class="row">
+            <div *ngIf='content != undefined && !submitted' class="content col-6">
+              <h3>Hi, {{reviewer}}!</h3>
+              <p>{{content['review']['personalMessage']}}</p><br>
+              <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+                  <div>{{content['draft']}}</div>
+                </div>
+              </div>
+
+              <ng2-file-input [drop-text]="'Drop the file down here'" [browse-text]="'Upload file'" (onAction)="onAction($event)"></ng2-file-input>
+
+
+              <form id="feedback-form">
+                <div class="form-group">
+                  <label for="exampleTextarea"><h6>Feedback</h6></label>
+                  <textarea class="form-control" id="exampleTextarea" rows="6" placeholder="Feedback" [(ngModel)]="feedback" name="feedback"></textarea>
+                </div>
+              </form>
+              <div style="text-align: center" >
+                <button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+              </div>
+            </div>
+            <div *ngIf='submitted' class="col-6">
+              <h2 style="text-align: center; margin-top: 50px">You have submitted</h2>
+              <div [style.height]="height"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { ThemeComponent } from './theme.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from "../auth/_guards/auth.guard";
+
 const routes: Routes = [
     {
         "path": "",
@@ -52,6 +53,11 @@ const routes: Routes = [
         ]
     },
     {
+        "path": "feedback",
+        "loadChildren": ".\/pages\/default\/feedback\/feedbackhead.module#FeedbackheadModule"
+
+    },
+    {
         "path": "snippets\/pages\/user\/login-1",
         "loadChildren": ".\/pages\/self-layout-blank\/snippets\/pages\/user\/user-login-1\/user-login-1.module#UserLogin1Module"
     },
@@ -95,6 +101,7 @@ const routes: Routes = [
         "path": "snippets\/pages\/errors\/error-6",
         "loadChildren": ".\/pages\/self-layout-blank\/snippets\/pages\/errors\/errors-error-6\/errors-error-6.module#ErrorsError6Module"
     },
+
     {
         "path": "**",
         "redirectTo": "404",

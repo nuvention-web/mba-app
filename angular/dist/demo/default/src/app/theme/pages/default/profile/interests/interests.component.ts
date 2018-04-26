@@ -17,7 +17,7 @@ export class InterestsComponent implements OnInit {
                 "What are you going to bring to the MBA program you are admitted to?",
                 ];
     questionNames = ["hobbiesOrInterests", "whatDoYouBring"];
-    datas:any = [[],[]];
+    datas:any = [[''],''];
     types = [1, 0];
     isInit = true;
     constructor(private _profile: ProfileService) {

@@ -23,12 +23,12 @@ export class FeedbackService {
 
     getData(url) {
         this.info = this.parseURL(url);
-        return this.http.get('https://' + this.info['url'] + '/feedback/users/' + this.info['user']
+        return this.http.get('https://' + this.info['url'] + '/review/users/' + this.info['user']
             + '/school/' + this.info['school'] + '/essay/' + this.info['essay'] +  '/draft/' + this.info['token'] + '/review/' + this.info['reviewid']).map((response: Response) => response.json());
     }
 
     uploadComment(content) {
-        return this.http.post('https://' + this.info['url'] + '/feedback/users/' + this.info['user']
+        return this.http.post('https://' + this.info['url'] + '/review/users/' + this.info['user']
             + '/school/' + this.info['school'] + '/essay/' + this.info['essay'] +  '/draft/' + this.info['token'] + '/review/' + this.info['reviewid'], content, {headers: header});
     }
 
@@ -38,7 +38,7 @@ export class FeedbackService {
         }
         const formData: FormData = new FormData();
         formData.append('file', file['file'], file['name']);
-        return this.http.post('https://' + this.info['url'] + '/feedback/users/' + this.info['user']
+        return this.http.post('https://' + this.info['url'] + '/review/users/' + this.info['user']
             + '/school/' + this.info['school'] + '/essay/' + this.info['essay'] +  '/draft/' + this.info['token'] + '/review/' + this.info['reviewid'] + '/upload', formData);
     }
 }

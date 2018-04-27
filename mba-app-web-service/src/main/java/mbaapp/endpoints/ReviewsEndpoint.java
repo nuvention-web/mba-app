@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  * Created by jnag on 4/14/18.
  */
 @RestController
-@RequestMapping("/feedback/users/{userEmail}/school/{schoolShortName}/essay/{essayID}/draft/{draftID}/review/{reviewID}")
+@RequestMapping("/review/users/{userEmail}/school/{schoolShortName}/essay/{essayID}/draft/{draftID}/review/{reviewID}")
 public class ReviewsEndpoint extends EndpointBase {
 
     Logger logger = Logger.getLogger(EssaysEndpoint.class.getName());

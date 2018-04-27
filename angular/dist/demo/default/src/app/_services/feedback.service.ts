@@ -16,7 +16,7 @@ export class FeedbackService {
     }
 
     parseURL(url): any{
-        let arr = url.split('//', 1)[1].split('/');
+        let arr = url.split('//')[1].split('/');
         return {'url': url, 'user': arr[2], 'school': arr[3], 'essay': arr[4], 'token': arr[5], 'reviewid': arr[6]};
     }
 

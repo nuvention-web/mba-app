@@ -15,6 +15,7 @@ export class FeedbackComponent implements OnInit, AfterViewInit{
   file: {} = null;
   feedback: string;
   reviewer: string;
+    userFirstName: string;
   submitted: any = false;
   height: any;
   constructor(private feedbackService: FeedbackService, private _script: ScriptLoaderService, private router: Router) {
@@ -22,7 +23,8 @@ export class FeedbackComponent implements OnInit, AfterViewInit{
       this.content = data;
       this.feedback = this.content['review']['reviewComments']['comment'];
       this.reviewer = this.content['reviewer'].split(' ')[0];
-    });
+      this.userFirstName = this.content['user'].split(' ')[0];
+      });
     this.height = window.screen.height + "px";
     console.log('start');
   }

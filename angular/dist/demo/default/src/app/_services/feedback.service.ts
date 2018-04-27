@@ -3,7 +3,7 @@ import {Http, Response, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 
 const header =  new Headers( {'Content-Type': 'application/json'});
-const url = 'myappmba-199623.appspot.com';
+const globalURL = 'myappmba-199623.appspot.com';
 const user = 'john.doe@gmail.com';
 
 // URL example: may be something likes this https://{url}/feedback/{username}/{schoolname}/{essayname}/{token}/{reviewID}
@@ -17,7 +17,7 @@ export class FeedbackService {
 
     parseURL(url): any{
         let arr = url.split('//')[1].split('/');
-        return {'url': url, 'user': arr[2], 'school': arr[3], 'essay': arr[4], 'token': arr[5], 'reviewid': arr[6]};
+        return {'url': globalURL, 'user': arr[2], 'school': arr[3], 'essay': arr[4], 'token': arr[5], 'reviewid': arr[6]};
     }
 
     getData(url) {

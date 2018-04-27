@@ -53,7 +53,7 @@ const routes: Routes = [
         ]
     },
     {
-        "path": "feedback",
+        "path": "feedback/:username/:schoolname/:essayname/:token/:reviewID",
         "loadChildren": ".\/pages\/default\/feedback\/feedbackhead.module#FeedbackheadModule"
 
     },

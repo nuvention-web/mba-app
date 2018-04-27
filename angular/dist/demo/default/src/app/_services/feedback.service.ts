@@ -11,8 +11,8 @@ const user = 'john.doe@gmail.com';
 @Injectable()
 export class FeedbackService {
     info = {};
-    constructor(private http: Http, public url : string) {
-        this.info = this.parseURL(url);
+    constructor(private http: Http) {
+
     }
 
     parseURL(url): any{
@@ -21,6 +21,7 @@ export class FeedbackService {
     }
 
     getData(url) {
+        this.info = this.parseURL(url);
         return this.http.get('https://' + this.info['url'] + '/feedback/users/' + this.info['user']
             + '/school/' + this.info['school'] + '/essay/' + this.info['essay'] +  '/draft/' + this.info['token'] + '/review/' + this.info['reviewid']).map((response: Response) => response.json());
     }

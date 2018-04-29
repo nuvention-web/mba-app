@@ -19,7 +19,7 @@
     <div>
         <ul class="nav nav-tabs  m-tabs-line m-tabs-line--2x m-tabs-line--primary" role="tablist">
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#m_tabs_1_1" ng-reflect-href="#m_tabs_2_1">
+                <a class="nav-link active" data-toggle="tab" href="#m_tabs_1_1" ng-reflect-href="#m_tabs_2_1">
                     <strong>Essays</strong>
                 </a>
             </li>
@@ -85,7 +85,7 @@
                             </div>
                             <div class="m-portlet__foot">
                                 <div class="row align-items-center">
-                                    <button routerLink="/school/{{school}}/notes/edit/{{ note.noteID }}" class="btn btn-brand"
+                                    <button routerLink="/school/{{school}}/notes/{{ note.noteID }}/edit" class="btn btn-brand"
                                             type="submit">
                                         Update
                                     </button>
@@ -96,7 +96,7 @@
                 </div>
                 <div class="row align-items-right">
                     <div class="col-xl-5 m--align-left">
-                        <a class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" routerLink="/notes/add/{{school}}/none" href="#" ng-reflect-href="#">
+                        <a class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" routerLink="/school/{{school}}/notes/none/add" href="#" ng-reflect-href="#">
 				<span>
 					<i class="la la-plus"></i>
 					<span>
@@ -129,7 +129,7 @@
                             </div>
                             <div class="m-portlet__foot">
                                 <div class="row align-items-center">
-                                    <button routerLink="/recommender/edit/{{school}}/{{recommendation.id}}/{{recommendation.recommender}}" class="btn btn-brand"
+                                    <button routerLink="/school/{{school}}/recommender/{{recommendation.id}}/edit" class="btn btn-brand"
                                             type="submit">
                                         Update
                                     </button>

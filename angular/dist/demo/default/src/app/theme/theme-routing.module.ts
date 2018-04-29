@@ -30,11 +30,11 @@ const routes: Routes = [
                 "loadChildren": ".\/pages\/default\/profile\/profile.module#ProfileModule"
             },
             {
-                "path": "school/:school/notes/:action/:noteID",
+                "path": "school/:school/notes/:noteID/:action",
                 "loadChildren": ".\/pages\/default\/notes\/notes.module#NotesModule"
             },
             {
-                "path": "recommender/edit/:school/:recommenderID/:recommenderName",
+                "path": "school/:school/recommender/:recommenderID/edit",
                 "loadChildren": ".\/pages\/default\/recommender\/recommender.module#RecommenderModule"
             },
             {

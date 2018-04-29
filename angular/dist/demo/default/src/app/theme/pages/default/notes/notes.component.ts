@@ -38,7 +38,7 @@ export class NotesComponent implements OnInit {
     }
 
     goBack() {
-        this.router.navigate(['/school/' + this.school])
+        this.router.navigate(['/school/' + this.school], {fragment: "m_tabs_1_2"})
     }
 
 
@@ -46,14 +46,14 @@ export class NotesComponent implements OnInit {
         if (this.action == "edit") {
             this._schools.updateNote(this.school, this.noteID, this.note.contents, this.note.title).subscribe(
                 (response:Response) => {
-                    this.router.navigate(['/school/' + this.school])
+                    this.router.navigate(['/school/' + this.school],{fragment: "m_tabs_1_2"})
                 }, (error:Response) => {
                 }
             )
         } else {
             this._schools.addNote(this.school, this.note.contents, this.note.title).subscribe(
                 (response:Response) => {
-                    this.router.navigate(['/school/' + this.school])
+                    this.router.navigate(['/school/' + this.school],{fragment: "m_tabs_1_2"})
                 }, (error:Response) => {
                 }
             )

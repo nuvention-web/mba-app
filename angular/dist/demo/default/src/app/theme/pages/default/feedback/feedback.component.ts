@@ -21,7 +21,9 @@ export class FeedbackComponent implements OnInit, AfterViewInit{
   constructor(private feedbackService: FeedbackService, private _script: ScriptLoaderService, private router: Router) {
       this.feedbackService.getData(this.router.url).subscribe(data => {
       this.content = data;
-      this.feedback = this.content['review']['reviewComments']['comment'];
+      if (this.content['review']['reviewComments']!=null) {
+          this.feedback = this.content['review']['reviewComments']['comment'];
+      }
       this.reviewer = this.content['reviewer'].split(' ')[0];
       this.userFirstName = this.content['user'].split(' ')[0];
       });

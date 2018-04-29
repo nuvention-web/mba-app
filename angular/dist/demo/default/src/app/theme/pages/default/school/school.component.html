@@ -6,7 +6,7 @@
             </h3>
             <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                 <li class="m-nav__item m-nav__item--home">
-                    <a href="#" class="m-nav__link m-nav__link--icon">
+                    <a routerLink="/" class="m-nav__link m-nav__link--icon">
                         <i class="m-nav__link-icon la la-home"></i>
                     </a>
                 </li>
@@ -45,7 +45,7 @@
                             </div>
                             <div class="m-portlet__foot">
                                 <div class="row align-items-center">
-                                    <button routerLink="/essays/{{school}}/{{ essay.essayID }}" class="btn btn-brand"
+                                    <button routerLink="/school/{{school}}/essay/{{ essay.essayID }}" class="btn btn-brand"
                                             type="submit">
                                         Work on This
                                     </button>
@@ -85,7 +85,7 @@
                             </div>
                             <div class="m-portlet__foot">
                                 <div class="row align-items-center">
-                                    <button routerLink="/notes/edit/{{school}}/{{ note.noteID }}" class="btn btn-brand"
+                                    <button routerLink="/school/{{school}}/notes/edit/{{ note.noteID }}" class="btn btn-brand"
                                             type="submit">
                                         Update
                                     </button>
@@ -100,7 +100,7 @@
 				<span>
 					<i class="la la-plus"></i>
 					<span>
-						New note
+						New Note
 					</span>
 				</span>
                         </a>

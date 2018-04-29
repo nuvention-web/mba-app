@@ -18,11 +18,11 @@ const routes: Routes = [
                 "loadChildren": ".\/pages\/default\/not-found\/not-found.module#NotFoundModule"
             },
             {
-                "path": "essays/:school",
-                "loadChildren": ".\/pages\/default\/essays\/essays.module#EssaysModule"
+                "path": "school/:school",
+                "loadChildren": ".\/pages\/default\/school\/school.module#SchoolModule"
             },
             {
-                "path": "essays/:school/:id",
+                "path": "school/:school/essay/:id",
                 "loadChildren": ".\/pages\/default\/essay\/essay.module#EssayModule"
             },
             {
@@ -30,7 +30,7 @@ const routes: Routes = [
                 "loadChildren": ".\/pages\/default\/profile\/profile.module#ProfileModule"
             },
             {
-                "path": "notes/:action/:school/:noteID",
+                "path": "school/:school/notes/:action/:noteID",
                 "loadChildren": ".\/pages\/default\/notes\/notes.module#NotesModule"
             },
             {

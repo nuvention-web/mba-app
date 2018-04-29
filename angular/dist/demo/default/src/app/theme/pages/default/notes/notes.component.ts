@@ -24,9 +24,9 @@ export class NotesComponent implements OnInit {
 
         this.route.params.subscribe(params => {
                 console.log(params);
-                this.school = params.school
-                this.noteID = params.noteID
-                this.action = params.action
+                this.school = params.school;
+                this.noteID = params.noteID;
+                this.action = params.action;
 
             }
         );
@@ -38,28 +38,23 @@ export class NotesComponent implements OnInit {
     }
 
     goBack() {
-        this.router.navigate(['/essays/' + this.school])
+        this.router.navigate(['/school/' + this.school])
     }
 
 
     updateNote() {
-        console.log(this.note);
         if (this.action == "edit") {
             this._schools.updateNote(this.school, this.noteID, this.note.contents, this.note.title).subscribe(
                 (response:Response) => {
-                    console.log(response)
-                    this.router.navigate(['/essays/' + this.school])
+                    this.router.navigate(['/school/' + this.school])
                 }, (error:Response) => {
-                    console.log(error);
                 }
             )
         } else {
             this._schools.addNote(this.school, this.note.contents, this.note.title).subscribe(
                 (response:Response) => {
-                    console.log(response)
-                    this.router.navigate(['/essays/' + this.school])
+                    this.router.navigate(['/school/' + this.school])
                 }, (error:Response) => {
-                    console.log(error);
                 }
             )
         }

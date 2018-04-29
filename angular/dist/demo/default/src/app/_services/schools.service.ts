@@ -71,7 +71,7 @@ export class SchoolsService {
     uploadFile(file, schoolName:string, essayID:string) {
         let formData: FormData = new FormData();
         formData.append('file', file, file.name);
-        return this.http.post(URL+"/mba/users/"+user+"/school/" + schoolName + "/essay/" + essayID+"/upload/draft", formData, this.jwt(1));
+        return this.http.post(URL+"/mba/users/"+user+"/school/" + schoolName + "/essay/" + essayID+"/upload/draft", formData, this.jwt(0));
     }
 
     private jwt(json=0) {
@@ -79,10 +79,10 @@ export class SchoolsService {
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         if (currentUser && currentUser.AUTH_TOKEN) {
             let headers = new Headers;
-            if(json=0) {
-                headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.AUTH_TOKEN });
+            if(json==1) {
+                headers = new Headers({'Authorization': currentUser.AUTH_TOKEN, 'Content-Type': 'application/json'});
             } else {
-                headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.AUTH_TOKEN , 'Content-Type': 'application/json'});
+                headers = new Headers({ 'Authorization': currentUser.AUTH_TOKEN});
             }
             return new RequestOptions({ headers: headers });
         }

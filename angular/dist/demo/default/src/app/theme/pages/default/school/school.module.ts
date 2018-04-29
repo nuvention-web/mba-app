@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutModule } from '../../../layouts/layout.module';
 import { DefaultComponent } from '../default.component';
-import { EssaysComponent } from './essays.component';
+import { SchoolComponent } from './school.component';
 
 const routes: Routes = [
     {
@@ -12,7 +12,7 @@ const routes: Routes = [
         'children': [
             {
                 'path': '',
-                'component': EssaysComponent,
+                'component': SchoolComponent,
             },
         ],
     },
@@ -24,8 +24,8 @@ const routes: Routes = [
     ], exports: [
         RouterModule,
     ], declarations: [
-        EssaysComponent,
+        SchoolComponent,
     ],
 })
-export class EssaysModule {
+export class SchoolModule {
 }

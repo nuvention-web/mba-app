@@ -4,7 +4,7 @@ import { URL, user} from './url-infos'
 
 let header = new Headers({'Content-Type': 'application/json'});
 @Injectable()
-export class UsersSerivce {
+export class UsersService {
 
  constructor(private http: Http) { }
 

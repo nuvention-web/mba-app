@@ -22,15 +22,12 @@
 <div class="m-content">
 	<!--Begin::Section-->
 	<div class="row">
-		<div *ngFor="let school of schools" class="col-xl-5">
+		<div *ngFor="let school of schools" class="col-xl-3">
 			<!--begin:: Widgets/Top Products-->
 			<div routerLink="/essays/{{school.shortName}}" class="show-hand m-portlet m-portlet--bordered-semi">
 				<div class="m-portlet__head">
 					<div class="m-portlet__head-caption">
 						<div class="m-portlet__head-title">
-							<span class="m-portlet__head-icon">
-								<img src="{{ school.logoURL }}"/>
-							</span>
 							<h4 class="m-portlet__head-text">
 								{{ school.name }}
 							</h4>
@@ -69,33 +66,13 @@
 						<table class="table">
 							<tbody>
 							<tr>
-								<td><strong>Application Deadline</strong></td>
-								<td> <strong>{{ school.deadline }}</strong></td>
-
-							</tr>
-							<tr *ngIf="school.avgGMAT">
-								<td>
-									Average GMAT Score
-								</td>
-								<td>
-									{{ school.avgGMAT }}
-								</td>
-							</tr>
-							<tr *ngIf="school.medianGMAT">
-								<td>
-									Median GMAT Score
-								</td>
-								<td>
-									{{ school.medianGMAT }}
-								</td>
+								<td><i class="flaticon-edit-1"></i>&nbsp;&nbsp;&nbsp;<strong>1/2</strong> Essays Started</td>
 							</tr>
 							<tr>
-								<td>Average GPA</td>
-								<td>{{ school.avgGPA }}</td>
+								<td><i class="flaticon-notes"></i>&nbsp;&nbsp;&nbsp;<strong>10</strong> Notes on File</td>
 							</tr>
 							<tr>
-								<td>Acceptance Rate</td>
-								<td>{{ school.acceptanceRate }}</td>
+								<td><i class="flaticon-chat"></i>&nbsp;&nbsp;&nbsp;<strong>3/5</strong> Review Requests Returned</td>
 							</tr>
 							</tbody>
 						</table>

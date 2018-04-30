@@ -44,6 +44,10 @@ export class SchoolsService {
         return this.http.delete(URL+"/mba/users/"+user+"/school/" + schoolName + "/essay/" + essayID + "/draft/" + draftID, this.jwt());
     }
 
+    downloadEssayDraft(schoolName:string, essayID:string, draftID:string) {
+        window.open(URL+"/mba/users/"+user+"/school/" + schoolName + "/essay/" + essayID + "/draft/" + draftID);
+    }
+
     getNote(schoolName:string, noteID:string) {
         return this.http.get(URL+"/mba/users/"+user+"/school/" + schoolName + "/notes/" + noteID, this.jwt()).map((response:Response) => response.json());
     }
@@ -68,10 +72,14 @@ export class SchoolsService {
             , this.jwt(1));
     }
 
-    uploadFile(file, schoolName:string, essayID:string) {
+    uploadEssayDraft(file, schoolName:string, essayID:string) {
         let formData: FormData = new FormData();
         formData.append('file', file, file.name);
         return this.http.post(URL+"/mba/users/"+user+"/school/" + schoolName + "/essay/" + essayID+"/upload/draft", formData, this.jwt(0));
+    }
+
+    saveEssayDraft(text, schoolName, essayID) {
+        return this.http.post(URL+"/mba/users/"+user+"/school/" + schoolName + "/essay/" + essayID + "/draft",{"contents": text}, this.jwt(1));
     }
 
     private jwt(json=0) {

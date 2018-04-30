@@ -47378,7 +47378,7 @@ var Dropzone = function (_Emitter) {
       return option;
     }
   }, {
-    key: "uploadFile",
+    key: "uploadEssayDraft",
     value: function uploadFile(file) {
       return this.uploadFiles([file]);
     }

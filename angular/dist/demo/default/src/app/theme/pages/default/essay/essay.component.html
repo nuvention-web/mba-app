@@ -83,7 +83,7 @@
                                                     <div class="col-md-6 m--align-right">
                                                         <div class="btn-group m-btn-group m-btn-group--pill"
                                                              role="group">
-                                                            <button class="m-btn btn-sm btn btn-outline-brand" type="button">
+                                                            <button (click)="downloadDraft(draft.id)" class="m-btn btn-sm btn btn-outline-brand" type="button">
                                                                 <i class="fa fa-eye"></i>
                                                             </button>
                                                             <button class="m-btn btn btn-sm btn-outline-brand" type="button">
@@ -115,42 +115,45 @@
 
                                             <ul class="nav nav-pills" role="tablist">
                                                 <li class="nav-item">
-                                                    <a class="nav-link active" data-toggle="tab" href="#m_tabs_3_1" ng-reflect-href="#m_tabs_3_1">
+                                                    <a class="newdraft nav-link active" data-toggle="tab" href="#newdraft_online" ng-reflect-href="#newdraft_online">
                                                         Online Editor
                                                     </a>
                                                 </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#m_tabs_3_2" ng-reflect-href="#m_tabs_3_2">
+                                                <li class="newdraft nav-item">
+                                                    <a class="nav-link" data-toggle="tab" href="#newdraft_file" ng-reflect-href="#newdraft_file">
                                                         File Upload
                                                     </a>
                                                 </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#m_tabs_3_3" ng-reflect-href="#m_tabs_3_3">
+                                                <li class="newdraft nav-item">
+                                                    <a class="nav-link" data-toggle="tab" href="#newdraft_gdrive" ng-reflect-href="#newdraft_gdrive">
                                                         Google Drive or URL
                                                     </a>
                                                 </li>
                                             </ul>
 
                                             <div class="tab-content">
-                                                <div class="tab-pane active" id="m_tabs_3_1" role="tabpanel">
+                                                <div class="tab-pane active" id="newdraft_online" role="tabpanel">
                                                     <textarea id="draft_editor" name="draft_editor"></textarea>
+                                                    <br>
+                                                    <button type="button" class="btn m-btn--pill btn-primary" (click)="saveDraft()">Save Draft</button>
                                                 </div>
-                                                <div class="tab-pane" id="m_tabs_3_2" role="tabpanel">
+                                                <div class="tab-pane" id="newdraft_file" role="tabpanel">
                                                     <div class="form-group m-form__group">
                                                         <div class="custom-file">
-                                                            <input class="custom-file-input" id="customFile" type="file" (change)="uploadFile($event)" accept=".doc,.docx,.jpeg">>
+                                                            <input class="custom-file-input" id="customFile" type="file" (change)="uploadFile($event)" accept=".doc,.docx">
                                                             <label class="custom-file-label" for="customFile">
-                                                                Choose file
+                                                                Choose a .doc or .docx file...
                                                             </label>
                                                         </div>
+                                                        <br>
+                                                        <button type="button" class="btn m-btn--pill btn-primary" (click)="uploadDraft()">Upload Draft</button>
                                                     </div>
                                                 </div>
-                                                <div class="tab-pane" id="m_tabs_3_3" role="tabpanel">
+                                                <div class="tab-pane" id="newdraft_gdrive" role="tabpanel">
                                                     <input class="form-control m-input" id="draft-url" placeholder="Enter a URL for your draft" type="text">
                                                 </div>
                                             </div>
                                             <br />
-                                            <button type="button" class="btn m-btn--pill btn-primary" (click)="saveDraft()">Save</button>
                                         </form>
                                     </div>
                                     <div class="col-md-6">
@@ -209,6 +212,29 @@
                                                 <span class="m-option__label">
 												<span class="m-option__head">
 													<span class="m-option__title">
+														Your Network
+													</span>
+													<span class="m-option__focus">
+														Free
+													</span>
+												</span>
+												<span class="m-option__body">
+													Send an email asking for advice on your essay.
+												</span>
+											</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label class="m-option">
+											<span class="m-option__control">
+												<span class="m-radio m-radio--brand m-radio--check-bold">
+													<input name="m_option_1" type="radio" value="1" disabled>
+													<span></span>
+												</span>
+											</span>
+                                                <span class="m-option__label">
+												<span class="m-option__head">
+													<span class="m-option__title">
 														MBA Student Advice
 													</span>
 													<span class="m-option__focus">
@@ -225,7 +251,7 @@
                                             <label class="m-option">
 											<span class="m-option__control">
 												<span class="m-radio m-radio--brand m-radio--check-bold">
-													<input name="m_option_1" type="radio" value="1">
+													<input name="m_option_1" type="radio" value="1" disabled>
 													<span></span>
 												</span>
 											</span>
@@ -244,29 +270,6 @@
 											</span>
                                             </label>
                                         </div>
-                                        <div class="col-lg-4">
-                                            <label class="m-option">
-											<span class="m-option__control">
-												<span class="m-radio m-radio--brand m-radio--check-bold">
-													<input name="m_option_1" type="radio" value="1">
-													<span></span>
-												</span>
-											</span>
-                                                <span class="m-option__label">
-												<span class="m-option__head">
-													<span class="m-option__title">
-														Your Network
-													</span>
-													<span class="m-option__focus">
-														Free
-													</span>
-												</span>
-												<span class="m-option__body">
-													Send an email asking for advice on your essay.
-												</span>
-											</span>
-                                            </label>
-                                        </div>
                                     </div>
                                 </div>
 
@@ -274,59 +277,26 @@
                                     <thead>
                                     <tr>
                                         <th>
+                                            Date
+                                        </th>
+                                        <th>
                                             Name
                                         </th>
                                         <th>
-                                            School
+                                            Email
                                         </th>
                                         <th>
-                                            Rating
-                                        </th>
-                                        <th>
-                                            Charge
+                                            Status
                                         </th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <th scope="row">
-                                            Max Joseph
-                                        </th>
-                                        <td>
-                                            Kellogg (Year 2)
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-brand">Buy for $50</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            CJ Smith
-                                        </th>
-                                        <td>
-                                            Booth (Year 1)
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-brand">Buy for $20</button>
-                                        </td>
+                                    <tr *ngFor="let review of essay.drafts[0].reviews">
+                                        <td>{{review}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
-
+                                {{essay | json}}
                             </div>
                         </div>
                     </div>

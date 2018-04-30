@@ -104,7 +104,13 @@ export class EssayComponent implements OnInit {
         });
 
         return theNote;
-}
+
+
+    }
+
+    public downloadDraft(draftID) {
+        this._schools.downloadEssayDraft(this.school, this.essayID, draftID);
+    }
 
 
     uploadFile(event) {
@@ -113,13 +119,24 @@ export class EssayComponent implements OnInit {
             this.fileUpload = file;
     }
 
-    saveDraft() {
-        this._schools.uploadFile(this.fileUpload, this.school, this.essayID).subscribe(
+    uploadDraft() {
+        this._schools.uploadEssayDraft(this.fileUpload, this.school, this.essayID).subscribe(
             (response:Response) => {
                 this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
                 this._schools.getAllEssays().subscribe(d => this.allEssays = this.transformJSON(d));
                 document.getElementById("openModalButton").click();
             }, (error:Response) => {
+            }
+        );
+    }
+
+    saveDraft() {
+        this._schools.saveEssayDraft("yo", this.school, this.essayID).subscribe(
+            (response:Response) => {
+                this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
+                this._schools.getAllEssays().subscribe(d => this.allEssays = this.transformJSON(d));
+            }, (error: Response) => {
+
             }
         );
     }

@@ -5,7 +5,7 @@ import { ValidationFormControlsComponent } from './validation-form-controls.comp
 import { LayoutModule } from '../../../../../../layouts/layout.module';
 import { DefaultComponent } from '../../../../default.component';
 import { FormsModule } from '@angular/forms';
-import { UsersSerivce } from '../../../../../../../_services/users.service';
+import { UsersService } from '../../../../../../../_services/users.service';
 
 const routes: Routes = [
     // {
@@ -28,7 +28,7 @@ const routes: Routes = [
     ], declarations: [
         ValidationFormControlsComponent
     ], providers: [
-        UsersSerivce
+        UsersService
     ]
 })
 export class ValidationFormControlsModule {

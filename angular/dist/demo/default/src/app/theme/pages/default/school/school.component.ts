@@ -6,11 +6,11 @@ import { SchoolsService } from '../../../../_services/schools.service';
 
 @Component({
     selector: 'app-essays',
-    templateUrl: './essays.component.html',
+    templateUrl: './school.component.html',
     encapsulation: ViewEncapsulation.None,
     providers: [SchoolsService]
 })
-export class EssaysComponent implements OnInit {
+export class SchoolComponent implements OnInit {
     school = "";
     schoolDetails: any = [];
 

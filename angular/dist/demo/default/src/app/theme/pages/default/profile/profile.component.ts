@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { ScriptLoaderService } from '../../../../_services/script-loader.service';
-import { UsersSerivce } from '../../../../_services/users.service';
+import { UsersService } from '../../../../_services/users.service';
 import { ProfileService } from '../../../../_services/profile.service';
 import { Location } from '@angular/common';
 @Component({
@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     id = 0;
     profile:any = undefined;
 
-    constructor(private _script: ScriptLoaderService, private _user: UsersSerivce, private _profile: ProfileService) {
+    constructor(private _script: ScriptLoaderService, private _user: UsersService, private _profile: ProfileService) {
         this._profile.getProfile().subscribe (p => this.profile = p);
     }
     ngOnInit() {

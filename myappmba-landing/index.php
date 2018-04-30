@@ -43,7 +43,7 @@
     <noscript><img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=173732776620419&ev=PageView&noscript=1"
     /></noscript>
-    <!-- End Facebook Pixel Code -->
+    <!-- End Facebook Pixel Code -->cha
   </head>
 
   <body>
@@ -184,15 +184,15 @@
         <div class="row  no-gutters">
           <div class="col-lg-6 text-white showcase-img" style="background-image: url('img/bg-showcase-2.jpg');"></div>
           <div class="col-lg-6 my-auto showcase-text">
-            <h2>Deadlines, Managed</h2>
-            <p class="lead mb-0">Every school has different requirements and timelines. Managing your deadlines doesn't have to be a pain. myapp.MBA keeps track of it all so you can focus on the more important things.</p>
+            <h2>Applications, Streamlined</h2>
+            <p class="lead mb-0">Every school has different requirements and timelines. Managing your applications doesn't have to be a pain. myapp.MBA provides you with a centralized portal to help you streamline your applications so you can focus on the more important things.</p>
           </div>
         </div>
         <div class="row  no-gutters">
           <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/bg-showcase-3.jpg');"></div>
           <div class="col-lg-6 order-lg-1 my-auto showcase-text">
             <h2>Advice, On-Demand</h2>
-            <p class="lead mb-0">If you get stuck on an essay or have a question, we have specialists who can review your application materials for a fraction of what an MBA consultant would cost.</p>
+            <p class="lead mb-0">If you get stuck on an essay or have a question, we have specialists who can review your application material to get you back on track!</p>
           </div>
         </div>
       </div>

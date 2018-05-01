@@ -56,7 +56,7 @@ public class EssaysEndpoint extends EndpointBase{
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
 
             userDBProvider.updateEssayStatus(user, school, essayID, essayStatusRequest);
 
@@ -82,7 +82,7 @@ public class EssaysEndpoint extends EndpointBase{
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
 
             return new ResponseEntity<>(userDBProvider.getEssay(user, school, essayID).toString(), HttpStatus.OK);
         }
@@ -107,7 +107,7 @@ public class EssaysEndpoint extends EndpointBase{
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
 
             userDBProvider.addEssayDraft(user, school, essayDraftRequest, essayID, keywords);
 
@@ -136,7 +136,7 @@ public class EssaysEndpoint extends EndpointBase{
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
 
             userDBProvider.updateEssayDraft(user, school, essayDraftRequest, essayID, draftID, keywords.schoolKeywords);
 
@@ -165,7 +165,7 @@ public class EssaysEndpoint extends EndpointBase{
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
 
             userDBProvider.deleteEssayDraft(user, school, essayID, draftID);
 
@@ -193,7 +193,7 @@ public class EssaysEndpoint extends EndpointBase{
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
 
             userDBProvider.addEssayDraftUpload(user,school,file, essayID);
 
@@ -220,7 +220,7 @@ public class EssaysEndpoint extends EndpointBase{
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
 
             EssayDraft draft = school.getEssayDraft(essayID, draftID);
 
@@ -255,7 +255,7 @@ public class EssaysEndpoint extends EndpointBase{
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
 
             File draftFile = userDBProvider.getDraft(user, school, essayID, draftID);
             EssayDraft draft = school.getEssayDraft(essayID, draftID);

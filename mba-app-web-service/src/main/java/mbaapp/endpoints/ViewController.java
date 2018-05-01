@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ViewController {
 
 
-    @RequestMapping(value={"/essays/*", "/essays/*/*", "/profile/*"})
+    @RequestMapping(value={"/essays/*", "/essays/*/*", "/profile/*", "/feedback/*/*/*/*/*"})
     public String essays() {
         return "/index.html";
     }

@@ -3,7 +3,6 @@ package mbaapp.endpoints;
 import io.swagger.annotations.ApiOperation;
 import mbaapp.core.User;
 import mbaapp.core.UserSchool;
-import mbaapp.requests.NotesRequest;
 import mbaapp.requests.RecommenderRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +41,7 @@ public class RecommenderEndpoint extends EndpointBase {
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
             return new ResponseEntity<String>(userDBProvider.getRecommender(user, school, recommenderID).toString(),HttpStatus.OK) ;
 
         } catch (Exception e) {
@@ -66,7 +65,7 @@ public class RecommenderEndpoint extends EndpointBase {
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
             userDBProvider.updateRecommender(user, school, recommenderRequest, recommenderID);
             return new ResponseEntity<>("Update recommender", HttpStatus.CREATED);
 

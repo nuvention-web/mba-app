@@ -51,11 +51,9 @@ export class EssayComponent implements OnInit {
     public deleteDraft(draftID) {
         this._schools.deleteEssayDraft(this.school, this.essayID, draftID).subscribe(
             (response:Response) => {
-                console.log(response)
                 this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
                 this._schools.getAllEssays().subscribe(d => this.allEssays = this.transformJSON(d));
             }, (error:Response) => {
-                console.log(error);
             }
         );
     }
@@ -106,24 +104,39 @@ export class EssayComponent implements OnInit {
         });
 
         return theNote;
-}
+
+
+    }
+
+    public downloadDraft(draftID) {
+        this._schools.downloadEssayDraft(this.school, this.essayID, draftID);
+    }
 
 
     uploadFile(event) {
         let file = event.target.files[0];
             console.log(file); // You will see the file
-            this.fileUpload = file
+            this.fileUpload = file;
     }
 
-    saveDraft() {
-        this._schools.uploadFile(this.fileUpload, this.school, this.essayID).subscribe(
+    uploadDraft() {
+        this._schools.uploadEssayDraft(this.fileUpload, this.school, this.essayID).subscribe(
             (response:Response) => {
-                console.log(response)
                 this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
                 this._schools.getAllEssays().subscribe(d => this.allEssays = this.transformJSON(d));
                 document.getElementById("openModalButton").click();
             }, (error:Response) => {
-                console.log(error);
+            }
+        );
+    }
+
+    saveDraft() {
+        this._schools.saveEssayDraft("yo", this.school, this.essayID).subscribe(
+            (response:Response) => {
+                this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
+                this._schools.getAllEssays().subscribe(d => this.allEssays = this.transformJSON(d));
+            }, (error: Response) => {
+
             }
         );
     }

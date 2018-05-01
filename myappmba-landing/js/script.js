@@ -91,6 +91,7 @@ $("#signup").submit(function(e) {
       "event_category": "Form",
       "event_label": "Homepage Signup"
     });
+    fbq('track', 'Lead');
   }).fail(function(data) {
     showError("Unable to sign you up. Please check your information and try again.");
   });

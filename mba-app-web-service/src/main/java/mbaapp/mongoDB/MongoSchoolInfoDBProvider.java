@@ -57,7 +57,7 @@ public class MongoSchoolInfoDBProvider implements SchoolInfoDBProvider {
 
         SchoolInfo school = new SchoolInfo(schoolName, shortName, location, round1, round2, round3, round4);
         for(SchoolInfoEssayRequest essayRequest : schoolInfoRequest.getEssays()) {
-            SchoolInfoEssay schoolInfoEssay = new SchoolInfoEssay(essayRequest.getEssayID(), essayRequest.getEssayPrompt());
+            SchoolInfoEssay schoolInfoEssay = new SchoolInfoEssay(essayRequest.getEssayID(), essayRequest.getEssayPrompt(), essayRequest.getIsRequired());
             school.addEssay(schoolInfoEssay);
 
         }

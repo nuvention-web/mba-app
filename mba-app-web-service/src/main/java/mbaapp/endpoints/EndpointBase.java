@@ -1,7 +1,6 @@
 package mbaapp.endpoints;
 
 import mbaapp.core.Keywords;
-import mbaapp.core.Review;
 import mbaapp.core.User;
 import mbaapp.core.UserSchool;
 import mbaapp.providers.UserDBProvider;
@@ -47,7 +46,7 @@ public class EndpointBase {
             return null;
         }
 
-        UserSchool school = schoolExistsForUser(user, schoolShortName);
+        UserSchool school = getSchoolForUser(user, schoolShortName);
 
         if (school == null) {
             return new ResponseEntity<String>("The school " + schoolShortName + " is not a part of the list of schools " +
@@ -59,7 +58,7 @@ public class EndpointBase {
     }
 
 
-    protected UserSchool schoolExistsForUser(User user, String schoolShortName) {
+    protected UserSchool getSchoolForUser(User user, String schoolShortName) {
         for (UserSchool school : user.getSchools()) {
             if (school.getShortName().equalsIgnoreCase(schoolShortName)) {
                 return school;

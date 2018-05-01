@@ -7,6 +7,7 @@ public class SchoolInfoEssay {
 
     private String essayID;
     private String essayPrompt;
+    private String isRequired;
 
     public String getEssayID() {
         return essayID;
@@ -20,12 +21,15 @@ public class SchoolInfoEssay {
         this.essayID = essayID;
     }
 
+    public String isRequired() { return isRequired; }
+
     public void setEssayPrompt(String essayPrompt) {
         this.essayPrompt = essayPrompt;
     }
 
-    public SchoolInfoEssay(String essayID, String essayPrompt) {
+    public SchoolInfoEssay(String essayID, String essayPrompt, String isRequired) {
         this.essayID = essayID;
         this.essayPrompt =essayPrompt;
+        this.isRequired = isRequired;
     }
 }

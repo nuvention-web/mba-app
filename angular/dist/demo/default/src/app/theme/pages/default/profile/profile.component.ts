@@ -15,6 +15,9 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     profile:any = undefined;
 
     constructor(private _script: ScriptLoaderService, private _user: UsersSerivce, private _profile: ProfileService) {
+        this._profile.authenticate().subscribe(
+            p => {console.log(p); console.log(p['headers']); console.log(p['headers']['authorization']);}
+        );
         this._profile.getProfile().subscribe (p => this.profile = p);
     }
     ngOnInit() {

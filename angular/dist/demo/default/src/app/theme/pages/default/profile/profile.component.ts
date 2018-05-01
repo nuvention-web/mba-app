@@ -14,12 +14,16 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     userInformation: any = {};
     id = 0;
     profile:any = undefined;
-
+    token: string;
     constructor(private _script: ScriptLoaderService, private _user: UsersService, private _profile: ProfileService) {
         this._profile.authenticate().subscribe(
-            p => {console.log(p); console.log(p['headers']); console.log(p['headers']['authorization']);}
+            t => {
+                console.log(t);
+                this.token = JSON.parse(t['_body'])['AUTH_TOKEN'];
+                this._profile.setToken(this.token);
+                this._profile.getProfile(this.token).subscribe(p => this.profile = p);
+            }
         );
-        this._profile.getProfile().subscribe (p => this.profile = p);
     }
     ngOnInit() {
         

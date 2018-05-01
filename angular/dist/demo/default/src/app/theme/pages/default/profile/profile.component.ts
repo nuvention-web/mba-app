@@ -3,6 +3,7 @@ import { ScriptLoaderService } from '../../../../_services/script-loader.service
 import { UsersService } from '../../../../_services/users.service';
 import { ProfileService } from '../../../../_services/profile.service';
 import { Location } from '@angular/common';
+
 @Component({
     selector: "app-profile",
     templateUrl: "./profile.component.html",
@@ -13,8 +14,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     userInformation: any = {};
     id = 0;
     profile:any = undefined;
-    
-    constructor(private _script: ScriptLoaderService, private _user: UsersSerivce, private _profile: ProfileService) {
+
+    constructor(private _script: ScriptLoaderService, private _user: UsersService, private _profile: ProfileService) {
         this._profile.authenticate().subscribe(
             p => {console.log(p); console.log(p['headers']); console.log(p['headers']['authorization']);}
         );

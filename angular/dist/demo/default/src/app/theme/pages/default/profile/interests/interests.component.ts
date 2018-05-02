@@ -17,7 +17,7 @@ export class InterestsComponent implements OnInit {
                 "What are you going to bring to the MBA program you are admitted to?",
                 ];
     questionNames = ["hobbiesOrInterests", "whatDoYouBring"];
-    datas:any = [[],[]];
+    datas:any = [[''],''];
     types = [1, 0];
     isInit = true;
     constructor(private _profile: ProfileService) {
@@ -31,6 +31,7 @@ export class InterestsComponent implements OnInit {
         //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
         //Add '${implements OnChanges}' to the class.
         if (this.isInit && changes['profile'] && this.profile != undefined) {
+            console.log("Change data");
             for (let i = 0; i < this.count; i++) {
                 this.datas[i] = ProfileData.wrap(this.profile[this.questionNames[i]]);
             }

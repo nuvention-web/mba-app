@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { ThemeComponent } from './theme.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from "../auth/_guards/auth.guard";
+
 const routes: Routes = [
     {
         "path": "",
@@ -17,11 +18,11 @@ const routes: Routes = [
                 "loadChildren": ".\/pages\/default\/not-found\/not-found.module#NotFoundModule"
             },
             {
-                "path": "essays/:school",
-                "loadChildren": ".\/pages\/default\/essays\/essays.module#EssaysModule"
+                "path": "school/:school",
+                "loadChildren": ".\/pages\/default\/school\/school.module#SchoolModule"
             },
             {
-                "path": "essays/:school/:id",
+                "path": "school/:school/essay/:id",
                 "loadChildren": ".\/pages\/default\/essay\/essay.module#EssayModule"
             },
             {
@@ -29,11 +30,11 @@ const routes: Routes = [
                 "loadChildren": ".\/pages\/default\/profile\/profile.module#ProfileModule"
             },
             {
-                "path": "notes/:action/:school/:noteID",
+                "path": "school/:school/notes/:noteID/:action",
                 "loadChildren": ".\/pages\/default\/notes\/notes.module#NotesModule"
             },
             {
-                "path": "recommender/edit/:school/:recommenderID/:recommenderName",
+                "path": "school/:school/recommender/:recommenderID/edit",
                 "loadChildren": ".\/pages\/default\/recommender\/recommender.module#RecommenderModule"
             },
             {
@@ -50,6 +51,11 @@ const routes: Routes = [
                 "pathMatch": "full"
             }
         ]
+    },
+    {
+        "path": "feedback/:username/:schoolname/:essayname/:token/:reviewID",
+        "loadChildren": ".\/pages\/default\/feedback\/feedbackhead.module#FeedbackheadModule"
+
     },
     {
         "path": "snippets\/pages\/user\/login-1",
@@ -95,6 +101,7 @@ const routes: Routes = [
         "path": "snippets\/pages\/errors\/error-6",
         "loadChildren": ".\/pages\/self-layout-blank\/snippets\/pages\/errors\/errors-error-6\/errors-error-6.module#ErrorsError6Module"
     },
+
     {
         "path": "**",
         "redirectTo": "404",

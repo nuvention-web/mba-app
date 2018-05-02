@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { Helpers } from '../../../../../../../helpers';
 import { ScriptLoaderService } from '../../../../../../../_services/script-loader.service';
-import { UsersSerivce } from '../../../../../../../_services/users.service';
+import { UsersService } from '../../../../../../../_services/users.service';
 import { User } from '../../../../../../../model/user';
 
 @Component({
@@ -13,7 +13,7 @@ export class ValidationFormControlsComponent implements OnInit, AfterViewInit {
 
     userInformation: any = {};
 
-    constructor(private _script: ScriptLoaderService, private _user: UsersSerivce) {
+    constructor(private _script: ScriptLoaderService, private _user: UsersService) {
         this._user.getUser().subscribe(d => {
             var tmp = d.name.split(" ");
             this.userInformation = d;

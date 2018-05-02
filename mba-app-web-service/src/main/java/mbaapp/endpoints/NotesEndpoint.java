@@ -3,7 +3,6 @@ package mbaapp.endpoints;
 import io.swagger.annotations.ApiOperation;
 import mbaapp.core.User;
 import mbaapp.core.UserSchool;
-import mbaapp.requests.EssayDraftRequest;
 import mbaapp.requests.NotesRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +41,7 @@ public class NotesEndpoint extends EndpointBase {
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
 
             userDBProvider.addNote(user, school, notesRequest);
 
@@ -68,7 +67,7 @@ public class NotesEndpoint extends EndpointBase {
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
 
             userDBProvider.updateNote(user, school, notesRequest, noteID);
 
@@ -93,7 +92,7 @@ public class NotesEndpoint extends EndpointBase {
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
 
             userDBProvider.deleteNote(user, school, noteID);
 
@@ -119,7 +118,7 @@ public class NotesEndpoint extends EndpointBase {
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
             return new ResponseEntity<>(userDBProvider.getNote(user, school, noteID).toString(), HttpStatus.OK);
 
         } catch (Exception e) {

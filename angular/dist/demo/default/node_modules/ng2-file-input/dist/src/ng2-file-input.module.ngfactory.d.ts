@@ -1,0 +1,3 @@
+import * as i0 from '@angular/core';
+import * as i1 from './ng2-file-input.module';
+export declare const Ng2FileInputModuleNgFactory: i0.NgModuleFactory<i1.Ng2FileInputModule>;

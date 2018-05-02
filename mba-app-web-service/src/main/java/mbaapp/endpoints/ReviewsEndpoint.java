@@ -3,16 +3,12 @@ package mbaapp.endpoints;
 import io.swagger.annotations.ApiOperation;
 import mbaapp.core.*;
 import mbaapp.mongoDB.SchoolInfoRepository;
-import mbaapp.requests.EssayDraftRequest;
 import mbaapp.requests.ReviewRequest;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +19,7 @@ import java.util.logging.Logger;
  * Created by jnag on 4/14/18.
  */
 @RestController
-@RequestMapping("/feedback/users/{userEmail}/school/{schoolShortName}/essay/{essayID}/draft/{draftID}/review/{reviewID}")
+@RequestMapping("/review/users/{userEmail}/school/{schoolShortName}/essay/{essayID}/draft/{draftID}/review/{reviewID}")
 public class ReviewsEndpoint extends EndpointBase {
 
     Logger logger = Logger.getLogger(EssaysEndpoint.class.getName());
@@ -45,7 +41,7 @@ public class ReviewsEndpoint extends EndpointBase {
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
 
             Essay essay = school.getEssay(essayID);
             EssayDraft draft = school.getEssayDraft(essayID, draftID);
@@ -101,7 +97,7 @@ public class ReviewsEndpoint extends EndpointBase {
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
 
             Essay essay = school.getEssay(essayID);
             EssayDraft draft = school.getEssayDraft(essayID, draftID);
@@ -150,7 +146,7 @@ public class ReviewsEndpoint extends EndpointBase {
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
 
             Essay essay = school.getEssay(essayID);
             EssayDraft draft = school.getEssayDraft(essayID, draftID);
@@ -199,7 +195,7 @@ public class ReviewsEndpoint extends EndpointBase {
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool school = schoolExistsForUser(user, schoolShortName);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
 
             Essay essay = school.getEssay(essayID);
             EssayDraft draft = school.getEssayDraft(essayID, draftID);
@@ -250,7 +246,7 @@ public class ReviewsEndpoint extends EndpointBase {
             return null;
         }
 
-        UserSchool school = schoolExistsForUser(user, schoolShortName);
+        UserSchool school = getSchoolForUser(user, schoolShortName);
 
         if (school == null) {
             return new ResponseEntity<String>("The school " + schoolShortName + " is not a part of the list of schools " +

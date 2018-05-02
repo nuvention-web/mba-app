@@ -1,0 +1,17 @@
+.m-content {
+  position: relative;
+  margin-left: 75px;
+  margin-top: 25px;
+}
+
+.custom-file-control:before{
+  content: "Browse";
+}
+.custom-file-control:after{
+  content: "Add files..";
+}
+
+#feedback-form {
+  position: relative;
+  margin-top: 20px;
+}

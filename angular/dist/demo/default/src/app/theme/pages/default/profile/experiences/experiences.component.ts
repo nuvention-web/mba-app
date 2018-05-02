@@ -17,7 +17,7 @@ export class ExperiencesComponent implements OnInit {
                 "List some of your experiences where you failed you achieve what you set out to. What did you learn from these failures?",
                 "What are some of your accomplishments that you are most proud of, and why?"];
     questionNames = ["leadershipExperience", "teamPlayerExperience", "failureExperience", "accomplishments"];
-    datas:any[][] = [[], [], [], []];
+    datas:any[][] = [[''], [''], [''], ['']];
     types = [1,1,1,1];
     isInit = true;
     constructor(private _profile: ProfileService) {

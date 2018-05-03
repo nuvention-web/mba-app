@@ -56,6 +56,7 @@
                         font-size: get-font-size(regular, '+++');
                         font-weight: get-font-weight(bolder);
                         font-family: #{get-heading-font-family()};
+                        color: get-brand-color();
 
                         small {
                             display: inline-block;

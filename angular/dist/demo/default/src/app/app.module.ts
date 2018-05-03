@@ -13,11 +13,13 @@ import { IconFlaticonModule } from './theme/pages/default/components/buttons/ico
 import { IconFlaticonComponent } from './theme/pages/default/components/buttons/icon/icon-flaticon/icon-flaticon.component';
 import { WidgetsBootstrapSelectComponent } from './theme/pages/default/components/forms/widgets/widgets-bootstrap-select/widgets-bootstrap-select.component';
 import { FormsModule } from '@angular/forms';
+import { SafePipe } from './safe.pipe';
 
 @NgModule({
     declarations: [
         ThemeComponent,
         AppComponent,
+        SafePipe,
     ],
     imports: [
         LayoutModule,

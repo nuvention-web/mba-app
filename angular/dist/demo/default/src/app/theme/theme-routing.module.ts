@@ -42,6 +42,10 @@ const routes: Routes = [
                 "loadChildren": ".\/pages\/default\/notes\/notes.module#NotesModule"
             },
             {
+                "path": "proofread/:school/essay/:essayID/draft/:draftID",
+                "loadChildren": ".\/pages\/default\/proofread\/proofread.module#ProofreadModule"
+            },
+            {
                 "path": "information",
                 "loadChildren": ".\/pages\/default\/information\/information.module#InformationModule"
             },

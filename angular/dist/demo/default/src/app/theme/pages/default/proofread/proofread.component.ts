@@ -25,6 +25,8 @@ export class ProofreadComponent implements OnInit{
     fileUpload = ""
     schoolDetails: any = [];
     draftID = "";
+    draft = {};
+    submitted: any = false;
 
 
     constructor(private route:ActivatedRoute, _script:ScriptLoaderService, private _schools:SchoolsService,
@@ -37,6 +39,7 @@ export class ProofreadComponent implements OnInit{
             this.draftID = params.draftID;
         });
         this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
+        this._schools.getDraft(this.school, this.essayID, this.draftID). subscribe(d => this.draft = d)
     }
 
 
@@ -45,12 +48,63 @@ export class ProofreadComponent implements OnInit{
     }
 
     public findEssay() {
-        for(var draft of this.essay["drafts"]){
-            if(this.draftID==draft["id"]) {
-                return draft["grammarCheck"]
-            }
-        }
+        return this.draft["grammarCheck"]
     }
+
+    public getSentimentScore() {
+
+        if(this.draft["analysisRun"]=="True") {
+            return this.draft["sentimentScore"]
+        }
+
+        return "";
+
+
+    }
+
+    public displayAnalysisButton() {
+        if(this.draft["analysisRun"]=="True") {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    public displayProofReadButton() {
+        if(this.draft["grammarCheckRun"]=="True") {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    public runProofRead() {
+        this._schools.runProofRead(this.school, this.essayID, this.draftID).subscribe(
+            (response: Response) => {
+                this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
+                this._schools.getDraft(this.school, this.essayID, this.draftID).subscribe(d => this.draft = d)
+            }, (error: Response) => {
+
+            }
+        );
+    }
+
+
+
+
+    public runAnalysis() {
+        this._schools.runAnalysis(this.school, this.essayID, this.draftID).subscribe(
+            (response: Response) => {
+                this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
+                this._schools.getDraft(this.school, this.essayID, this.draftID).subscribe(d => this.draft = d)
+            }, (error: Response) => {
+
+            }
+        );
+    }
+
 }
 
 @Pipe({name: 'safeHtml'})
@@ -60,5 +114,9 @@ export class SafeHtmlPipe implements PipeTransform {
     transform(value: string) {
         return this.sanitized.bypassSecurityTrustHtml(value);
     }
+}
+
+export class matProgressBar{
+
 }
 

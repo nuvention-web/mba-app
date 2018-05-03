@@ -1,25 +1,20 @@
 package mbaapp.endpoints;
 
 import io.swagger.annotations.ApiOperation;
-import mbaapp.PlagiarismService;
+import mbaapp.services.AnalysisService;
+import mbaapp.services.PlagiarismService;
 import mbaapp.core.EssayDraft;
 import mbaapp.core.User;
 import mbaapp.core.UserSchool;
 import mbaapp.requests.EssayStatusRequest;
-import org.languagetool.JLanguageTool;
-import org.languagetool.language.AmericanEnglish;
-import org.languagetool.rules.RuleMatch;
+import mbaapp.services.ProofReadingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.MessageFormat;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by jnag on 5/2/18.
@@ -33,10 +28,76 @@ public class ScanEndpoints extends EndpointBase {
     @Autowired
     PlagiarismService plagiarismService;
 
-    @PostMapping("/plagiarism")
+    @Autowired
+    AnalysisService analysisService;
+
+    @Autowired
+    ProofReadingService proofReadingService;
+
+
+    @PostMapping("/analysis")
     @CrossOrigin
     @ApiOperation(value = "Update essay status")
-    public ResponseEntity<String> updateEssayStatus(@RequestBody EssayStatusRequest essayStatusRequest, @PathVariable String userEmail,
+    public ResponseEntity<String> textanalysis(@RequestBody EssayStatusRequest essayStatusRequest, @PathVariable String userEmail,
+                                                    @PathVariable String schoolShortName, @PathVariable String essayID,
+                                                    @PathVariable String draftID) {
+        try {
+
+            if (runValidations(userEmail, schoolShortName) != null) {
+                return runValidations(userEmail, schoolShortName);
+            }
+
+            User user = userDBProvider.getUser(userEmail);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
+            EssayDraft draft = school.getEssayDraft(essayID, draftID);
+
+            analysisService.runAnalysis(user, school, essayID, draftID, draft);
+            userDBProvider.saveUser(user);
+
+            return new ResponseEntity<>("Scanned draft", HttpStatus.OK);
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+
+
+    @PostMapping("/proofRead")
+    @CrossOrigin
+    @ApiOperation(value = "Proofread API")
+    public ResponseEntity<String> proofRead(@RequestBody EssayStatusRequest essayStatusRequest, @PathVariable String userEmail,
+                                             @PathVariable String schoolShortName, @PathVariable String essayID,
+                                             @PathVariable String draftID) {
+
+        try {
+
+            if (runValidations(userEmail, schoolShortName) != null) {
+                return runValidations(userEmail, schoolShortName);
+            }
+
+            User user = userDBProvider.getUser(userEmail);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
+            EssayDraft draft = school.getEssayDraft(essayID, draftID);
+            proofReadingService.proofRead(user, school, essayID, draftID, draft);
+            userDBProvider.saveUser(user);
+
+            return new ResponseEntity<>("Scanned draft", HttpStatus.OK);
+
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @PostMapping("/plagiarism")
+    @CrossOrigin
+    @ApiOperation(value = "Plagiarism API")
+    public ResponseEntity<String> plagiarism(@RequestBody EssayStatusRequest essayStatusRequest, @PathVariable String userEmail,
                                                     @PathVariable String schoolShortName, @PathVariable String essayID,
                                                     @PathVariable String draftID) {
 

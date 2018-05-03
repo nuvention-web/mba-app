@@ -180,6 +180,33 @@ public class EssaysEndpoint extends EndpointBase{
     }
 
 
+    @GetMapping( value = "/draft/{draftID}", produces = "application/json")
+    @CrossOrigin
+    @ApiOperation(value = "Get an essay draft")
+    public ResponseEntity<String> getDraft(@PathVariable String userEmail,
+                                              @PathVariable String schoolShortName, @PathVariable String essayID,
+                                              @PathVariable String draftID) {
+
+        try {
+
+            if (runValidations(userEmail, schoolShortName) != null) {
+                return runValidations(userEmail, schoolShortName);
+            }
+
+            User user = userDBProvider.getUser(userEmail);
+            UserSchool userSchool = getSchoolForUser(user, schoolShortName);
+            return new ResponseEntity<>(userSchool.getEssayDraft(essayID, draftID).toJSON().toString(), HttpStatus.OK);
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+
+    }
+
+
+
     @PostMapping("/upload/draft")
     @CrossOrigin
     @ApiOperation(value = "Upload an essay draft")

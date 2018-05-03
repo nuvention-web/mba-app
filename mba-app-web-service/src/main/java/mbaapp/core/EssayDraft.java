@@ -55,6 +55,10 @@ public class EssayDraft {
     private DraftType draftType;
     private List<String> schoolKeywords;
     private boolean schoolKeyWordsFound;
+    private double sentimentScore;
+    private String keyPhrases;
+    private String analysisRun;
+    private String grammarCheckRun;
 
     private List<Review> reviews;
 
@@ -80,6 +84,14 @@ public class EssayDraft {
         reviews.add(review);
     }
 
+    public String getAnalysisRun() {
+        return analysisRun;
+    }
+
+    public void setAnalysisRun(String analysisRun) {
+        this.analysisRun = analysisRun;
+    }
+
     public List<Review> getReviews() {
         if(reviews == null) {
             reviews = new ArrayList<>();
@@ -87,8 +99,28 @@ public class EssayDraft {
         return reviews;
     }
 
+    public double getSentimentScore() {
+        return sentimentScore;
+    }
+
+    public String getKeyPhrases() {
+        return keyPhrases;
+    }
+
+    public void setSentimentScore(double sentimentScore) {
+        this.sentimentScore = sentimentScore;
+    }
+
+    public void setKeyPhrases(String keyPhrases) {
+        this.keyPhrases = keyPhrases;
+    }
+
     public String getGrammarCheck() {
         return grammarCheck;
+    }
+
+    public void setGrammerCheck(String grammarCheck) {
+        this.grammarCheck = grammarCheck;
     }
 
     public void setId(String id) {
@@ -136,6 +168,17 @@ public class EssayDraft {
 
     public String getUrl() { return url; }
 
+    public void setGrammarCheck(String grammarCheck) {
+        this.grammarCheck = grammarCheck;
+    }
+
+    public String getGrammarCheckRun() {
+        return grammarCheckRun;
+    }
+
+    public void setGrammarCheckRun(String grammarCheckRun) {
+        this.grammarCheckRun = grammarCheckRun;
+    }
 
     private List<String> getKeyWordsListApplicable(String schoolShortName, HashMap<String, List<String>> allSchoolKeywords){
 
@@ -161,7 +204,7 @@ public class EssayDraft {
             schoolKeywords = allSchoolKeyWords.get(schoolShortName);
             schoolKeyWordsFound = schoolKeywords.stream().parallel().anyMatch(contents.toUpperCase()::contains);
 
-            grammarCheck = runGrammarCheckOnParagraph(contents);
+//            grammarCheck = runGrammarCheckOnParagraph(contents);
 
     }
 
@@ -196,9 +239,9 @@ public class EssayDraft {
                 schoolKeyWordsFound = schoolKeywordsUpper.stream().parallel().anyMatch(text.toUpperCase()::contains);
             }
             contentsBuilder.append(paragraphs.get(i).getText()).append("</p>");
-            grammarCheckBuilder.append("<p>").append(runGrammarCheckOnParagraph(paragraphs.get(i).getText())).append("</p>");
+//            grammarCheckBuilder.append("<p>").append(runGrammarCheckOnParagraph(paragraphs.get(i).getText())).append("</p>");
         }
-        grammarCheck = grammarCheckBuilder.toString();
+//        grammarCheck = grammarCheckBuilder.toString();
         contents = contentsBuilder.toString();
     }
 
@@ -211,9 +254,9 @@ public class EssayDraft {
         for (RuleMatch match : matches) {
             int fromPos = match.getFromPos();
             int toPos = match.getToPos();
-            String spanStart = MessageFormat.format("<span data-toggle=\"m-popover\" data-placement=\"left\" title=\"{0} Suggestions: {1}\"><u>",
+            String spanStart = MessageFormat.format("<span data-toggle=\"m-popover\" data-placement=\"left\" title=\"{0} Suggestions: {1}\"><u><b>",
                     match.getMessage(), match.getSuggestedReplacements());
-            String spanEnd = "</u></span>";
+            String spanEnd = "</b></u></span>";
             stringBuilder.insert(fromPos + totalShift, spanStart);
             stringBuilder.insert(spanStart.length()+toPos + totalShift, spanEnd);
             totalShift = spanEnd.length() + spanStart.length() + totalShift;

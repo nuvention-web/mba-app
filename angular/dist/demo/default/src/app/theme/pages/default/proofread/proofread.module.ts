@@ -5,6 +5,7 @@ import { LayoutModule } from '../../../layouts/layout.module';
 import {FormsModule} from "@angular/forms";
 import { DefaultComponent } from '../default.component';
 import {ProofreadComponent, SafeHtmlPipe} from './proofread.component';
+import {MatProgressBar, MatProgressBarModule} from "@angular/material";
 
 const routes: Routes = [
     {

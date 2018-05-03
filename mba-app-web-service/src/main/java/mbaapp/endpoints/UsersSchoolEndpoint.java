@@ -1,20 +1,13 @@
 package mbaapp.endpoints;
 
 import io.swagger.annotations.ApiOperation;
-import mbaapp.requests.EssayDraftRequest;
 import mbaapp.core.User;
 import mbaapp.core.UserSchool;
-import mbaapp.providers.UserDBProvider;
-import mbaapp.requests.EssayStatusRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +37,7 @@ public class UsersSchoolEndpoint extends EndpointBase {
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool userSchool = schoolExistsForUser(user, schoolShortName);
+            UserSchool userSchool = getSchoolForUser(user, schoolShortName);
 
             return new ResponseEntity<>(userDBProvider.getUserSchoolDetail(user, userSchool).toString(), HttpStatus.OK);
         } catch (Exception e) {
@@ -67,7 +60,7 @@ public class UsersSchoolEndpoint extends EndpointBase {
             }
 
             User user = userDBProvider.getUser(userEmail);
-            UserSchool userSchool = schoolExistsForUser(user, schoolShortName);
+            UserSchool userSchool = getSchoolForUser(user, schoolShortName);
             userDBProvider.setDeadlineForSchool(user, userSchool, deadline);
 
             return new ResponseEntity<>("Added deadline", HttpStatus.CREATED);

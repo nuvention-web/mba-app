@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile.component';
 import { LayoutModule } from '../../../layouts/layout.module';
 import { FormsModule } from '@angular/forms';
-import { UsersSerivce } from '../../../../_services/users.service';
+import { UsersService } from '../../../../_services/users.service';
 import { DefaultComponent } from '../default.component';
 import { GoalsComponent } from './goals/goals.component';
 import { ExperiencesComponent } from './experiences/experiences.component';
@@ -41,7 +41,7 @@ const routes: Routes = [
         OverviewComponent,
         InterestsComponent
     ], providers: [
-        UsersSerivce, ProfileService
+        UsersService, ProfileService
     ]
 })
 export class ProfileModule {

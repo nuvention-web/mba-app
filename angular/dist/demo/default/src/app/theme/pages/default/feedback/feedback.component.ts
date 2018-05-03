@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit, ViewEncapsulation} from '@angular/core
 import { Ng2FileInputAction } from 'ng2-file-input';
 import {FeedbackService} from "../../../../_services/feedback.service";
 import { ScriptLoaderService } from "../../../../_services/script-loader.service";
+import { Router} from "@angular/router";
 
 @Component({
     selector: 'app-feedback',
@@ -14,16 +15,18 @@ export class FeedbackComponent implements OnInit, AfterViewInit{
   file: {} = null;
   feedback: string;
   reviewer: string;
-  user: string;
+    userFirstName: string;
   submitted: any = false;
   height: any;
-  constructor(private feedbackService: FeedbackService, private _script: ScriptLoaderService) {
-      this.feedbackService.getData().subscribe(data => {
+  constructor(private feedbackService: FeedbackService, private _script: ScriptLoaderService, private router: Router) {
+      this.feedbackService.getData(this.router.url).subscribe(data => {
       this.content = data;
-      this.feedback = this.content['review']['reviewComments']['comment'];
+      if (this.content['review']['reviewComments']!=null) {
+          this.feedback = this.content['review']['reviewComments']['comment'];
+      }
       this.reviewer = this.content['reviewer'].split(' ')[0];
-      this.user = this.content['user'].split(' ')[0];
-    });
+      this.userFirstName = this.content['user'].split(' ')[0];
+      });
     this.height = window.screen.height + "px";
     console.log('start');
   }

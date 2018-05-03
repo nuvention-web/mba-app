@@ -37,13 +37,13 @@
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '162048144617616');
+      fbq('init', '173732776620419');
       fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=162048144617616&ev=PageView&noscript=1"
+      src="https://www.facebook.com/tr?id=173732776620419&ev=PageView&noscript=1"
     /></noscript>
-    <!-- End Facebook Pixel Code -->
+    <!-- End Facebook Pixel Code -->cha
   </head>
 
   <body>
@@ -184,15 +184,15 @@
         <div class="row  no-gutters">
           <div class="col-lg-6 text-white showcase-img" style="background-image: url('img/bg-showcase-2.jpg');"></div>
           <div class="col-lg-6 my-auto showcase-text">
-            <h2>Deadlines, Managed</h2>
-            <p class="lead mb-0">Every school has different requirements and timelines. Managing your deadlines doesn't have to be a pain. myapp.MBA keeps track of it all so you can focus on the more important things.</p>
+            <h2>Applications, Streamlined</h2>
+            <p class="lead mb-0">Every school has different requirements and timelines. Managing your applications doesn't have to be a pain. myapp.MBA provides you with a centralized portal to help you streamline your applications so you can focus on the more important things.</p>
           </div>
         </div>
         <div class="row  no-gutters">
           <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/bg-showcase-3.jpg');"></div>
           <div class="col-lg-6 order-lg-1 my-auto showcase-text">
             <h2>Advice, On-Demand</h2>
-            <p class="lead mb-0">If you get stuck on an essay or have a question, we have specialists who can review your application materials for a fraction of what an MBA consultant would cost.</p>
+            <p class="lead mb-0">If you get stuck on an essay or have a question, we have specialists who can review your application material to get you back on track!</p>
           </div>
         </div>
       </div>
@@ -265,6 +265,11 @@
     </div>
 
     <!-- Bootstrap core JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-117478607-1"></script>
     <script>
@@ -273,10 +278,6 @@
       gtag('js', new Date());
       gtag('config', 'UA-117478607-1');
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="js/script.js"></script>
 
 
   </body>

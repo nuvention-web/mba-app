@@ -1,16 +1,16 @@
 <div data-code-preview="true" data-code-html="true" data-code-js="false">
   <div>
     <div class="m-stack m-stack--ver m-stack--general">
-      <div class="m-stack__item m-stack__item--center m-stack__item--middle" style="width: 40px;"></div>
+      <div class="m-stack__item m-stack__item--center m-stack__item--middle"></div>
       <div class="m-stack__item m-stack__item--middle m-stack__item--fluid">
         <div class="m-content">
           <div class="row">
             <div *ngIf='content != undefined && !submitted' class="content col-10">
               <div class="m-portlet m-portlet--mobile">
                 <div class="m-portlet__body">
-                  <div><h4><p style="color:#ab3233">Hi, {{reviewer}}!</p></h4></div>
+                  <div><h4><p style="color:#ab3233">Hi {{reviewer}}!</p></h4></div>
                   <div>
-                    <p class="lead">You have received an essay from {{content['user']}} to review. Please leave some feedback for {{user}} below. You can also upload a draft with any suggested edits.</p>
+                    <p class="lead">You have received an essay from {{content['user']}} to review. Please leave some feedback for {{userFirstName}} below. You can also upload a draft with any suggested edits.</p>
                   </div>
                 </div>
               </div>
@@ -21,9 +21,9 @@
                   <div class="m-portlet__head-caption">
                     <div class="m-portlet__head-title">
                       <h6 class="m-portlet__head-text">
-                      <br>{{content['prompt']}}
+                        <br>{{content['prompt']}}
                       </h6>
-                  </div>
+                    </div>
                   </div>
                 </div>
                 <div class="m-portlet__body">
@@ -31,13 +31,13 @@
                 </div>
               </div>
 
-              <ng2-file-input [drop-text]="'Drop the file down here'" [browse-text]="'Upload file'" (onAction)="onAction($event)"></ng2-file-input>
+              <ng2-file-input [drop-text]="'Upload an edited draft here, or you can leave some comments below! '" [browse-text]="'Upload file'" (onAction)="onAction($event)"></ng2-file-input>
 
 
               <form id="feedback-form">
                 <div class="form-group">
-                  <label for="exampleTextarea"><h6>Feedback</h6></label>
-                  <textarea class="form-control" id="exampleTextarea" rows="6" placeholder="Feedback" [(ngModel)]="feedback" name="feedback"></textarea>
+                  <label for="exampleTextarea"><h6>Comments</h6></label>
+                  <textarea class="form-control" id="exampleTextarea" rows="6" placeholder="Please leave your feedback here" [(ngModel)]="feedback" name="feedback"></textarea>
                 </div>
               </form>
               <div style="text-align: center" >
@@ -45,7 +45,7 @@
               </div>
             </div>
             <div *ngIf='submitted' class="col-6">
-              <h2 style="text-align: center; margin-top: 50px">You have submitted</h2>
+              <h3 style="text-align: center; margin-top: 50px">Thank you for your feedback! </h3>
               <div [style.height]="height"></div>
             </div>
           </div>

@@ -7,6 +7,7 @@ public class SchoolInfoEssayRequest {
 
     String essayID;
     String essayPrompt;
+    String isRequired;
 
     public String getEssayID() {
         return essayID;
@@ -15,4 +16,6 @@ public class SchoolInfoEssayRequest {
     public String getEssayPrompt() {
         return essayPrompt;
     }
+
+    public String getIsRequired() {return isRequired; }
 }

@@ -3,23 +3,33 @@ import {Http, Response, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 
 const header =  new Headers( {'Content-Type': 'application/json'});
-const url = 'myappmba-199623.appspot.com';
+const globalURL = 'myappmba-199623.appspot.com';
 const user = 'john.doe@gmail.com';
+
+// URL example: may be something likes this https://{url}/feedback/{username}/{schoolname}/{essayname}/{token}/{reviewID}
 
 @Injectable()
 export class FeedbackService {
+    info = {};
     constructor(private http: Http) {
+
     }
 
-    getData() {
-        return this.http.get('https://' + url + '/feedback/users/' + user
-            + '/school/Tuck/essay/Tuck_2017_1/draft/1a415c98-d64f-4e9a-a358-841ec3bed538/review/9b50465a-b18e-4636-8eb1-b78e9e67022e').map((response: Response) => response.json());
+    parseURL(url): any{
+        console.log(url);
+        let arr = url.split('/');
+        return {'url': globalURL, 'user': arr[2], 'school': arr[3], 'essay': arr[4], 'token': arr[5], 'reviewid': arr[6]};
+    }
 
+    getData(url) {
+        this.info = this.parseURL(url);
+        return this.http.get('https://' + this.info['url'] + '/review/users/' + this.info['user']
+            + '/school/' + this.info['school'] + '/essay/' + this.info['essay'] +  '/draft/' + this.info['token'] + '/review/' + this.info['reviewid']).map((response: Response) => response.json());
     }
 
     uploadComment(content) {
-        return this.http.post('https://' + url + '/feedback/users/' + user
-            + '/school/Tuck/essay/Tuck_2017_1/draft/1a415c98-d64f-4e9a-a358-841ec3bed538/review/9b50465a-b18e-4636-8eb1-b78e9e67022e', content, {headers: header});
+        return this.http.post('https://' + this.info['url'] + '/review/users/' + this.info['user']
+            + '/school/' + this.info['school'] + '/essay/' + this.info['essay'] +  '/draft/' + this.info['token'] + '/review/' + this.info['reviewid'], content, {headers: header});
     }
 
     uploadFile(file) {
@@ -28,8 +38,8 @@ export class FeedbackService {
         }
         const formData: FormData = new FormData();
         formData.append('file', file['file'], file['name']);
-        return this.http.post('https://' + url + '/feedback/users/' + user
-            + '/school/Tuck/essay/Tuck_2017_1/draft/1a415c98-d64f-4e9a-a358-841ec3bed538/review/9b50465a-b18e-4636-8eb1-b78e9e67022e/upload', formData);
+        return this.http.post('https://' + this.info['url'] + '/review/users/' + this.info['user']
+            + '/school/' + this.info['school'] + '/essay/' + this.info['essay'] +  '/draft/' + this.info['token'] + '/review/' + this.info['reviewid'] + '/upload', formData);
     }
 }
 

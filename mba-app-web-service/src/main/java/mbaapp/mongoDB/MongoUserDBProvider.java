@@ -167,6 +167,31 @@ public class MongoUserDBProvider implements UserDBProvider {
                 school.put("avgGPA", schoolInfo.getAvgGPA());
                 school.put("acceptanceRate", schoolInfo.getAcceptanceRate());
                 school.put("logoURL", schoolInfo.getLogoURL());
+                int numRequiredEssays = 0;
+                for(SchoolInfoEssay essay : schoolInfo.getEssays()) {
+                    boolean isRequired = essay.isRequired() == null ? false : Boolean.parseBoolean(essay.isRequired());
+                    numRequiredEssays = isRequired ? numRequiredEssays+1 : numRequiredEssays;
+                }
+                int numEssays = 0;
+                int numDrafts = 0;
+                int numSentForReview = 0;
+                for (UserSchool userSchool : user.getSchools()) {
+                    if (userSchool.getShortName().equalsIgnoreCase(schoolName)) {
+                        for (Essay essay : userSchool.getEssays()) {
+                            if (essay.getDrafts().size() > 0) {
+                                numEssays = numEssays + 1;
+                            }
+                            numDrafts = numDrafts + essay.getDrafts().size();
+                            for (EssayDraft draft : essay.getDrafts()) {
+                                numSentForReview += draft.getReviews().size();
+                            }
+                        }
+                        school.put("numEssaysWorkedOn", numEssays);
+                        school.put("numDrafts", numDrafts);
+                        school.put("numDraftsSentForReview", numSentForReview);
+                        school.put("numRequiredEssays", numRequiredEssays);
+                    }
+                }
             }
         }
 
@@ -476,12 +501,10 @@ public class MongoUserDBProvider implements UserDBProvider {
 
     public JSONObject getUserSchoolDetail(User user, UserSchool userSchool) throws Exception {
         SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(userSchool.getShortName());
-
         JSONObject userSchoolJSON = userSchool.toJSON(schoolInfo.getEssays());
         userSchoolJSON.put("logoURL", schoolInfo.getLogoURL());
         userSchoolJSON.put("name", schoolInfo.getName());
         userSchoolJSON.put("location", schoolInfo.getLocation());
-
         return userSchoolJSON;
 
     }

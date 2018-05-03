@@ -31,6 +31,7 @@ export class InterestsComponent implements OnInit {
         //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
         //Add '${implements OnChanges}' to the class.
         if (this.isInit && changes['profile'] && this.profile != undefined) {
+            console.log("Change data");
             for (let i = 0; i < this.count; i++) {
                 this.datas[i] = ProfileData.wrap(this.profile[this.questionNames[i]]);
             }

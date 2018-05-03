@@ -1,0 +1,51 @@
+<div class="m-content">
+    <div>
+        <ul class="nav nav-tabs  m-tabs-line m-tabs-line--2x m-tabs-line--primary" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#m_tabs_1_1" ng-reflect-href="#m_tabs_2_1">
+                    <strong>Proof Reading Service</strong>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#m_tabs_1_2"  ng-reflect-href="#m_tabs_2_2">
+                    <strong>Plagiarism Checker Service</strong>
+                </a>
+            </li>
+        </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="m_tabs_1_1" role="tabpanel">
+                    <div class="row">
+                        <div class="m-stack m-stack--ver m-stack--general">
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle"></div>
+                            <div class="m-stack__item m-stack__item--middle m-stack__item--fluid">
+                                <div class="m-content">
+                                    <div class="row">
+                                        <div class="m-portlet m-portlet--tab">
+                                            <div class="m-portlet__head">
+                                                <div class="m-portlet__head-caption">
+                                                    <div class="m-portlet__head-title">
+                                                        <div><<h6 class="m-portlet__head-text">
+                                                            <br>Proof reading service analysis</h6>
+                                                        </div>
+                                                        <div>
+                                                            <br>
+                                                            <br>
+                                                            <p>You can review the results of our proof reading service below, that was carried out by AI and Machine Learning driven tools. Place your cursor over the highlighted phrases to view the suggestions.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="m-portlet__body">
+                                                    <div [innerHTML]="findEssay() | safeHtml"></div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

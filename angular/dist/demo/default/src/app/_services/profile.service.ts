@@ -6,7 +6,7 @@ import { URL, user} from './url-infos'
 let header = new Headers({'Content-Type': 'application/json'});
 let username = "john.doe@gmail.com";
 let password = "hello";
-let myURL = "http://myappmba-199623.appspot.com"
+let myURL = "https://myappmba-199623.appspot.com"
 @Injectable()
 export class ProfileService {
 

@@ -1,10 +1,14 @@
 package mbaapp.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import mbaapp.endpoints.UsersEndpoint;
 import mbaapp.providers.SchoolInfoDBProvider;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.json.JSONObject;
+import org.languagetool.JLanguageTool;
+import org.languagetool.language.AmericanEnglish;
+import org.languagetool.rules.RuleMatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -16,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.file.Files;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,18 +30,25 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
  * Created by jnag on 2/24/18.
  */
-@Controller
+//@Controller
 public class EssayDraft {
+
+//    Logger logger = Logger.getLogger(EssayDraft.class.getName());
 
     private String draftName;
     private String id;
     private String contents;
+    private String grammarCheck;
     private String url;
     private Set<String> warningWords;
     private String uploadID;
@@ -73,6 +85,14 @@ public class EssayDraft {
             reviews = new ArrayList<>();
         }
         return reviews;
+    }
+
+    public String getGrammarCheck() {
+        return grammarCheck;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setDraftType(DraftType draftType) {
@@ -132,14 +152,16 @@ public class EssayDraft {
 
     }
 
-    public void validateEssayDraftContents(String schoolShortName, HashMap<String, List<String>> allSchoolKeyWords) {
+    public void validateEssayDraftContents(String schoolShortName, HashMap<String, List<String>> allSchoolKeyWords) throws Exception {
 
-        warningWords = new HashSet<>();
-        List<String> keywordsList = getKeyWordsListApplicable(schoolShortName, allSchoolKeyWords);
-        warningWords = keywordsList.stream().parallel().filter(contents::contains).collect(Collectors.toSet());
+            warningWords = new HashSet<>();
+            List<String> keywordsList = getKeyWordsListApplicable(schoolShortName, allSchoolKeyWords);
+            warningWords = keywordsList.stream().parallel().filter(contents::contains).collect(Collectors.toSet());
 
-        schoolKeywords = allSchoolKeyWords.get(schoolShortName);
-        schoolKeyWordsFound = schoolKeywords.stream().parallel().anyMatch(contents.toUpperCase()::contains);
+            schoolKeywords = allSchoolKeyWords.get(schoolShortName);
+            schoolKeyWordsFound = schoolKeywords.stream().parallel().anyMatch(contents.toUpperCase()::contains);
+
+            grammarCheck = runGrammarCheckOnParagraph(contents);
 
     }
 
@@ -161,6 +183,7 @@ public class EssayDraft {
         List<XWPFParagraph> paragraphs = document.getParagraphs();
 
         StringBuilder contentsBuilder = new StringBuilder();
+        StringBuilder grammarCheckBuilder = new StringBuilder();
 
         for(int i=0;i<paragraphs.size();i++){
             contentsBuilder.append("<p>");
@@ -173,10 +196,34 @@ public class EssayDraft {
                 schoolKeyWordsFound = schoolKeywordsUpper.stream().parallel().anyMatch(text.toUpperCase()::contains);
             }
             contentsBuilder.append(paragraphs.get(i).getText()).append("</p>");
+            grammarCheckBuilder.append("<p>").append(runGrammarCheckOnParagraph(paragraphs.get(i).getText())).append("</p>");
         }
-
+        grammarCheck = grammarCheckBuilder.toString();
         contents = contentsBuilder.toString();
     }
+
+    private String runGrammarCheckOnParagraph(String paragraph) throws Exception {
+        JLanguageTool langTool = new JLanguageTool(new AmericanEnglish());
+
+        StringBuilder stringBuilder = new StringBuilder(paragraph);
+        List<RuleMatch> matches = langTool.check(paragraph);
+        int totalShift=0;
+        for (RuleMatch match : matches) {
+            int fromPos = match.getFromPos();
+            int toPos = match.getToPos();
+            String spanStart = MessageFormat.format("<span data-toggle=\"m-popover\" data-placement=\"left\" title=\"{0} Suggestions: {1}\"><u>",
+                    match.getMessage(), match.getSuggestedReplacements());
+            String spanEnd = "</u></span>";
+            stringBuilder.insert(fromPos + totalShift, spanStart);
+            stringBuilder.insert(spanStart.length()+toPos + totalShift, spanEnd);
+            totalShift = spanEnd.length() + spanStart.length() + totalShift;
+        }
+
+        return stringBuilder.toString();
+
+
+    }
+
 
     public List<String> getSchoolKeywords() {
         return schoolKeywords;

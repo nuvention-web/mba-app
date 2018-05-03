@@ -1,5 +1,6 @@
 package mbaapp.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import mbaapp.requests.EssayDraftRequest;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * Created by jnag on 2/15/18.
@@ -29,6 +31,9 @@ public class UserSchool{
     private String shortName;
     private String deadline;
     private Set<String> warningWords;
+
+    @JsonIgnore
+    private static final Logger logger = Logger.getLogger(UserSchool.class.getName());
 
     public String getShortName() {
         return shortName;
@@ -107,8 +112,13 @@ public class UserSchool{
         for(Essay essay : essays) {
             if(essay.getEssayID().equalsIgnoreCase(essayID)){
                 essayNotFound = false;
-                EssayDraft essayDraft = essay.addDraft(request.getDraftName(), request.getContents(), "", "", EssayDraft.DraftType.CONTENTS);
-                essayDraft.validateEssayDraftContents(this.shortName, keywords.schoolKeywords);
+                if(request.getUrl()==null) {
+                    EssayDraft essayDraft = essay.addDraft(request.getDraftName(), request.getContents(), "", "", EssayDraft.DraftType.CONTENTS);
+                    essayDraft.validateEssayDraftContents(this.shortName, keywords.schoolKeywords);
+                }
+                else{
+                    EssayDraft essayDraft = essay.addDraft(request.getDraftName(), "", "", request.getUrl(), EssayDraft.DraftType.URL);
+                }
             }
         }
 
@@ -116,7 +126,12 @@ public class UserSchool{
             for(SchoolInfoEssay schoolInfoEssay : schoolInfo.getEssays()) {
                 if(essayID.equalsIgnoreCase(schoolInfoEssay.getEssayID())) {
                     Essay essay = new Essay(essayID, request.getEssayStatus());
-                    essay.addDraft(request.getDraftName(), request.getContents(), "", "", EssayDraft.DraftType.CONTENTS);
+                    if(request.getUrl()!=null) {
+                        essay.addDraft(request.getDraftName(), "", "", request.getUrl(), EssayDraft.DraftType.URL);
+                    }
+                    else {
+                        essay.addDraft(request.getDraftName(), request.getContents(), "", "", EssayDraft.DraftType.CONTENTS);
+                    }
                     essays.add(essay);
                     essayNotFound = false;
                 }

@@ -38,18 +38,10 @@
         <div class="tab-content">
             <div class="tab-pane active" id="m_tabs_1_1" role="tabpanel">
                 <div class="row">
-                    <div *ngFor="let essay of schoolDetails.essays" class="col-xl-5">
-                        <div class="m-portlet">
+                    <div *ngFor="let essay of schoolDetails.essays" class="col-xl-4 col-md-6">
+                        <div class="m-portlet show-hand" routerLink="/school/{{school}}/essay/{{ essay.essayID }}">
                             <div class="m-portlet__body">
                                 {{ essay.prompt }}
-                            </div>
-                            <div class="m-portlet__foot">
-                                <div class="row align-items-center">
-                                    <button routerLink="/school/{{school}}/essay/{{ essay.essayID }}" class="btn btn-brand"
-                                            type="submit">
-                                        Work on This
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </div>

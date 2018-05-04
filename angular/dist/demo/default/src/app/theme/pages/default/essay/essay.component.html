@@ -294,12 +294,17 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr *ngFor="let review of essay.drafts[0].reviews">
-                                        <td>{{review}}</td>
+                                    <tr *ngFor="let review of reviews">
+                                        <td>{{review.date}}</td>
+                                        <td>{{review.name}}</td>
+                                        <td>{{review.email}}</td>
+                                        <td>
+                                            <button [hidden]="review.reviewComments == null" class="btn btn-brand">See Response</button>
+                                            <button [hidden]="review.reviewComments != null" class="btn btn-default" disabled>No Response</button>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
-                                {{essay | json}}
                             </div>
                         </div>
                     </div>

@@ -36,6 +36,10 @@ export class SchoolsService {
         return this.http.get(URL+"/mba/users/"+user+"/school/" + schoolName + "/essay/" + essayID, this.jwt()).map((response:Response) => response.json());
     }
 
+    getEssayReviews(schoolName:string, essayID:string) {
+        return this.http.get(URL+"/mba/users/"+user+"/school/" + schoolName + "/essay/" + essayID + "/reviews", this.jwt()).map((response:Response) => response.json());
+    }
+
     getDraft(schoolName:string, essayID:string, draftID:string) {
         return this.http.get(URL+"/mba/users/"+user+"/school/" + schoolName + "/essay/" + essayID + "/draft/" + draftID, this.jwt()).map((response:Response) => response.json());
     }
@@ -47,7 +51,6 @@ export class SchoolsService {
     runProofRead(schoolName:string, essayID:string, draftID:string){
         return this.http.post(URL+"/mba/users/"+user+"/school/" + schoolName + "/essay/" + essayID + "/draft/" + draftID + "/scan/proofRead",{}, this.jwt(1));
     }
-
 
     getAllEssays() {
         return this.http.get(URL+"/mba/users/"+user+"/essays", this.jwt()).map((response:Response) => response.json());

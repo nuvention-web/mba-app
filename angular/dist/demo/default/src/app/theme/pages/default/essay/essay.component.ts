@@ -20,7 +20,8 @@ export class EssayComponent implements OnInit {
     allEssays = [];
     school = "";
     essayID = "";
-    fileUpload = ""
+    fileUpload = "";
+    reviews = [];
     schoolDetails: any = [];
 
 
@@ -33,6 +34,7 @@ export class EssayComponent implements OnInit {
             this.essayID = params.id;
         });
         this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
+        this._schools.getEssayReviews(this.school, this.essayID).subscribe(d => this.reviews = d.reviews);
         this._schools.getAllEssays().subscribe(d => this.allEssays = this.transformJSON(d));
         this._schools.getSchoolDetails(this.school).subscribe(d => this.schoolDetails = d);
     }

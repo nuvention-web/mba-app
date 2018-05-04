@@ -86,6 +86,9 @@
                                                             <button (click)="downloadDraft(draft.id)" class="m-btn btn-sm btn btn-outline-brand" type="button">
                                                                 <i class="fa fa-eye"></i>
                                                             </button>
+                                                            <button routerLink="/proofread/{{school}}/essay/{{ essay.essayID }}/draft/{{draft.id}}" class="m-btn btn-sm btn btn-outline-brand" type="button">
+                                                                <i class="fa fa-signal"></i>
+                                                            </button>
                                                             <button class="m-btn btn btn-sm btn-outline-brand" type="button">
                                                                 <i class="fa fa-copy"></i>
                                                             </button>
@@ -99,12 +102,6 @@
                                                         Found the following key words in this draft for {{school}}:<br>
                                                         {{ draft.warningWords }}
                                                     </div>
-                                                </div>
-                                                <div class="row align-items-right">
-                                                    <button routerLink="/proofread/{{school}}/essay/{{ essay.essayID }}/draft/{{draft.id}}" class="btn btn-brand"
-                                                            type="submit">
-                                                        Analysis
-                                                    </button>
                                                 </div>
                                             </div>
                                         </div>

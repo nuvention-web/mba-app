@@ -1,14 +1,13 @@
 package mbaapp.endpoints;
 
 import io.swagger.annotations.ApiOperation;
-import mbaapp.core.EssayDraft;
-import mbaapp.core.Review;
-import mbaapp.core.User;
-import mbaapp.core.UserSchool;
+import mbaapp.core.*;
 import mbaapp.email.EmailService;
 import mbaapp.requests.EmailDraftRequest;
 import mbaapp.requests.EssayDraftRequest;
 import mbaapp.requests.EssayStatusRequest;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -92,6 +91,52 @@ public class EssaysEndpoint extends EndpointBase{
         }
 
     }
+
+
+    @GetMapping(value = "/reviews", produces = "application/json")
+    @CrossOrigin
+    @ApiOperation(value = "Get essay details of a particular essay")
+    public ResponseEntity<String> getReviews(@PathVariable String userEmail,
+                                           @PathVariable String schoolShortName, @PathVariable String essayID) {
+
+        try {
+            if (runValidations(userEmail, schoolShortName) != null) {
+                return runValidations(userEmail, schoolShortName);
+            }
+
+            User user = userDBProvider.getUser(userEmail);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
+
+            Essay essay = school.getEssay(essayID);
+
+            if(essay==null){
+                return new ResponseEntity<String>("Did not find an essay with the essay ID "+essayID, HttpStatus.BAD_REQUEST);
+            }
+
+
+            JSONObject reviewsJSON = new JSONObject();
+            JSONArray reviewsArray = new JSONArray();
+            for(EssayDraft draft : essay.getDrafts()){
+                for(Review review : draft.getReviews()){
+                    JSONObject reviewJSON = review.toJSON();
+                    reviewJSON.put("draftID", draft.getId());
+                    reviewJSON.put("draftName", draft.getDraftName());
+                    reviewsArray.put(review.toJSON());
+                }
+            }
+
+            reviewsJSON.put("reviews", reviewsArray);
+
+            return new ResponseEntity<>(reviewsJSON.toString(), HttpStatus.OK);
+
+        }
+        catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 
 
     @PostMapping("/draft")

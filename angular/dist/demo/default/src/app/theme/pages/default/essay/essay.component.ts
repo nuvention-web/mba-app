@@ -22,7 +22,7 @@ export class EssayComponent implements OnInit {
     essayID = "";
     fileUpload = "";
     reviews = [];
-    schoolDetails: any = [];
+    schoolDetails: any;
 
     contactName: string;
     contactDraft: string;
@@ -32,7 +32,7 @@ export class EssayComponent implements OnInit {
 
     constructor(private route:ActivatedRoute, _script:ScriptLoaderService, private _schools:SchoolsService,
                 private router:Router) {
-
+        this.schoolDetails = {notes: []};
         this.route.params.subscribe(params => {
             this.params = params;
             this.school = params.school;
@@ -97,18 +97,14 @@ export class EssayComponent implements OnInit {
 
     public findNote(requestedNote) {
         var theNote = {};
-        var notes=[];
-
-        notes = this.schoolDetails.notes;
-        notes.forEach(function (note) {
-            console.log("requested note "+requestedNote)
-            //console.log(note)
-            if(note.title == requestedNote) {
-                theNote = note;
-                console.log("Found "+theNote)
-                return
-            }
-        });
+        if(this.schoolDetails.notes) {
+            this.schoolDetails.notes.forEach(function (note) {
+                if(note.title == requestedNote) {
+                    theNote = note;
+                    return
+                }
+            });
+        }
 
         return theNote;
 

@@ -183,17 +183,17 @@
                                                 </select>
                                                 <br>
                                                 <br>
-                                                <div [innerHTML]="findEssay(selectedEssay.value)"></div>
+                                                <div [innerHTML]="findEssay(selectedEssay.value).contents"></div>
                                             </div>
-                                            <!--<div class="tab-pane" id="reference_tabs_1_2" role="tabpanel">-->
-                                                <!--<select id="notes-dropdown" (change)="valueChange()" style="width:100%;" #selectedNote>-->
-                                                    <!--<option value="test">Select a note...</option>-->
-                                                        <!--<option *ngFor="let note of schoolDetails.notes" [value]="note.title">{{note.title}}</option>-->
-                                                <!--</select>-->
-                                                <!--<br>-->
-                                                <!--<br>-->
-                                                <!--<div [innerHTML]="findNote(selectedNote.value).contents"></div>-->
-                                            <!--</div>-->
+                                            <div class="tab-pane" id="reference_tabs_1_2" role="tabpanel">
+                                                <select id="notes-dropdown" (change)="valueChange()" style="width:100%;" #selectedNote>
+                                                    <option value="test">Select a note...</option>
+                                                        <option *ngFor="let note of schoolDetails.notes" [value]="note.title">{{note.title}}</option>
+                                                </select>
+                                                <br>
+                                                <br>
+                                                <div [innerHTML]="findNote(selectedNote.value).contents"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

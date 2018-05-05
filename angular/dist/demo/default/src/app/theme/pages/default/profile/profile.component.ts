@@ -7,12 +7,13 @@ import { Location } from '@angular/common';
 @Component({
     selector: "app-profile",
     templateUrl: "./profile.component.html",
+    styleUrls: ['./profile.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
 export class ProfileComponent implements OnInit, AfterViewInit {
 
     userInformation: any = {};
-    id = 0;
+    id = 1;
     profile:any = undefined;
     token: string;
     constructor(private _script: ScriptLoaderService, private _user: UsersService, private _profile: ProfileService) {

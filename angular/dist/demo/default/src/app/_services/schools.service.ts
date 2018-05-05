@@ -32,6 +32,10 @@ export class SchoolsService {
         return this.http.get(URL+"/mba/users/"+user+"/school/" + schoolName, this.jwt()).map((response:Response) => response.json());
     }
 
+    updateSchoolDetails(schoolName: string, schoolDetail) {
+        return this.http.post(URL+"/mba/users/"+user+"/school/" + schoolName, schoolDetail, this.jwt())
+    }
+
     getEssay(schoolName:string, essayID:string) {
         return this.http.get(URL+"/mba/users/"+user+"/school/" + schoolName + "/essay/" + essayID, this.jwt()).map((response:Response) => response.json());
     }

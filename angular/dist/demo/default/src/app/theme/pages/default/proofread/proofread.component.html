@@ -44,7 +44,7 @@
                                                 </div>
 
 
-                                                <div id="grammarContainer" [innerHTML]="this.draft.grammarCheck | safeHtml"></div>
+                                                <div [hidden]="this.draft.grammarCheck == undefined" id="grammarContainer" [innerHTML]="this.draft.grammarCheck | safeHtml"></div>
                                                 </div>
                                         </div>
                                     </div>

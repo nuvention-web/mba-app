@@ -22,7 +22,7 @@
 <div class="m-content">
 	<!--Begin::Section-->
 	<div class="row">
-		<div *ngFor="let school of schools" class="col-xl-4 col-lg-6 col-sm-12">
+		<div *ngFor="let school of schools; let i=index" class="col-xl-4 col-lg-6 col-sm-12">
 			<!--begin:: Widgets/Top Products-->
 			<div routerLink="/school/{{school.shortName}}" class="show-hand m-portlet m-portlet--bordered-semi">
 				<div class="m-portlet__head">
@@ -45,7 +45,7 @@
 											<div class="m-dropdown__content">
 												<ul class="m-nav">
 													<li class="m-nav__item">
-														<a (click)="deleteSchool(school.shortName)" class="m-nav__link">
+														<a (click)="deleteSchool($event, i, school.shortName)" class="m-nav__link">
 															<i class="m-nav__link-icon flaticon-circle"></i>
 															<span class="m-nav__link-text">
 																Remove

@@ -275,6 +275,61 @@
                                         </div>
                                     </div>
                                 </div>
+                                <form class="m-form  m-form--label-align-right">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="alert m-alert m-alert--default">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group m-form__group mb-3">
+                                                            <label for="contactName">
+                                                                Contact Name
+                                                            </label>
+                                                            <input class="form-control m-input" [(ngModel)]="contactName" name="contactName" id="contactName" placeholder="Enter full name" type="text">
+                                                            <span class="m-form__help">
+                                                        Who are you getting feedback from?
+                                                    </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group m-form__group mb-3">
+                                                            <label for="contactEmail">
+                                                                Email address
+                                                            </label>
+                                                            <input ngModel class="form-control m-input" [(ngModel)]="contactEmail"  name="contactEmail" id="contactEmail" placeholder="Enter email" type="email">
+                                                            <span class="m-form__help">
+                                                        A link will be sent to this email.
+                                                    </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group m-form__group mb-3">
+                                                            <label for="contactEmail">
+                                                                Select Draft
+                                                            </label>
+                                                            <select ngModel class="form-control m-input" [(ngModel)]="contactDraft" name="contactDraft">
+                                                                <option *ngFor="let draft of essay.drafts" [value]="draft.id">{{draft.draftName}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group m-form__group mb-3">
+                                                            <label for="contactComment">
+                                                                Comment
+                                                            </label>
+                                                            <textarea ngModel class="form-control m-input" [(ngModel)]="contactComment" name="contactComment" id="contactComment"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <button (click)="sendForReview()" class="btn btn-brand">Send for Feedback</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
 
                                 <table class="table">
                                     <thead>
@@ -293,7 +348,7 @@
                                         </th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody [hidden]="reviews.length == 0">
                                     <tr *ngFor="let review of reviews">
                                         <td>{{review.date}}</td>
                                         <td>{{review.name}}</td>
@@ -305,6 +360,9 @@
                                     </tr>
                                     </tbody>
                                 </table>
+                                <div [hidden]="reviews.length != 0" class="my-5 text-center">
+                                    <strong>No review requests... try sending one above!</strong>
+                                </div>
                             </div>
                         </div>
                     </div>

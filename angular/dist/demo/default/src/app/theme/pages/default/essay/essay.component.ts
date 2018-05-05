@@ -24,6 +24,11 @@ export class EssayComponent implements OnInit {
     reviews = [];
     schoolDetails: any = [];
 
+    contactName: string;
+    contactDraft: string;
+    contactEmail: string;
+    contactComment: string;
+
 
     constructor(private route:ActivatedRoute, _script:ScriptLoaderService, private _schools:SchoolsService,
                 private router:Router) {
@@ -141,6 +146,14 @@ export class EssayComponent implements OnInit {
 
             }
         );
+    }
+
+    sendForReview() {
+        this._schools.sendForReview(this.school, this.essayID, this.contactDraft, this.contactEmail, this.contactName, this.contactComment).subscribe((response) => {
+            this._schools.getEssayReviews(this.school, this.essayID).subscribe(d => this.reviews = d.reviews);
+        }, (error) => {
+        
+        });
     }
 
 

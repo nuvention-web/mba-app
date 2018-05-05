@@ -98,6 +98,14 @@ export class SchoolsService {
         return this.http.post(URL+"/mba/users/"+user+"/school/" + schoolName + "/essay/" + essayID + "/draft",{"contents": text}, this.jwt(1));
     }
 
+    sendForReview(schoolName, essayID, draftID, email, name, message) {
+        return this.http.post(URL+"/mba/users/"+user+"/school/" + schoolName + "/essay/" + essayID+"/draft/"+draftID+"/email/", {
+            "email": email,
+            "name": name,
+            "message": message
+        }, this.jwt(1));
+    }
+
     private jwt(json=0) {
         // create authorization header with jwt token
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));

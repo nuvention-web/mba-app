@@ -8,6 +8,7 @@ import { SchoolsService } from '../../../../_services/schools.service';
     selector: 'app-essays',
     templateUrl: './school.component.html',
     encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./school.component.css'],
     providers: [SchoolsService]
 })
 export class SchoolComponent implements OnInit {
@@ -22,6 +23,21 @@ export class SchoolComponent implements OnInit {
         this._schools.getSchoolDetails(this.school).subscribe(d => this.schoolDetails = d);
     }
 
+    saveSchool(i) {
+        console.log(this.schoolDetails.notes);
+        this._schools.updateNote(this.school, this.schoolDetails.notes[i].noteID, this.schoolDetails.notes[i].contents, this.schoolDetails.notes[i].title);
+    }
+
     ngOnInit() {
+    }
+
+    newNote() {
+        let note = {title: "", contents:""};
+        this.schoolDetails.notes.push(note);
+        this._schools.addNote(this.school, "Contents", "Title");
+    }
+
+    delNote(i) {
+
     }
 }

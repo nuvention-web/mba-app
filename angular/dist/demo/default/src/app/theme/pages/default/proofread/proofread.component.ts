@@ -22,7 +22,7 @@ export class ProofreadComponent implements OnInit{
     allEssays = [];
     school = "";
     essayID = "";
-    fileUpload = ""
+    fileUpload = "";
     schoolDetails: any = [];
     draftID = "";
     draft = {};
@@ -38,17 +38,25 @@ export class ProofreadComponent implements OnInit{
             this.essayID = params.essayID;
             this.draftID = params.draftID;
         });
-        this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
-        this._schools.getDraft(this.school, this.essayID, this.draftID). subscribe(d => this.draft = d)
+        this._schools.getDraft(this.school, this.essayID, this.draftID). subscribe(d => {
+            this.draft = d;
+        })
     }
 
 
     ngOnInit() {
-
     }
 
-    public findEssay() {
-        return this.draft["grammarCheck"]
+    ngAfterViewInit() {
+        this.initializePopover();
+    }
+
+    initializePopover() {
+        (<any>$)('#grammarContainer').popover({
+            selector: '[data-toggle="m-popover"]',
+            placement: 'right',
+            trigger: 'hover'
+        });
     }
 
     public getSentimentScore() {
@@ -83,8 +91,10 @@ export class ProofreadComponent implements OnInit{
     public runProofRead() {
         this._schools.runProofRead(this.school, this.essayID, this.draftID).subscribe(
             (response: Response) => {
-                this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
-                this._schools.getDraft(this.school, this.essayID, this.draftID).subscribe(d => this.draft = d)
+                this._schools.getDraft(this.school, this.essayID, this.draftID).subscribe(d => {
+                    this.draft = d;
+                    (<any>$)('[data-toggle="m-popover"]').popover();
+                });
             }, (error: Response) => {
 
             }

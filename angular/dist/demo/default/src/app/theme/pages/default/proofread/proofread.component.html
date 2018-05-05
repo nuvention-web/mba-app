@@ -37,7 +37,6 @@
                                                 </div>
                                             </div>
                                             <div class="m-portlet__body">
-
                                                 <div *ngIf='displayProofReadButton()' class="m-section">
                                                     <button class="btn btn-brand" (click)="runProofRead()">
                                                         Proofread your essay!
@@ -45,7 +44,7 @@
                                                 </div>
 
 
-                                                <div [innerHTML]="findEssay() | safeHtml"></div>
+                                                <div id="grammarContainer" [innerHTML]="this.draft.grammarCheck | safeHtml"></div>
                                                 </div>
                                         </div>
                                     </div>

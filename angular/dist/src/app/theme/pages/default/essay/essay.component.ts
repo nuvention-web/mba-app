@@ -29,6 +29,7 @@ export class EssayComponent implements OnInit {
     contactDraft: string;
     contactEmail: string;
     contactComment: string;
+    contactSuccess = false;
 
 
     constructor(private route:ActivatedRoute, _script:ScriptLoaderService, private _schools:SchoolsService,
@@ -148,6 +149,7 @@ export class EssayComponent implements OnInit {
     sendForReview() {
         this._schools.sendForReview(this.school, this.essayID, this.contactDraft, this.contactEmail, this.contactName, this.contactComment).subscribe((response) => {
             this._schools.getEssayReviews(this.school, this.essayID).subscribe(d => this.reviews = d.reviews);
+            this.contactSuccess = true;
         }, (error) => {
         
         });

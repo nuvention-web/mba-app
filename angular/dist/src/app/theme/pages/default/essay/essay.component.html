@@ -117,14 +117,14 @@
                                             </div>
 
                                             <ul class="nav nav-pills" role="tablist">
-                                                <li class="nav-item">
-                                                    <a class="newdraft nav-link active" data-toggle="tab" href="#newdraft_online" ng-reflect-href="#newdraft_online">
-                                                        Online Editor
+                                                <li class="newdraft nav-item">
+                                                    <a class="nav-link active" data-toggle="tab" href="#newdraft_file" ng-reflect-href="#newdraft_file">
+                                                        File Upload
                                                     </a>
                                                 </li>
                                                 <li class="newdraft nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#newdraft_file" ng-reflect-href="#newdraft_file">
-                                                        File Upload
+                                                    <a class="nav-link" data-toggle="tab" href="#newdraft_online" ng-reflect-href="#newdraft_online">
+                                                        Online Editor
                                                     </a>
                                                 </li>
                                                 <li class="newdraft nav-item">
@@ -135,20 +135,19 @@
                                             </ul>
 
                                             <div class="tab-content">
-                                                <div class="tab-pane active" id="newdraft_online" role="tabpanel">
+                                                <div class="tab-pane" id="newdraft_online" role="tabpanel">
                                                     <textarea id="draft_editor" name="draft_editor"></textarea>
                                                     <br>
                                                     <button type="button" class="btn m-btn--pill btn-primary" (click)="saveDraft()">Save Draft</button>
                                                 </div>
-                                                <div class="tab-pane" id="newdraft_file" role="tabpanel">
+                                                <div class="tab-pane active" id="newdraft_file" role="tabpanel">
                                                     <div class="form-group m-form__group">
-                                                        <div class="custom-file">
+                                                        <div class="mb-3 custom-file">
                                                             <input class="custom-file-input" id="customFile" type="file" (change)="uploadFile($event)" accept=".doc,.docx">
                                                             <label class="custom-file-label" for="customFile">
                                                                 Choose a .doc or .docx file...
                                                             </label>
                                                         </div>
-                                                        <br>
                                                         <button type="button" class="btn m-btn--pill btn-primary" (click)="uploadDraft()">Upload Draft</button>
                                                     </div>
                                                 </div>
@@ -200,7 +199,7 @@
                             </div>
                             <div class="tab-pane" id="m_tabs_6_5" role="tabpanel">
                                 <div class="form-group m-form__group">
-                                    <label for="example_input_full_name">
+                                    <label>
                                         Choose Advice Type:
                                     </label>
                                     <div class="row">
@@ -280,6 +279,14 @@
                                         <div class="col-md-6">
                                             <div class="alert m-alert m-alert--default">
                                                 <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div [hidden]="!contactSuccess" class="alert alert-success" role="alert">
+                                                            <strong>
+                                                                Great job!
+                                                            </strong>
+                                                            Your draft is on its way to {{contactName}}.
+                                                        </div>
+                                                    </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group m-form__group mb-3">
                                                             <label for="contactName">

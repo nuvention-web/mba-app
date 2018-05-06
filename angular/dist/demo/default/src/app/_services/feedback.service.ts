@@ -10,36 +10,33 @@ const user = 'john.doe@gmail.com';
 
 @Injectable()
 export class FeedbackService {
-    info = {};
     constructor(private http: Http) {
 
     }
 
     parseURL(url): any{
-        console.log(url);
         let arr = url.split('/');
-        return {'url': globalURL, 'user': arr[2], 'school': arr[3], 'essay': arr[4], 'token': arr[5], 'reviewid': arr[6]};
+        return {'url': globalURL, 'user': arr[2], 'school': arr[3], 'essay': arr[4], 'token': arr[5], 'reviewid': arr[6], 'reviewer': arr[7]};
     }
 
-    getData(url) {
-        this.info = this.parseURL(url);
-        return this.http.get('https://' + this.info['url'] + '/review/users/' + this.info['user']
-            + '/school/' + this.info['school'] + '/essay/' + this.info['essay'] +  '/draft/' + this.info['token'] + '/review/' + this.info['reviewid']).map((response: Response) => response.json());
+    getData(info) {
+        return this.http.get('https://' + info['url'] + '/review/users/' + info['user']
+            + '/school/' + info['school'] + '/essay/' + info['essay'] +  '/draft/' + info['token'] + '/review/' + info['reviewid']).map((response: Response) => response.json());
     }
 
-    uploadComment(content) {
-        return this.http.post('https://' + this.info['url'] + '/review/users/' + this.info['user']
-            + '/school/' + this.info['school'] + '/essay/' + this.info['essay'] +  '/draft/' + this.info['token'] + '/review/' + this.info['reviewid'], content, {headers: header});
+    uploadComment(info, content) {
+        return this.http.post('https://' + info['url'] + '/review/users/' + info['user']
+            + '/school/' + info['school'] + '/essay/' + info['essay'] +  '/draft/' + info['token'] + '/review/' + info['reviewid'], content, {headers: header});
     }
 
-    uploadFile(file) {
+    uploadFile(info, file) {
         if (file == null || file['file'] == null || file['name'] == null) {
             return;
         }
         const formData: FormData = new FormData();
         formData.append('file', file['file'], file['name']);
-        return this.http.post('https://' + this.info['url'] + '/review/users/' + this.info['user']
-            + '/school/' + this.info['school'] + '/essay/' + this.info['essay'] +  '/draft/' + this.info['token'] + '/review/' + this.info['reviewid'] + '/upload', formData);
+        return this.http.post('https://' + info['url'] + '/review/users/' + info['user']
+            + '/school/' + info['school'] + '/essay/' + info['essay'] +  '/draft/' + info['token'] + '/review/' + info['reviewid'] + '/upload', formData);
     }
 }
 

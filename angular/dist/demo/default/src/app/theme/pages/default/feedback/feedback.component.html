@@ -37,15 +37,24 @@
               <form id="feedback-form">
                 <div class="form-group">
                   <label for="exampleTextarea"><h6>Comments</h6></label>
-                  <textarea class="form-control" id="exampleTextarea" rows="6" placeholder="Please leave your feedback here" [(ngModel)]="feedback" name="feedback"></textarea>
+                  <textarea class="form-control" id="exampleTextarea" rows="12" placeholder="Please leave your feedback here" [(ngModel)]="feedback" name="feedback"></textarea>
                 </div>
               </form>
               <div style="text-align: center" >
                 <button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
               </div>
             </div>
-            <div *ngIf='submitted' class="col-6">
-              <h3 style="text-align: center; margin-top: 50px">Thank you for your feedback! </h3>
+            <div *ngIf='submitted' class="col-12 after-submitted">
+              <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+                  <div class="m-stack m-stack--ver m-stack--general">
+                    <div class="m-stack__item m-stack__item--center m-stack__item--middle" style="width: 160px; padding-top: 25px"><h5>{{reviewer}}'s comment: </h5></div>
+                    <div class="m-stack__item" style="padding-left: 70px">
+                      <textarea-editor [(ngModel)]="feedback" disabled="true" style="font-size: 20px;"></textarea-editor>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div [style.height]="height"></div>
             </div>
           </div>

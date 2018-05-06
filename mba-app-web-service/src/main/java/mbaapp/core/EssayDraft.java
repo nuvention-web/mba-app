@@ -1,7 +1,6 @@
 package mbaapp.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import mbaapp.endpoints.UsersEndpoint;
 import mbaapp.providers.SchoolInfoDBProvider;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -11,37 +10,26 @@ import org.languagetool.language.AmericanEnglish;
 import org.languagetool.rules.RuleMatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.nio.file.Files;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Created by jnag on 2/24/18.
  */
 //@Controller
-public class EssayDraft {
+public class EssayDraft extends BaseMBA{
 
 //    Logger logger = Logger.getLogger(EssayDraft.class.getName());
 
@@ -59,6 +47,7 @@ public class EssayDraft {
     private String keyPhrases;
     private String analysisRun;
     private String grammarCheckRun;
+    private String date;
 
     private List<Review> reviews;
 
@@ -74,6 +63,7 @@ public class EssayDraft {
 
     public EssayDraft() {
          this.id = UUID.randomUUID().toString();
+         this.date = getCurrentTime();
          reviews = new ArrayList<>();
     }
 
@@ -97,6 +87,10 @@ public class EssayDraft {
             reviews = new ArrayList<>();
         }
         return reviews;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public double getSentimentScore() {

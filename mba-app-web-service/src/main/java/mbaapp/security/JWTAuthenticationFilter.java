@@ -76,6 +76,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
         JSONObject userJSON = new JSONObject();
         userJSON.put("AUTH_TOKEN", TOKEN_PREFIX + token);
+        userJSON.put("email", ((User) auth.getPrincipal()).getUsername());
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
         res.getWriter().write(userJSON.toString());

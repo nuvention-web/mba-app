@@ -65,7 +65,7 @@ export class SchoolsService {
     }
 
     downloadEssayDraft(schoolName:string, essayID:string, draftID:string) {
-        window.open(URL+"/mba/users/"+user+"/school/" + schoolName + "/essay/" + essayID + "/draft/" + draftID);
+        window.open(URL+"/download/users/"+user+"/school/" + schoolName + "/essay/" + essayID + "/draft/" + draftID);
     }
 
     getNote(schoolName:string, noteID:string) {
@@ -90,6 +90,10 @@ export class SchoolsService {
     addNote(schoolName:string, contents:string, title:string){
         return this.http.post(URL+"/mba/users/"+user+"/school/" + schoolName + "/notes/", {"contents": contents, "title": title}
             , this.jwt(1));
+    }
+
+    deleteNote(schoolName:string, noteID:string){
+        return this.http.delete(URL+"/mba/users/"+user+"/school/" + schoolName + "/notes/" + noteID, this.jwt(1));
     }
 
     uploadEssayDraft(file, schoolName:string, essayID:string) {

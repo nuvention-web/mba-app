@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,6 +41,8 @@ public class EssaysEndpoint extends EndpointBase{
 
     @Autowired
     public JavaMailSender emailSender;
+
+    private String REVIEW_PATH_FORMAT = "/feedback/{0}/{1}/{2}/{3}/{4}";
 
 
     @PutMapping()
@@ -121,7 +124,9 @@ public class EssaysEndpoint extends EndpointBase{
                     JSONObject reviewJSON = review.toJSON();
                     reviewJSON.put("draftID", draft.getId());
                     reviewJSON.put("draftName", draft.getDraftName());
-                    reviewsArray.put(review.toJSON());
+                    String reviewPath = MessageFormat.format(REVIEW_PATH_FORMAT, userEmail, schoolShortName, essayID, draft.getId(), review.getID());
+                    reviewJSON.put("reviewURL", reviewPath);
+                    reviewsArray.put(reviewJSON);
                 }
             }
 

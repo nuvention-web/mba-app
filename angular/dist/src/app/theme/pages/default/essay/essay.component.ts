@@ -135,6 +135,11 @@ export class EssayComponent implements OnInit {
         );
     }
 
+    viewReviewInNewWindow(path) {
+        var url = window.location.protocol + "//" + window.location.host + path
+        window.open(url, '_blank')
+    }
+
     saveDraft() {
         this._schools.saveEssayDraft("yo", this.school, this.essayID).subscribe(
             (response:Response) => {

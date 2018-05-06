@@ -37,7 +37,8 @@ export class SchoolComponent implements OnInit {
         this._schools.addNote(this.school, "Contents", "Title");
     }
 
-    delNote(i) {
-
+    delNote(note) {
+        this._schools.deleteNote(this.school, note.noteID);
+        this.schoolDetails.notes = this.schoolDetails.notes.filter(obj => obj !== note);
     }
 }

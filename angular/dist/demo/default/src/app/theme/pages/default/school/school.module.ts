@@ -4,6 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { LayoutModule } from '../../../layouts/layout.module';
 import { DefaultComponent } from '../default.component';
 import { SchoolComponent } from './school.component';
+import { TextAreaEditorModule } from "angular-inline-editors";
+import { InputEditorModule } from "angular-inline-editors";
+import {FormsModule} from "@angular/forms";
+
 
 const routes: Routes = [
     {
@@ -20,7 +24,7 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        CommonModule, RouterModule.forChild(routes), LayoutModule,
+        CommonModule, RouterModule.forChild(routes), LayoutModule, TextAreaEditorModule.forRoot(), InputEditorModule.forRoot(), FormsModule
     ], exports: [
         RouterModule,
     ], declarations: [

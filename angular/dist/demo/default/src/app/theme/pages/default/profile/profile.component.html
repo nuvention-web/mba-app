@@ -22,22 +22,18 @@
 
 				<ul class="nav nav-tabs  m-tabs-line m-tabs-line--brand" role="tablist">
 					<li class="nav-item m-tabs__item">
-						<a class="nav-link m-tabs__link active" data-toggle="tab" (click)="id = 0;" role="tab"><h5>Overview</h5></a>
+						<a class="nav-link m-tabs__link show-hand-light" data-toggle="tab" (click)="id = 1;" role="tab"><h5>Goals</h5></a>
 					</li>
 					<li class="nav-item m-tabs__item">
-						<a class="nav-link m-tabs__link" data-toggle="tab" (click)="id = 1;" role="tab"><h5>Goals</h5></a>
+						<a class="nav-link m-tabs__link show-hand-light" data-toggle="tab" (click)="id = 2;" role="tab"><h5>Experiences</h5></a>
 					</li>
 					<li class="nav-item m-tabs__item">
-						<a class="nav-link m-tabs__link" data-toggle="tab" (click)="id = 2;" role="tab"><h5>Experiences</h5></a>
-					</li>
-					<li class="nav-item m-tabs__item">
-						<a class="nav-link m-tabs__link" data-toggle="tab" (click)="id = 3;" role="tab"><h5>Interests</h5></a>
+						<a class="nav-link m-tabs__link show-hand-light" data-toggle="tab" (click)="id = 3;" role="tab"><h5>Interests</h5></a>
 					</li>
 				</ul>
 			</div>
 		</div>
 		<div [ngSwitch]="id">
-			<app-overview *ngSwitchCase="0" [profile]="profile"></app-overview>
 			<app-goals  *ngSwitchCase="1" [profile]="profile"></app-goals>
 			<app-experiences  *ngSwitchCase="2" [profile]="profile"></app-experiences>
 			<app-interests  *ngSwitchCase="3" [profile]="profile"></app-interests>

@@ -6,6 +6,7 @@ import { ScriptLoaderService } from '../../../../_services/script-loader.service
 import { SchoolsService } from '../../../../_services/schools.service';
 import {Router} from "@angular/router";
 import { Response } from '@angular/http';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-essay',
@@ -150,6 +151,10 @@ export class EssayComponent implements OnInit {
         }, (error) => {
         
         });
+    }
+
+    formatDate(d) {
+        return moment(d).format("LL");
     }
 
 

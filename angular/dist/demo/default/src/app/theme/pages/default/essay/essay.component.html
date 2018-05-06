@@ -350,7 +350,7 @@
                                     </thead>
                                     <tbody [hidden]="reviews.length == 0">
                                     <tr *ngFor="let review of reviews">
-                                        <td>{{review.date}}</td>
+                                        <td>{{formatDate(review.date)}}</td>
                                         <td>{{review.name}}</td>
                                         <td>{{review.email}}</td>
                                         <td>

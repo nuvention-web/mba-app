@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
+import { URL} from './url-infos'
 
 const header =  new Headers( {'Content-Type': 'application/json'});
-const globalURL = 'myappmba-199623.appspot.com';
-const user = 'john.doe@gmail.com';
 
 // URL example: may be something likes this https://{url}/feedback/{username}/{schoolname}/{essayname}/{token}/{reviewID}
 
@@ -18,7 +17,7 @@ export class FeedbackService {
     parseURL(url): any{
         console.log(url);
         let arr = url.split('/');
-        return {'url': globalURL, 'user': arr[2], 'school': arr[3], 'essay': arr[4], 'token': arr[5], 'reviewid': arr[6]};
+        return {'url': URL, 'user': arr[2], 'school': arr[3], 'essay': arr[4], 'token': arr[5], 'reviewid': arr[6]};
     }
 
     getData(url) {

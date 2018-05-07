@@ -14,7 +14,7 @@ public class ViewController {
 
     @RequestMapping(value={"/school/**", "/profile/**", "/feedback/**", "/signin", "/404"})
     public String essays() {
-        return "redirect:/index.html";
+        return "/index.html";
     }
 
 

@@ -66,7 +66,7 @@ public class EmailService {
         html = html.replace("{replaceUserName}", user.getName());
         html = html.replace("{replaceUserFirstName}", user.getName().split(" ")[0]);
         html = html.replace("{replacePersonalMessage}", draftRequest.getMessage());
-        String reviewURL = MessageFormat.format("https://myappmba-199623.appspot.com/feedback/{0}/{1}/{2}/{3}/{4}",
+        String reviewURL = MessageFormat.format("https://portal.myapp.mba/feedback/{0}/{1}/{2}/{3}/{4}/reviewer",
                                 user.getEmail(), userSchool.getShortName(), essayID, draftID, reviewID);
         html = html.replace("{replaceReviewURL}", reviewURL);
 

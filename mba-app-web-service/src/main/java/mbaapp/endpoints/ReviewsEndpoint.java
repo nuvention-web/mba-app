@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 @RequestMapping("/review/users/{userEmail}/school/{schoolShortName}/essay/{essayID}/draft/{draftID}/review/{reviewID}")
 public class ReviewsEndpoint extends EndpointBase {
 
-    Logger logger = Logger.getLogger(EssaysEndpoint.class.getName());
+    Logger logger = Logger.getLogger(ReviewsEndpoint.class.getName());
 
     @Autowired
     private SchoolInfoRepository schoolInfoRepository;

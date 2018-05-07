@@ -6,7 +6,7 @@
         <div class="m-content">
           <div class="row">
             <div *ngIf='content != undefined && !submitted' class="content col-10">
-              <div class="m-portlet m-portlet--mobile">
+              <div *ngIf='!user' class="m-portlet m-portlet--mobile">
                 <div class="m-portlet__body">
                   <div><h4><p style="color:#ab3233">Hi {{reviewer}}!</p></h4></div>
                   <div>
@@ -14,6 +14,14 @@
                   </div>
                 </div>
               </div>
+
+              <!--<div *ngIf='user' class="m-portlet m-portlet&#45;&#45;mobile">-->
+                <!--<div class="m-portlet__body">-->
+                    <!--<div> <h4>{{reviewer}}'s comments: </h4></div>-->
+                    <!--<div>{{feedback}}</div>-->
+                  <!--</div>-->
+              <!--</div>-->
+
               <!--&lt;!&ndash;<h3>Hi, {{reviewer}}!</h3>&ndash;&gt;-->
               <!--<p>{{content['review']['personalMessage']}}</p><br>-->
               <div class="m-portlet m-portlet--mobile">
@@ -31,19 +39,28 @@
                 </div>
               </div>
 
-              <ng2-file-input [drop-text]="'Upload an edited draft here, or you can leave some comments below! '" [browse-text]="'Upload file'" (onAction)="onAction($event)"></ng2-file-input>
-
-
-              <form id="feedback-form">
-                <div class="form-group">
-                  <label for="exampleTextarea"><h6>Comments</h6></label>
-                  <textarea class="form-control" id="exampleTextarea" rows="6" placeholder="Please leave your feedback here" [(ngModel)]="feedback" name="feedback"></textarea>
+              <div *ngIf='user' class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+                  <div><h5><p style="color:#ab3233">{{reviewer}}'s feedback:</p></h5></div>
+                  <div>{{feedback}}</div>
                 </div>
-              </form>
-              <div style="text-align: center" >
-                <button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+              </div>
+
+              <div *ngIf='!user'>
+                <ng2-file-input [drop-text]="'Upload an edited draft here, or you can leave some comments below! '" [browse-text]="'Upload file'" (onAction)="onAction($event)"></ng2-file-input>
+
+                <form id="feedback-form">
+                  <div class="form-group">
+                    <label for="exampleTextarea"><h6>Comments</h6></label>
+                    <textarea class="form-control" id="exampleTextarea" rows="6" placeholder="Please leave your feedback here" [(ngModel)]="feedback" name="feedback"></textarea>
+                  </div>
+                </form>
+                <div style="text-align: center" >
+                  <button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+                </div>
               </div>
             </div>
+
             <div *ngIf='submitted' class="col-6">
               <h3 style="text-align: center; margin-top: 50px">Thank you for your feedback! </h3>
               <div [style.height]="height"></div>

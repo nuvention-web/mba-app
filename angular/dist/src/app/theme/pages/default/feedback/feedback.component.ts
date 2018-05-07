@@ -13,12 +13,15 @@ import { Router} from "@angular/router";
 export class FeedbackComponent implements OnInit, AfterViewInit{
   content: any = undefined;
   file: {} = null;
+  info = {} = null;
   feedback: string;
   reviewer: string;
-    userFirstName: string;
+  userFirstName: string;
   submitted: any = false;
+  user:any = false;
   height: any;
   constructor(private feedbackService: FeedbackService, private _script: ScriptLoaderService, private router: Router) {
+      this.info = this.feedbackService.parseURL(this.router.url);
       this.feedbackService.getData(this.router.url).subscribe(data => {
       this.content = data;
       if (this.content['review']['reviewComments']!=null) {
@@ -28,6 +31,9 @@ export class FeedbackComponent implements OnInit, AfterViewInit{
       this.userFirstName = this.content['user'].split(' ')[0];
       });
     this.height = window.screen.height + "px";
+    if(this.info["view"]=="user"){
+        this.user=true
+    }
     console.log('start');
   }
 

@@ -42,7 +42,7 @@ public class EssaysEndpoint extends EndpointBase{
     @Autowired
     public JavaMailSender emailSender;
 
-    private String REVIEW_PATH_FORMAT = "/feedback/{0}/{1}/{2}/{3}/{4}";
+    private String REVIEW_PATH_FORMAT = "/feedback/{0}/{1}/{2}/{3}/{4}/user";
 
 
     @PutMapping()

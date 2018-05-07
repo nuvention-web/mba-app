@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 @RequestMapping("/download")
 public class DownloadDraftEndpoint extends EndpointBase{
 
-    Logger logger = Logger.getLogger(EssaysEndpoint.class.getName());
+    Logger logger = Logger.getLogger(DownloadDraftEndpoint.class.getName());
 
     @GetMapping(value = "/users/{userEmail}/school/{schoolShortName}/essay/{essayID}/draft/{draftID}", produces = "application/octet-stream")
     @CrossOrigin

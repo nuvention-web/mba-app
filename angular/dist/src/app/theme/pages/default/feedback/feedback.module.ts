@@ -12,6 +12,7 @@ import {FeedbackService} from "../../../../_services/feedback.service";
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutModule } from '../../../layouts/layout.module';
 import {FeedbackdefaultComponent} from "./feedbackdefault.component";
+import { TextAreaEditorModule} from "angular-inline-editors";
 
 
 const routes: Routes = [
@@ -32,7 +33,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule, NgbModule.forRoot(), HttpClientModule, FormsModule,
-    Ng2FileInputModule.forRoot(), HttpModule, RouterModule.forChild(routes), LayoutModule
+    Ng2FileInputModule.forRoot(), TextAreaEditorModule.forRoot(), HttpModule, RouterModule.forChild(routes), LayoutModule
   ],
   providers: [FeedbackService],
   bootstrap: [FeedbackComponent]

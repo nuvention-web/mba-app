@@ -15,3 +15,13 @@
   position: relative;
   margin-top: 20px;
 }
+
+.inline-no-edit {
+  border: dashed purple 2px;
+  padding: 10px;
+}
+
+.after-submitted {
+  position: relative;
+  margin-top: 40px;
+}

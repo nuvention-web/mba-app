@@ -21,10 +21,23 @@ export class LoginCustom {
         });
     }
 
+
+    static displayVerificationCode() {
+        let login = $('#m_login');
+        login.removeClass('m-login--forget-password');
+        login.removeClass('m-login--signin');
+        login.removeClass('m-login--signup');
+
+        login.addClass('m-login--verify');
+        (<any>login.find('.m-login__verify')).animateClass('flipInX animated');
+    }
+
+
     static displaySignUpForm() {
         let login = $('#m_login');
         login.removeClass('m-login--forget-password');
         login.removeClass('m-login--signin');
+        login.removeClass('m-login--verify');
 
         login.addClass('m-login--signup');
         (<any>login.find('.m-login__signup')).animateClass('flipInX animated');
@@ -34,6 +47,7 @@ export class LoginCustom {
         let login = $('#m_login');
         login.removeClass('m-login--forget-password');
         login.removeClass('m-login--signup');
+        login.removeClass('m-login--verify');
         try {
             $('form').data('validator').resetForm();
         } catch (e) {
@@ -47,6 +61,7 @@ export class LoginCustom {
         let login = $('#m_login');
         login.removeClass('m-login--signin');
         login.removeClass('m-login--signup');
+        login.removeClass('m-login--verify');
 
         login.addClass('m-login--forget-password');
         (<any>login.find('.m-login__forget-password')).animateClass(
@@ -73,6 +88,11 @@ export class LoginCustom {
             e.preventDefault();
             LoginCustom.displaySignInForm();
         });
+
+        $('#m_login_verify_resend').click((e) => {
+            e.preventDefault();
+            LoginCustom.displaySignInForm();
+        })
     }
 
     static handleSignUpFormSubmit() {
@@ -125,10 +145,29 @@ export class LoginCustom {
         });
     }
 
+    static handleVerifyCodeFormSubmit() {
+        $('#m_login_verify_submit').click( (e) => {
+            let btn = $(e.target);
+            let form = $(e.target).closest('form');
+            form.validate({
+                rules: {
+                    code: {
+                        required: true
+                    }
+                }
+            });
+            if (!form.valid()) {
+                e.preventDefault();
+                return;
+            }
+        });
+    }
+
     static init() {
         LoginCustom.handleFormSwitch();
         LoginCustom.handleSignInFormSubmit();
         LoginCustom.handleSignUpFormSubmit();
         LoginCustom.handleForgetPasswordFormSubmit();
+        LoginCustom.handleVerifyCodeFormSubmit();
     }
 }

@@ -153,6 +153,10 @@
             .m-login__forget-password {
                 display: none;
             }
+
+            .m-login__verify {
+                display: none;
+            }
         }
 
         &.m-login--signup {
@@ -171,6 +175,10 @@
             .m-login__account {
                 display: none;
             }
+
+            .m-login__verify {
+                display: none;
+            }
         }
 
         &.m-login--forget-password {
@@ -185,7 +193,29 @@
             .m-login__forget-password {
                 display: block;
             }
+
+            .m-login__verify {
+                display: none;
+            }
         }
+
+        &.m-login--verify {
+            .m-login__signup {
+                display: none;
+            }
+
+            .m-login__signin {
+                display: none;
+            }
+
+            .m-login__forget-password {
+                display: none;
+            }
+
+            .m-login__verify {
+                display: block;
+            }
+         }
     } 
 
     @include minimal-desktop() {

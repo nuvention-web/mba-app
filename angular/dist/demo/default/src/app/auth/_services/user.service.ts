@@ -29,7 +29,6 @@ export class UserService {
     }
 
     verify(email: string, code: string) {
-        console.log(code);
         return this.http.post(URL + '/account/activate', {email: email, code: code}, {headers: header});
     }
 

@@ -33,6 +33,8 @@ export class AuthComponent implements OnInit {
         { read: ViewContainerRef }) alertSignup: ViewContainerRef;
     @ViewChild('alertForgotPass',
         { read: ViewContainerRef }) alertForgotPass: ViewContainerRef;
+    @ViewChild('alertVerify',
+        { read: ViewContainerRef }) alertVerify: ViewContainerRef;
 
     constructor(
         private _router: Router,
@@ -56,6 +58,7 @@ export class AuthComponent implements OnInit {
                 Helpers.setLoading(false);
                 LoginCustom.init();
             });
+        this.model.email = "qingtongguo2019@u.northwestern.edu";
     }
 
     signin() {
@@ -74,18 +77,44 @@ export class AuthComponent implements OnInit {
 
     signup() {
         this.loading = true;
+        if (this.model.password !== this.model.rpassword) {
+            this.showAlert('alertSignup');
+            this._alertService.error('Two passwords are not equal.');
+            this.loading = false;
+            return;
+        }
+        this.loading = false;
         this._userService.create(this.model).subscribe(
+            data => {
+                this.showAlert('alertVerify');
+                this._alertService.success(
+                    'Thank you.  The code has sent to your email. To complete your registration please fill in the code.',
+                    true);
+                this.loading = false;
+                LoginCustom.displayVerificationCode();
+                this.model = {};
+            },
+            error => {
+                this.showAlert('alertSignup');
+                this._alertService.error(error);
+                this.loading = false;
+            });
+    }
+
+    verify() {
+        this.loading = true;
+        this._userService.verify(this.model.email, this.model.code).subscribe(
             data => {
                 this.showAlert('alertSignin');
                 this._alertService.success(
-                    'Thank you. To complete your registration please check your email.',
+                    'Congratulation! You have created your account successfully!',
                     true);
                 this.loading = false;
                 LoginCustom.displaySignInForm();
                 this.model = {};
             },
             error => {
-                this.showAlert('alertSignup');
+                this.showAlert('alertVerify');
                 this._alertService.error(error);
                 this.loading = false;
             });

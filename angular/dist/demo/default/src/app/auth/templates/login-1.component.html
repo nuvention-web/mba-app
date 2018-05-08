@@ -1,4 +1,4 @@
-<div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-grid--tablet-and-mobile m-grid--hor-tablet-and-mobile m-login m-login--1 m-login--signin" id="m_login">
+<div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-grid--tablet-and-mobile m-grid--hor-tablet-and-mobile m-login m-login--1 m-login--verify" id="m_login">
 	<div class="m-grid__item m-grid__item--order-tablet-and-mobile-2 m-login__aside">
 		<div class="m-stack m-stack--hor m-stack--desktop">
 			<div class="m-stack__item m-stack__item--fluid">
@@ -55,7 +55,7 @@
 						<form (ngSubmit)="f.form.valid && signup()" #f="ngForm" class="m-login__form m-form" action="">
 							<ng-template #alertSignup></ng-template>
 							<div class="form-group m-form__group">
-								<input class="form-control m-input" type="text" placeholder="Fullname" name="fullname" [(ngModel)]="model.fullname" #fullname="ngModel">
+								<input class="form-control m-input" type="text" placeholder="Name" name="name" [(ngModel)]="model.name" #fullname="ngModel">
 							</div>
 							<div class="form-group m-form__group">
 								<input class="form-control m-input" type="text" placeholder="Email" name="email" [(ngModel)]="model.email" #email="ngModel" autocomplete="off">
@@ -86,6 +86,31 @@
 								</button>
 								<button [disabled]="loading"  id="m_login_signup_cancel" class="btn btn-outline-focus  m-btn m-btn--pill m-btn--custom">
 									Cancel
+								</button>
+							</div>
+						</form>
+					</div>
+
+					<div class="m-login__verify">
+						<div class="m-login__head">
+							<h3 class="m-login__title">
+								Verification
+							</h3>
+							<div class="m-login__desc">
+								Enter verification code on your email:
+							</div>
+						</div>
+						<form (ngSubmit)="f.form.valid && verify()" #f="ngForm" class="m-login__form m-form" action="">
+							<ng-template #alertVerify></ng-template>
+							<div class="form-group m-form__group">
+								<input class="form-control m-input" type="text" placeholder="Code" name="code" [(ngModel)]="model.code" #email="ngModel" id="m_code" autocomplete="off">
+							</div>
+							<div class="m-login__form-action">
+								<button [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--light': loading}" id="m_login_verify_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">
+									Submit
+								</button>
+								<button [disabled]="loading"  id="m_login_verify_resend" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom">
+									Resend
 								</button>
 							</div>
 						</form>

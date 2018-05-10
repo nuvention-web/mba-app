@@ -20,5 +20,53 @@ $m--root-font: (
 );
 */
 
-$m--brand-color: #716aca;
+$m--brand-color: #ab3233;
+
+//== UI State Color
+$m--state-colors: (
+  // metronic states
+        brand: (
+                base: #ab3233,
+                inverse: #ffffff
+        ),
+        metal: (
+                base: #c4c5d6,
+                inverse: #111111
+        ),
+        light: (
+                base: #ffffff,
+                inverse: #282a3c
+        ),
+        accent: (
+                base: #00c5dc,
+                inverse: #ffffff
+        ),
+        focus: (
+                base: #9816f4,
+                inverse: #ffffff
+        ),
+
+  // bootstrap states
+        primary: (
+                base: #ab3233,
+                inverse: #ffffff
+        ),
+        success: (
+                base: #34bfa3,
+                inverse: #ffffff
+        ),
+        info: (
+                base: #36a3f7,
+                inverse: #ffffff
+        ),
+        warning: (
+                base: #ffb822,
+                inverse: #111111
+        ),
+        danger: (
+                base: #f4516c,
+                inverse: #ffffff
+        )
+);
+
 $m--brand-inverse-color: #ffffff;

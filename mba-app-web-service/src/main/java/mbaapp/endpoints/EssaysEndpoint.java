@@ -1,14 +1,13 @@
 package mbaapp.endpoints;
 
 import io.swagger.annotations.ApiOperation;
-import mbaapp.core.EssayDraft;
-import mbaapp.core.Review;
-import mbaapp.core.User;
-import mbaapp.core.UserSchool;
+import mbaapp.core.*;
 import mbaapp.email.EmailService;
 import mbaapp.requests.EmailDraftRequest;
 import mbaapp.requests.EssayDraftRequest;
 import mbaapp.requests.EssayStatusRequest;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,6 +41,8 @@ public class EssaysEndpoint extends EndpointBase{
 
     @Autowired
     public JavaMailSender emailSender;
+
+    private String REVIEW_PATH_FORMAT = "/feedback/{0}/{1}/{2}/{3}/{4}/user";
 
 
     @PutMapping()
@@ -92,6 +94,54 @@ public class EssaysEndpoint extends EndpointBase{
         }
 
     }
+
+
+    @GetMapping(value = "/reviews", produces = "application/json")
+    @CrossOrigin
+    @ApiOperation(value = "Get essay details of a particular essay")
+    public ResponseEntity<String> getReviews(@PathVariable String userEmail,
+                                           @PathVariable String schoolShortName, @PathVariable String essayID) {
+
+        try {
+            if (runValidations(userEmail, schoolShortName) != null) {
+                return runValidations(userEmail, schoolShortName);
+            }
+
+            User user = userDBProvider.getUser(userEmail);
+            UserSchool school = getSchoolForUser(user, schoolShortName);
+
+            Essay essay = school.getEssay(essayID);
+
+            if(essay==null){
+                return new ResponseEntity<String>("Did not find an essay with the essay ID "+essayID, HttpStatus.BAD_REQUEST);
+            }
+
+
+            JSONObject reviewsJSON = new JSONObject();
+            JSONArray reviewsArray = new JSONArray();
+            for(EssayDraft draft : essay.getDrafts()){
+                for(Review review : draft.getReviews()){
+                    JSONObject reviewJSON = review.toJSON();
+                    reviewJSON.put("draftID", draft.getId());
+                    reviewJSON.put("draftName", draft.getDraftName());
+                    String reviewPath = MessageFormat.format(REVIEW_PATH_FORMAT, userEmail, schoolShortName, essayID, draft.getId(), review.getID());
+                    reviewJSON.put("reviewURL", reviewPath);
+                    reviewsArray.put(reviewJSON);
+                }
+            }
+
+            reviewsJSON.put("reviews", reviewsArray);
+
+            return new ResponseEntity<>(reviewsJSON.toString(), HttpStatus.OK);
+
+        }
+        catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 
 
     @PostMapping("/draft")
@@ -180,6 +230,33 @@ public class EssaysEndpoint extends EndpointBase{
     }
 
 
+    @GetMapping( value = "/draft/{draftID}", produces = "application/json")
+    @CrossOrigin
+    @ApiOperation(value = "Get an essay draft")
+    public ResponseEntity<String> getDraft(@PathVariable String userEmail,
+                                              @PathVariable String schoolShortName, @PathVariable String essayID,
+                                              @PathVariable String draftID) {
+
+        try {
+
+            if (runValidations(userEmail, schoolShortName) != null) {
+                return runValidations(userEmail, schoolShortName);
+            }
+
+            User user = userDBProvider.getUser(userEmail);
+            UserSchool userSchool = getSchoolForUser(user, schoolShortName);
+            return new ResponseEntity<>(userSchool.getEssayDraft(essayID, draftID).toJSON().toString(), HttpStatus.OK);
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+
+    }
+
+
+
     @PostMapping("/upload/draft")
     @CrossOrigin
     @ApiOperation(value = "Upload an essay draft")
@@ -208,36 +285,36 @@ public class EssaysEndpoint extends EndpointBase{
     }
 
 
-    @GetMapping(value = "/download/draft/{draftID}", produces = "application/octet-stream")
-    @CrossOrigin
-    @ApiOperation(value = "Download an essay draft")
-    public ResponseEntity downloadDraft(@PathVariable String userEmail, @PathVariable String schoolShortName,
-                                                @PathVariable String essayID, @PathVariable String draftID) {
-
-        try {
-            if (runValidations(userEmail, schoolShortName) != null) {
-                return runValidations(userEmail, schoolShortName);
-            }
-
-            User user = userDBProvider.getUser(userEmail);
-            UserSchool school = getSchoolForUser(user, schoolShortName);
-
-            EssayDraft draft = school.getEssayDraft(essayID, draftID);
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="+draft.getDraftName());
-
-            ResponseEntity responseEntity =  new ResponseEntity(userDBProvider.getEssayDraftUploaded(user,school, essayID, draftID).toByteArray(), headers,
-                    HttpStatus.OK) ;
-
-            return responseEntity;
-
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-
-        }
-    }
+//    @GetMapping(value = "/ddownload/draft/{draftID}ownload/draft/{draftID}", produces = "application/octet-stream")
+//    @CrossOrigin
+//    @ApiOperation(value = "Download an essay draft")
+//    public ResponseEntity downloadDraft(@PathVariable String userEmail, @PathVariable String schoolShortName,
+//                                                @PathVariable String essayID, @PathVariable String draftID) {
+//
+//        try {
+//            if (runValidations(userEmail, schoolShortName) != null) {
+//                return runValidations(userEmail, schoolShortName);
+//            }
+//
+//            User user = userDBProvider.getUser(userEmail);
+//            UserSchool school = getSchoolForUser(user, schoolShortName);
+//
+//            EssayDraft draft = school.getEssayDraft(essayID, draftID);
+//
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="+draft.getDraftName());
+//
+//            ResponseEntity responseEntity =  new ResponseEntity(userDBProvider.getEssayDraftUploaded(user,school, essayID, draftID).toByteArray(), headers,
+//                    HttpStatus.OK) ;
+//
+//            return responseEntity;
+//
+//        } catch (Exception e) {
+//            logger.log(Level.SEVERE, e.getMessage(), e);
+//            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//
+//        }
+//    }
 
 
 

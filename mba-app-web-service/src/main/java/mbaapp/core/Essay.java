@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -124,6 +125,7 @@ public class Essay {
     public JSONObject toJSON() throws Exception{
         ObjectMapper objectMapper = new ObjectMapper();
         StringWriter stringWriter = new StringWriter();
+        Collections.reverse(this.drafts);
         objectMapper.writeValue(stringWriter, this);
         JSONObject essayJSON = new JSONObject(stringWriter.toString());
         return essayJSON;

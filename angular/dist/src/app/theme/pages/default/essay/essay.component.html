@@ -1,0 +1,407 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                {{school}} Essay
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a class="m-nav__link" routerLink="/school/{{school}}/">
+						<span class="m-nav__link-text">
+							{{school}}
+						</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    {{essay.essayID}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- END: Subheader -->
+<div class="m-content">
+    <div>
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="m-portlet m-portlet--tabs">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-tools">
+                            <ul class="nav nav-tabs m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_tabs_6_1" role="tab"
+                                       ng-reflect-href="#m_tabs_6_1" aria-selected="true">
+                                        <i class="fa fa-sitemap"></i>
+                                        Prompts
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_2" role="tab"
+                                       ng-reflect-href="#m_tabs_6_2" aria-selected="false">
+                                        <i class="fa fa-copy"></i>
+                                        Drafts
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_3" role="tab"
+                                       ng-reflect-href="#m_tabs_6_3" aria-selected="false">
+                                        <i class="fa fa-edit"></i>
+                                        New Draft
+                                    </a>
+                                </li>
+                                <li class="nav-item m-tabs__item">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_5" role="tab"
+                                       ng-reflect-href="#m_tabs_6_4" aria-selected="false">
+                                        <i class="fa fa-edit"></i>
+                                        Feedback
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="tab-content">
+                            <div class="tab-pane active show" id="m_tabs_6_1" role="tabpanel">
+                                {{ essay.prompt }}
+                            </div>
+                            <div class="tab-pane show" id="m_tabs_6_2" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="list-group">
+                                            <div class="list-group-item" *ngFor="let draft of essay.drafts">
+                                                <div class="row">
+                                                    <div class="col-md-6"><strong>{{ draft.draftName }}</strong><br>{{draft.draftType}}</div>
+                                                    <div class="col-md-6 m--align-right">
+                                                        <div class="btn-group m-btn-group m-btn-group--pill"
+                                                             role="group">
+                                                            <button (click)="downloadDraft(draft.id)" class="m-btn btn-sm btn btn-outline-brand" type="button">
+                                                                <i class="fa fa-eye"></i>
+                                                            </button>
+                                                            <button routerLink="/proofread/{{school}}/essay/{{ essay.essayID }}/draft/{{draft.id}}" class="m-btn btn-sm btn btn-outline-brand" type="button">
+                                                                <i class="fa fa-signal"></i>
+                                                            </button>
+                                                            <button class="m-btn btn btn-sm btn-outline-brand" type="button">
+                                                                <i class="fa fa-copy"></i>
+                                                            </button>
+                                                            <button (click)="deleteDraft(draft.id)" class="m-btn btn btn-sm btn-outline-brand" type="button">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-8" *ngIf="draft.warningWords?.length > 0">
+                                                        <i class="fa fa-warning"></i>
+                                                        Found the following key words in this draft for {{school}}:<br>
+                                                        {{ draft.warningWords }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="m_tabs_6_3" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <form method="post">
+                                            <div class="form-group m-form__group">
+                                                <input class="form-control m-input" id="draft-title" placeholder="Enter a title for your draft" type="text">
+                                            </div>
+
+                                            <ul class="nav nav-pills" role="tablist">
+                                                <li class="newdraft nav-item">
+                                                    <a class="nav-link active" data-toggle="tab" href="#newdraft_file" ng-reflect-href="#newdraft_file">
+                                                        File Upload
+                                                    </a>
+                                                </li>
+                                                <li class="newdraft nav-item">
+                                                    <a class="nav-link" data-toggle="tab" href="#newdraft_online" ng-reflect-href="#newdraft_online">
+                                                        Online Editor
+                                                    </a>
+                                                </li>
+                                                <li class="newdraft nav-item">
+                                                    <a class="nav-link" data-toggle="tab" href="#newdraft_gdrive" ng-reflect-href="#newdraft_gdrive">
+                                                        Google Drive or URL
+                                                    </a>
+                                                </li>
+                                            </ul>
+
+                                            <div class="tab-content">
+                                                <div class="tab-pane" id="newdraft_online" role="tabpanel">
+                                                    <textarea id="draft_editor" name="draft_editor"></textarea>
+                                                    <br>
+                                                    <button type="button" class="btn m-btn--pill btn-primary" (click)="saveDraft()">Save Draft</button>
+                                                </div>
+                                                <div class="tab-pane active" id="newdraft_file" role="tabpanel">
+                                                    <div class="form-group m-form__group">
+                                                        <div class="mb-3 custom-file">
+                                                            <input class="custom-file-input" id="customFile" type="file" (change)="uploadFile($event)" accept=".doc,.docx">
+                                                            <label class="custom-file-label" for="customFile">
+                                                                Choose a .doc or .docx file...
+                                                            </label>
+                                                        </div>
+                                                        <button type="button" class="btn m-btn--pill btn-primary" (click)="uploadDraft()">Upload Draft</button>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="newdraft_gdrive" role="tabpanel">
+                                                    <input class="form-control m-input" id="draft-url" placeholder="Enter a URL for your draft" type="text">
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </form>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#reference_tabs_1_1" ng-reflect-href="#reference_tabs_2_1">
+                                                    Essays
+                                                </a>
+                                                </li>
+                                            <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#reference_tabs_1_2" ng-reflect-href="#reference_tabs_2_2">
+                                                    Notes
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="reference_tabs_1_1" role="tabpanel">
+                                                <select id="essay-draft-dropdown" (change)="valueChange()" style="width:100%;" #selectedEssay>
+                                                    <option value="test">Select an Essay...</option>
+                                                    <optgroup *ngFor="let s of allEssays" label = "{{s.school}}">
+                                                        <option *ngFor="let e of s.essays" [value]="e.draftName">{{e.draftName}}</option>
+                                                    </optgroup>
+                                                </select>
+                                                <br>
+                                                <br>
+                                                <div [innerHTML]="findEssay(selectedEssay.value).contents"></div>
+                                            </div>
+                                            <div class="tab-pane" id="reference_tabs_1_2" role="tabpanel">
+                                                <select id="notes-dropdown" (change)="valueChange()" style="width:100%;" #selectedNote>
+                                                    <option value="test">Select a note...</option>
+                                                        <option *ngFor="let note of schoolDetails.notes" [value]="note.title">{{note.title}}</option>
+                                                </select>
+                                                <br>
+                                                <br>
+                                                <div [innerHTML]="findNote(selectedNote.value).contents"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="m_tabs_6_5" role="tabpanel">
+                                <div class="form-group m-form__group">
+                                    <label>
+                                        Choose Advice Type:
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <label class="m-option">
+											<span class="m-option__control">
+												<span class="m-radio m-radio--brand m-radio--check-bold">
+													<input name="m_option_1" type="radio" value="1" checked="checked">
+													<span></span>
+												</span>
+											</span>
+                                                <span class="m-option__label">
+												<span class="m-option__head">
+													<span class="m-option__title">
+														Your Network
+													</span>
+													<span class="m-option__focus">
+														Free
+													</span>
+												</span>
+												<span class="m-option__body">
+													Send an email asking for advice on your essay.
+												</span>
+											</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label class="m-option">
+											<span class="m-option__control">
+												<span class="m-radio m-radio--brand m-radio--check-bold">
+													<input name="m_option_1" type="radio" value="1" disabled>
+													<span></span>
+												</span>
+											</span>
+                                                <span class="m-option__label">
+												<span class="m-option__head">
+													<span class="m-option__title">
+														MBA Student Advice
+													</span>
+													<span class="m-option__focus">
+														$20-$60
+													</span>
+												</span>
+												<span class="m-option__body">
+													Get advice from a current student in a top MBA program.
+												</span>
+											</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label class="m-option">
+											<span class="m-option__control">
+												<span class="m-radio m-radio--brand m-radio--check-bold">
+													<input name="m_option_1" type="radio" value="1" disabled>
+													<span></span>
+												</span>
+											</span>
+                                                <span class="m-option__label">
+												<span class="m-option__head">
+													<span class="m-option__title">
+														Professional Consultant
+													</span>
+													<span class="m-option__focus">
+														$220
+													</span>
+												</span>
+												<span class="m-option__body">
+													Get advice from a professional MBA consultant.
+												</span>
+											</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form class="m-form  m-form--label-align-right">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="alert m-alert m-alert--default">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div [hidden]="!contactSuccess" class="alert alert-success" role="alert">
+                                                            <strong>
+                                                                Great job!
+                                                            </strong>
+                                                            Your draft is on its way to {{contactName}}.
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group m-form__group mb-3">
+                                                            <label for="contactName">
+                                                                Contact Name
+                                                            </label>
+                                                            <input class="form-control m-input" [(ngModel)]="contactName" name="contactName" id="contactName" placeholder="Enter full name" type="text">
+                                                            <span class="m-form__help">
+                                                        Who are you getting feedback from?
+                                                    </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group m-form__group mb-3">
+                                                            <label for="contactEmail">
+                                                                Email address
+                                                            </label>
+                                                            <input ngModel class="form-control m-input" [(ngModel)]="contactEmail"  name="contactEmail" id="contactEmail" placeholder="Enter email" type="email">
+                                                            <span class="m-form__help">
+                                                        A link will be sent to this email.
+                                                    </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group m-form__group mb-3">
+                                                            <label for="contactEmail">
+                                                                Select Draft
+                                                            </label>
+                                                            <select ngModel class="form-control m-input" [(ngModel)]="contactDraft" name="contactDraft">
+                                                                <option *ngFor="let draft of essay.drafts" [value]="draft.id">{{draft.draftName}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group m-form__group mb-3">
+                                                            <label for="contactComment">
+                                                                Comment
+                                                            </label>
+                                                            <textarea ngModel class="form-control m-input" [(ngModel)]="contactComment" name="contactComment" id="contactComment"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <button (click)="sendForReview()" class="btn btn-brand">Send for Feedback</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            Date
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>
+                                            Email
+                                        </th>
+                                        <th>
+                                            Status
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody [hidden]="reviews.length == 0">
+                                    <tr *ngFor="let review of reviews">
+                                        <td>{{formatDate(review.date)}}</td>
+                                        <td>{{review.name}}</td>
+                                        <td>{{review.email}}</td>
+                                        <td>
+                                            <button [hidden]="review.reviewComments == null" (click)="viewReviewInNewWindow(review.reviewURL)" class="btn btn-brand">See Response</button>
+                                            <button [hidden]="review.reviewComments != null" class="btn btn-default" disabled>No Response</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div [hidden]="reviews.length != 0" class="my-5 text-center">
+                                    <strong>No review requests... try sending one above!</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#m_modal_1"></button>
+    <div aria-labelledby="exampleModalLabel" class="modal fade" id="m_modal_1" role="dialog" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        {{params.school}}
+                    </h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+						<span aria-hidden="true">
+							×
+						</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Uploaded draft!
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal" type="button">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

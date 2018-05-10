@@ -101,7 +101,7 @@
 
                 // offcanvas dropdown mode
                 &.m-dropdown.m-dropdown--offcanvas.m-dropdown--header-bg-fil.m-dropdown--arrow { 
-                    @include m-component--dropdown--set-arrow-color(array-get($layout, default, self, bg-color), bottom); 
+                    @include m-component--dropdown--set-arrow-color(array-get($layout, default, self, bg-color), bottom);
                 }
             }
         }

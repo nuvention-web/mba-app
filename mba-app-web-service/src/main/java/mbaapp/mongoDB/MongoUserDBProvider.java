@@ -175,6 +175,7 @@ public class MongoUserDBProvider implements UserDBProvider {
                 int numEssays = 0;
                 int numDrafts = 0;
                 int numSentForReview = 0;
+                int numReviewsReturned = 0;
                 for (UserSchool userSchool : user.getSchools()) {
                     if (userSchool.getShortName().equalsIgnoreCase(schoolName)) {
                         for (Essay essay : userSchool.getEssays()) {
@@ -184,12 +185,19 @@ public class MongoUserDBProvider implements UserDBProvider {
                             numDrafts = numDrafts + essay.getDrafts().size();
                             for (EssayDraft draft : essay.getDrafts()) {
                                 numSentForReview += draft.getReviews().size();
+                                for(Review review : draft.getReviews()) {
+                                    if(review.getReviewComments()!=null) {
+                                        numReviewsReturned = numReviewsReturned + 1;
+                                    }
+                                }
                             }
                         }
                         school.put("numEssaysWorkedOn", numEssays);
                         school.put("numDrafts", numDrafts);
                         school.put("numDraftsSentForReview", numSentForReview);
                         school.put("numRequiredEssays", numRequiredEssays);
+                        school.put("numReviewsReturned", numReviewsReturned);
+                        school.put("numNotes", userSchool.getNotes().size());
                     }
                 }
             }

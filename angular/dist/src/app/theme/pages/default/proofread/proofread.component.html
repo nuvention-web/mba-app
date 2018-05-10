@@ -1,0 +1,142 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                {{draft.draftName}} Analysis
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a class="m-nav__link" routerLink="/school/{{school}}/">
+						<span class="m-nav__link-text">
+							{{school}}
+						</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    {{essay.essayID}}
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    {{draft.draftName}}
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    Analysis
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="m-content">
+    <div>
+        <ul class="nav nav-tabs  m-tabs-line m-tabs-line--2x m-tabs-line--primary" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#m_tabs_1_1" ng-reflect-href="#m_tabs_2_1">
+                    <strong>Proof Reading Service</strong>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#m_tabs_1_2"  ng-reflect-href="#m_tabs_2_2">
+                    <strong>Essay analysis</strong>
+                </a>
+            </li>
+        </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="m_tabs_1_1" role="tabpanel">
+                    <div class="row">
+                        <div class="m-stack m-stack--ver m-stack--general">
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle"></div>
+                            <div class="m-stack__item m-stack__item--middle m-stack__item--fluid">
+                                <div class="m-content">
+                                    <div class="row">
+                                        <div class="m-portlet m-portlet--tab">
+                                            <div class="m-portlet__head">
+                                                <div class="m-portlet__head-caption">
+                                                    <div class="m-portlet__head-title">
+                                                        <div><h6 class="m-portlet__head-text">
+                                                            <br>Proof reading service analysis</h6>
+                                                        </div>
+                                                        <div>
+                                                            <br>
+                                                            <br>
+                                                            <p>You can review the results of our proof reading service below, that was carried out by AI and Machine Learning driven tools. Place your cursor over the highlighted phrases to view the suggestions.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="m-portlet__body">
+                                                <div *ngIf='displayProofReadButton()' class="m-section">
+                                                    <button class="btn btn-brand" (click)="runProofRead()">
+                                                        Proofread your essay!
+                                                    </button>
+                                                </div>
+
+
+                                                <div [hidden]="this.draft.grammarCheck == undefined" id="grammarContainer" [innerHTML]="this.draft.grammarCheck | safeHtml"></div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="m_tabs_1_2" role="tabpanel">
+                    <div class="m-portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        Analysis
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+
+                            <div *ngIf='displayAnalysisButton()' class="m-section">
+                                <button class="btn btn-brand" (click)="runAnalysis()">
+                                    Detect key phrases and sentiments from your essay now!
+                                </button>
+                            </div>
+
+
+                            <div class="m-section">
+                                <h3 class="m-section__heading">
+                                    Sentiment score
+                                </h3>
+                                    <span class="m-widget1__number m--font-success">
+										<h2>{{getSentimentScore()}}</h2>
+									</span>
+                                <span class="m-section__sub">
+            				    	<i>A sentiment score close to 100% indicates a positive sentiment while a score close to 0 indicates a negative sentiment. The sentiment analysis is powered by Microsoft Azure.</i>
+			                	</span>
+                            </div>
+
+                            <div class="m-section m-section--last">
+                                <h3 class="m-section__heading">
+                                    Key phrases
+                                </h3>
+                                <div>
+                                <span class = "m-widget1__number m--font-brand">
+                                    {{draft["keyPhrases"]}}
+                                </span>
+                                </div>
+                                <br>
+                                <i>Denotes the key talking points of your essay. Check to make sure these phrases are most relevant to the essay prompt. The key phrase extraction is powered by Microsoft Azure.</i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

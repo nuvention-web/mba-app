@@ -1,0 +1,63 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                {{note.title}}
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a class="m-nav__link" routerLink="/school/{{school}}/">
+						<span class="m-nav__link-text">
+							{{school}}
+						</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    Editing Note
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="m-content">
+    <!--begin::Portlet-->
+
+
+    <div class="m-portlet m-portlet--tab">
+        <form class="m-form m-form--fit m-form--label-align-right">
+            <div class="m-portlet__body">
+                <div class="form-group m-form__group">
+                    <label for="exampleInputEmail1">
+                        Title
+                    </label>
+                    <textarea [(ngModel)]="note.title" name ="noteTitle" class="form-control m-input m-input--air" id="exampleInputEmail1" rows="1">{{ note.title }}</textarea>
+                </div>
+                <div class="form-group m-form__group">
+                    <label for="exampleTextarea">
+                        Notes
+                    </label>
+                    <textarea [(ngModel)]="note.contents" name ="noteContents" class="form-control m-input m-input--air" id="exampleTextarea" rows="5">{{ note.contents }}</textarea>
+                </div>
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit">
+                <div class="m-form__actions">
+                    <button class="btn btn-brand" (click)="updateNote()">
+                        Submit
+                    </button>
+                    <button class="btn btn-secondary" (click)="goBack()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+

@@ -14,7 +14,7 @@ import { UserService } from './_services/user.service';
 import { AlertComponent } from './_directives/alert.component';
 import { LoginCustom } from './_helpers/login-custom';
 import { Helpers } from '../helpers';
-import { setUser } from "../_services/url-infos";
+// import { setUser } from "../_services/url-infos";
 
 @Component({
     selector: '.m-grid.m-grid--hor.m-grid--root.m-page',
@@ -66,7 +66,7 @@ export class AuthComponent implements OnInit {
         this._authService.login(this.model.email, this.model.password).subscribe(
             data => {
                 this._router.navigate([this.returnUrl]);
-                setUser(this.model.email);
+                // setUser(this.model.email);
             },
             error => {
                 this.showAlert('alertSignin');

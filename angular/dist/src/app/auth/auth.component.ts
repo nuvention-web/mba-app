@@ -58,7 +58,7 @@ export class AuthComponent implements OnInit {
                 Helpers.setLoading(false);
                 LoginCustom.init();
             });
-        this.model.email = "qingtongguo2019@u.northwestern.edu";
+        this.model.email = "";
     }
 
     signin() {

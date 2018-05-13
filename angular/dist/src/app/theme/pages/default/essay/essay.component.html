@@ -171,6 +171,11 @@
                                                     Notes
                                                 </a>
                                             </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#reference_tabs_1_3" ng-reflect-href="#reference_tabs_2_3">
+                                                    Profiles
+                                                </a>
+                                            </li>
                                         </ul>
                                         <div class="tab-content">
                                             <div class="tab-pane active" id="reference_tabs_1_1" role="tabpanel">
@@ -192,6 +197,15 @@
                                                 <br>
                                                 <br>
                                                 <div [innerHTML]="findNote(selectedNote.value).contents"></div>
+                                            </div>
+                                            <div class="tab-pane" id="reference_tabs_1_3" role="tabpanel">
+                                                <select id="profile-dropdown" (change)="valueChange()" style="width:100%;" #selectedQuestion>
+                                                    <option value="test">Select a question...</option>
+                                                    <option *ngFor="let q of profileKeys()" [value]="q">{{q}}</option>
+                                                </select>
+                                                <br>
+                                                <br>
+                                                <div [innerHTML]="findProfile(selectedQuestion.value)"></div>
                                             </div>
                                         </div>
                                     </div>

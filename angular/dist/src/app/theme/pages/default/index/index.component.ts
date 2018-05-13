@@ -5,6 +5,7 @@ import { SchoolsService } from '../../../../_services/schools.service';
 import { forEach } from '@angular/router/src/utils/collection';
 import { Response } from '@angular/http';
 
+let infoDir = '../../../../../../assets/app/media/img/schools/schools.csv';
 @Component({
     selector: "app-index",
     templateUrl: "./index.component.html",
@@ -15,11 +16,16 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
     schools: any = undefined;
     allSchools: any = undefined;
+    schoolsInfo: any = undefined;
     chosenValue: string;
 
     constructor(private _script: ScriptLoaderService, private _schools:SchoolsService) {
         this.getSchools();
-        this._schools.getAllSchools().subscribe(d => this.allSchools = d);
+        this._schools.getAllSchools().subscribe(d => {this.allSchools = d;});
+    }
+
+    getSchoolsInfo() {
+
     }
 
     getSchools() {

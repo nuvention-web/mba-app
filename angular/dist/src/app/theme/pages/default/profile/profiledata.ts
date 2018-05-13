@@ -7,6 +7,9 @@ export class ProfileData {
     }
 
     static wrap(datas:any):any {
+        if (datas == null) {
+            return new ProfileData("");
+        }
         if (typeof datas === "string") {
             return new ProfileData(datas)
         } else if (datas instanceof Array && datas.length > 0 && typeof datas[0] === "string") {
@@ -16,7 +19,7 @@ export class ProfileData {
             }
             return res;
         }
-        return null;
+        return [''];
     }
 
     static unwrap(datas:any):any {

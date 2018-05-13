@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import { URL, getCurrentUser, jwt} from './url-infos'
 
+export const schoolInfoDir = "../../assets/app/info/schools/schools.json";
+
 @Injectable()
 export class SchoolsService {
 
@@ -14,6 +16,10 @@ export class SchoolsService {
 
     getAllSchools() {
         return this.http.get(URL+"/mba" + "/schools", jwt()).map((response:Response) => response.json());
+    }
+
+    getSchoolInfos() {
+        return this.http.get(schoolInfoDir).map((response: Response) => response.json());
     }
 
     userDeleteSchool(schoolName:string) {

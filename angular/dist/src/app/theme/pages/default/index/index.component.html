@@ -106,11 +106,23 @@
 						</label>
 						<div class="col-lg-12 col-md-12">
 							<select  [(ngModel)]="chosenValue" class="form-control m-input" name="option">
-								<option *ngFor="let school of (allSchools | filterSchools: schools)">
+								<option *ngFor="let school of (allSchools | filterSchools: schools: updated)">
 									{{school.name}}
 								</option>
 							</select>
 						</div>
+
+						<label class="col-form-label col-md-12">
+							Select a Deadline...
+						</label>
+						<div class="col-lg-12 col-md-12">
+							<select  [(ngModel)]="chosenDeadline" class="form-control m-input" name="option">
+								<option *ngFor="let deadline of (schoolsInfo | filterSchoolsDeadline: allSchools: chosenValue)">
+									{{deadline}}
+								</option>
+							</select>
+						</div>
+
 					</div>
 				</div>
 			</form>
@@ -121,4 +133,4 @@
 		</div>
 		</div>
 	</div>
-	</div>
+</div>

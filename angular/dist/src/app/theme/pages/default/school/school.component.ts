@@ -24,12 +24,11 @@ export class SchoolComponent implements OnInit {
             this.school = params.school
 
         );
-        this._schools.getSchoolDetails(this.school).subscribe(d => this.schoolDetails = d);
+        this._schools.getSchoolDetails(this.school).subscribe(d => {this.schoolDetails = d; console.log(d)});
         this._schools.getSchoolInfos().subscribe(d => this.getSchoolInfo(d));
     }
 
     saveSchool(i) {
-        console.log(this.schoolDetails.notes);
         this._schools.updateNote(this.school, this.schoolDetails.notes[i].noteID, this.schoolDetails.notes[i].contents, this.schoolDetails.notes[i].title);
     }
 

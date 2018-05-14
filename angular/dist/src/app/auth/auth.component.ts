@@ -70,7 +70,7 @@ export class AuthComponent implements OnInit {
             },
             error => {
                 this.showAlert('alertSignin');
-                this._alertService.error(error);
+                this._alertService.error("Invalid username or password");
                 this.loading = false;
             });
     }

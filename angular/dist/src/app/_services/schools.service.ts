@@ -27,6 +27,7 @@ export class SchoolsService {
     }
 
     userAddSchool(schoolName:string) {
+        console.log(schoolName);
         return this.http.put(URL+"/mba/users/"+getCurrentUser()+"/school", {"schools": [schoolName]}
             , jwt(1));
     }
@@ -36,7 +37,7 @@ export class SchoolsService {
     }
 
     updateSchoolDetails(schoolName: string, schoolDetail) {
-        return this.http.post(URL+"/mba/users/"+getCurrentUser()+"/school/" + schoolName, schoolDetail, jwt())
+        return this.http.put(URL+"/mba/users/"+getCurrentUser()+"/school/" + schoolName, schoolDetail, jwt(1))
     }
 
     getEssay(schoolName:string, essayID:string) {

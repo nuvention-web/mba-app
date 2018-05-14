@@ -38,6 +38,11 @@
                     <strong>home</strong>
                 </a>
             </li>
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link show-hand-light" data-toggle="tab" href="#m_tabs_1_5" ng-reflect-href="#m_tabs_2_5">
+                    <strong>setting</strong>
+                </a>
+            </li>
         </ul>
 
         <div class="tab-content">
@@ -242,6 +247,42 @@
                                 </div>
                             </div>
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="schoolInfo != null" class="tab-pane" id="m_tabs_1_5" role="tabpanel">
+                <div class="row mt-3">
+                    <div class="m-content">
+                        <div class="m-portlet">
+                            <form class="m-form m-form--fit m-form--label-align-right">
+                                <div class="m-portlet__body">
+                                    <div class="form-group m-form__group row">
+                                        <label class="col-form-label col-6">Standard Group Select</label>
+                                        <div class="col-6">
+                                            <select class="form-control" #selectedDeadline>
+                                                <option *ngFor="let d of [1,2,3]" value="{{d}}">
+                                                    {{getDeadline(d)}}
+                                                </option>
+                                                <option *ngIf = "getDeadline(4) !== ''">
+                                                    {{getDeadline(4)}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__foot m-portlet__foot--fit">
+                                    <div class="m-form__actions m-form__actions">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <button type="submit" class="btn btn-brand">Submit</button>
+                                                <button type="reset" class="btn btn-secondary">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

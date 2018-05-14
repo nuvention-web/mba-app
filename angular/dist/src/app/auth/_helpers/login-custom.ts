@@ -89,9 +89,9 @@ export class LoginCustom {
             LoginCustom.displaySignInForm();
         });
 
-        $('#m_login_verify_resend').click((e) => {
+        $('#m_login_verify').click( (e) => {
             e.preventDefault();
-            LoginCustom.displaySignInForm();
+            LoginCustom.displayVerificationCode();
         })
     }
 

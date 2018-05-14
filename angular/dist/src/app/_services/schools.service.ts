@@ -41,6 +41,10 @@ export class SchoolsService {
         return this.http.get(URL+"/mba/users/"+getCurrentUser()+"/school/" + schoolName + "/essay/" + essayID + "/reviews", jwt()).map((response:Response) => response.json());
     }
 
+    getResumes() {
+        return this.http.get(URL+"/mba/users/"+getCurrentUser()+"/resume", jwt()).map((response:Response) => response.json());
+    }
+
     getDraft(schoolName:string, essayID:string, draftID:string) {
         return this.http.get(URL+"/mba/users/"+getCurrentUser()+"/school/" + schoolName + "/essay/" + essayID + "/draft/" + draftID, jwt()).map((response:Response) => response.json());
     }
@@ -98,6 +102,25 @@ export class SchoolsService {
         formData.append('file', file, file.name);
         return this.http.post(URL+"/mba/users/"+getCurrentUser()+"/school/" + schoolName + "/essay/" + essayID+"/upload/draft", formData, jwt(0));
     }
+
+    uploadResume(file) {
+        let formData: FormData = new FormData();
+        formData.append('file', file, file.name);
+        return this.http.post(URL+"/mba/users/"+getCurrentUser()+"/resume/upload", formData, jwt(0));
+    }
+
+    scoreResume(resumeID:string) {
+        return this.http.post(URL+"/mba/users/"+getCurrentUser()+"/resume/"+resumeID+"/analysis", {}, jwt(0));
+    }
+
+    deleteResume(resumeID:string) {
+        return this.http.delete(URL+"/mba/users/"+getCurrentUser()+"/resume/"+resumeID,  jwt(0));
+    }
+
+    downloadResume(resumeID:string) {
+        window.open(URL+"/download/users/"+getCurrentUser()+"/resume/" + resumeID);
+    }
+
 
     saveEssayDraft(text, schoolName, essayID) {
         return this.http.post(URL+"/mba/users/"+getCurrentUser()+"/school/" + schoolName + "/essay/" + essayID + "/draft",{"contents": text}, jwt(1));

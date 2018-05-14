@@ -48,6 +48,8 @@ public interface UserDBProvider {
 
     public void addEssayDraftUpload(User user, UserSchool userSchool, MultipartFile file, String essayID) throws Exception;
 
+    public void addResume(User user, MultipartFile file) throws Exception;
+
     public void addNote(User user, UserSchool userSchool, NotesRequest notesRequest) throws Exception;
 
     public void updateNote(User user, UserSchool userSchool, NotesRequest notesRequest, String noteID) throws Exception;
@@ -62,6 +64,8 @@ public interface UserDBProvider {
 
     public void updateEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID, String draftID, HashMap<String, List<String>> schoolKeywords) throws Exception;
 
+    public void deleteResume(User user, Resume resume) throws Exception;
+
     public void deleteEssayDraft(User user, UserSchool userSchool, String essayID, String draftID) throws Exception;
 
     public JSONObject getUserSchoolDetail(User user, UserSchool userSchool) throws Exception;
@@ -72,7 +76,13 @@ public interface UserDBProvider {
 
     public ByteArrayOutputStream getEssayDraftUploaded(User user, UserSchool school, String essayID, String draftID) throws Exception;
 
+    public ByteArrayOutputStream getResumeUpload(User user, Resume resume) throws Exception;
+
+    public Resume getResume(User user, String resumeID) throws Exception;
+
     public ByteArrayOutputStream getFileUploaded(String id) throws Exception;
+
+    public ByteArrayOutputStream getResumeForDownload(Resume resume) throws Exception;
 
     public File getDraft(User user, UserSchool userSchool, String essayID, String draftID) throws Exception;
 

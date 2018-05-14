@@ -24250,13 +24250,13 @@ body.m-portlet--fullscreen.m-aside-left--fixed .m-aside-left {
 .m-widget5 .m-widget5__item .m-widget5__stats1 {
     display: table-cell;
     text-align: right;
-    width: 7.1rem;
+    width: 10.5rem;
     padding-top: 1.07rem;
     vertical-align: top
 }
 
 .m-widget5 .m-widget5__item .m-widget5__stats1 .m-widget5__number {
-    font-size: 1.5rem;
+    font-size: 2.2rem;
     font-weight: 600
 }
 

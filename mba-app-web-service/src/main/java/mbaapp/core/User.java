@@ -37,6 +37,8 @@ public class User {
 
     public List<String> accomplishments;
     public List<String> hobbiesOrInterests;
+    public List<Resume> resumes;
+
 
     public String whatDoYouBring;
 
@@ -57,6 +59,7 @@ public class User {
         failureExperience = new ArrayList<>();
         accomplishments = new ArrayList<>();
         hobbiesOrInterests = new ArrayList<>();
+        resumes = new ArrayList<>();
     }
 
     public String getId() {
@@ -125,6 +128,21 @@ public class User {
 
     public List<String> getRecommenders() {
         return recommenders;
+    }
+
+    public List<Resume> getResumes(){
+        if(resumes==null) {
+            resumes = new ArrayList<>();
+        }
+        return resumes;
+    }
+
+    public void addResume(Resume resume) {
+        if(resumes == null) {
+            resumes = new ArrayList<>();
+        }
+
+        resumes.add(resume);
     }
 
     public void addActivity(String message) {

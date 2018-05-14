@@ -113,6 +113,15 @@ export class SchoolsService {
         return this.http.post(URL+"/mba/users/"+getCurrentUser()+"/resume/"+resumeID+"/analysis", {}, jwt(0));
     }
 
+    deleteResume(resumeID:string) {
+        return this.http.delete(URL+"/mba/users/"+getCurrentUser()+"/resume/"+resumeID,  jwt(0));
+    }
+
+    downloadResume(resumeID:string) {
+        window.open(URL+"/download/users/"+getCurrentUser()+"/resume/" + resumeID);
+    }
+
+
     saveEssayDraft(text, schoolName, essayID) {
         return this.http.post(URL+"/mba/users/"+getCurrentUser()+"/school/" + schoolName + "/essay/" + essayID + "/draft",{"contents": text}, jwt(1));
     }

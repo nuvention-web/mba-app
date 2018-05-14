@@ -313,9 +313,9 @@ public class MongoUserDBProvider implements UserDBProvider {
         GridFSFile gridFSID = gridFsTemplate.store(file.getInputStream(), file.getOriginalFilename(), dbObject);
         String uploadID = gridFSID.getId().toString();
         Resume resume = new Resume();
-        int resumeNum = user.getResumes().size() + 1;
-        String resumeName = MessageFormat.format("{0}_Resume_{1}",user.getName().split("\\s+")[0], Integer.toString(resumeNum));
-        resume.setResumeName(resumeName);
+//        int resumeNum = user.getResumes().size() + 1;
+////        String resumeName = MessageFormat.format("{0}_Resume_{1}",user.getName().split("\\s+")[0], Integer.toString(resumeNum));
+        resume.setResumeName(file.getOriginalFilename());
         resume.setUploadID(uploadID);
 
         user.addResume(resume);
@@ -396,6 +396,12 @@ public class MongoUserDBProvider implements UserDBProvider {
         return outputStream;
     }
 
+    public ByteArrayOutputStream getResumeForDownload(Resume resume) throws Exception{
+        GridFSDBFile gridfsfile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(resume.getUploadID())));
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        gridfsfile.writeTo(outputStream);
+        return outputStream;
+    }
 
     public File getDraft(User user, UserSchool userSchool, String essayID, String draftID) throws Exception {
 
@@ -532,6 +538,14 @@ public class MongoUserDBProvider implements UserDBProvider {
         }
         userSchool.deleteEssayDraft(essayID, draftID);
         userRepository.save(user);
+    }
+
+    public void deleteResume(User user, Resume resume) throws Exception {
+
+        gridFsTemplate.delete(new Query(Criteria.where("_id").is(resume.getUploadID())));
+        user.getResumes().remove(resume);
+        userRepository.save(user);
+
     }
 
 

@@ -2,13 +2,12 @@ package mbaapp.endpoints;
 
 import io.swagger.annotations.ApiOperation;
 import mbaapp.core.EssayDraft;
+import mbaapp.core.Resume;
 import mbaapp.core.User;
 import mbaapp.core.UserSchool;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.logging.Level;
@@ -19,9 +18,9 @@ import java.util.logging.Logger;
  */
 @RestController
 @RequestMapping("/download")
-public class DownloadDraftEndpoint extends EndpointBase{
+public class DownloadEndpoint extends EndpointBase{
 
-    Logger logger = Logger.getLogger(DownloadDraftEndpoint.class.getName());
+    Logger logger = Logger.getLogger(DownloadEndpoint.class.getName());
 
     @GetMapping(value = "/users/{userEmail}/school/{schoolShortName}/essay/{essayID}/draft/{draftID}", produces = "application/octet-stream")
     @CrossOrigin
@@ -54,7 +53,46 @@ public class DownloadDraftEndpoint extends EndpointBase{
         }
     }
 
-    protected ResponseEntity<String> runValidations(String userEmail, String schoolShortName) {
+    @GetMapping(value = "/users/{userEmail}/resume/{resumeID}", produces = "application/octet-stream")
+    @CrossOrigin
+    @ApiOperation(value = "Download a resume draft")
+    public ResponseEntity downloadResume(@PathVariable String userEmail, @PathVariable String resumeID) {
+
+        try {
+            if (runValidations(userEmail, null) != null) {
+                return runValidations(userEmail, null);
+            }
+
+            User user = userDBProvider.getUser(userEmail);
+
+            Resume resume = userDBProvider.getResume(user, resumeID);
+
+            if (resume == null) {
+                return new ResponseEntity<String>("Did not find resume", HttpStatus.BAD_REQUEST);
+            }
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="+resume.getResumeName());
+
+            ResponseEntity responseEntity =  new ResponseEntity(userDBProvider.getResumeForDownload(resume).toByteArray(), headers,
+                    HttpStatus.OK) ;
+
+            return responseEntity;
+
+
+        }
+        catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+
+
+
+    }
+
+
+        protected ResponseEntity<String> runValidations(String userEmail, String schoolShortName) {
 
         User user = userDBProvider.getUser(userEmail);
         if (user == null) {

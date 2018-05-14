@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * Created by jnag on 5/12/18.
  */
-public class Resume {
+public class Resume extends MBABase{
 
     private String resumeName;
     private String resumeID;
@@ -21,11 +21,17 @@ public class Resume {
     private String percentile;
     private String advice;
     private String analysisDone;
+    private String date;
 
 
     public Resume() {
         resumeID = UUID.randomUUID().toString();
         analysisDone = "False";
+        date = getCurrentTime();
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public String getBrevityScore() {

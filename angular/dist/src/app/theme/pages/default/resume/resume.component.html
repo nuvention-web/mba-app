@@ -20,12 +20,11 @@
                                                 <div class="m-portlet__head-caption">
                                                     <div class="m-portlet__head-title">
                                                         <div><h6 class="m-portlet__head-text">
-                                                            <br>Resumes</h6>
+                                                            <br>Resume analysis</h6>
                                                         </div>
                                                         <div>
                                                             <br>
-                                                            <br>
-                                                            <p>You can review the results of our proof reading service below, that was carried out by AI and Machine Learning driven tools. Place your cursor over the highlighted phrases to view the suggestions.</p>
+                                                            <p>Get your resumes scored! We use an automated AI and machine learning driven tool (powered by Rezscore) to score your resume and provide some feedback. </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -35,10 +34,27 @@
                                                     <div class="m-widget5">
                                                         <div *ngFor="let resume of resumes" class="m-widget5__item">
                                                             <div class="m-widget5__content">
-                                                                <div class="m-widget5__title">
-                                                                    {{resume.resumeName}}
+                                                                <div class="row">
+                                                                    <!--{{resume.resumeName}}-->
+                                                                    <div class="col-md-6">
+                                                                        <div class="row">
+                                                                            <span class="m-portlet__head-icon"><i class="fa fa-file-text-o"></i></span>&nbsp;&nbsp;&nbsp;
+                                                                            <span class="m-portlet__head-text"> <h4> {{ resume.resumeName }}</h4></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 m--align-right">
+                                                                        <div class="btn-group m-btn-group m-btn-group--pill"
+                                                                             role="group">
+                                                                            <button (click)="downloadResume(resume)" class="m-btn btn-sm btn btn-outline-brand" type="button">
+                                                                                <i class="fa fa-download"></i>
+                                                                            </button>
+                                                                            <button (click)="deleteResume(resume)" class="m-btn btn btn-sm btn-outline-brand" type="button">
+                                                                                <i class="fa fa-trash"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div id="grammarContainer" *ngIf=displayStats(resume)>
+                                                                <div id="resumeContainer" *ngIf=displayStats(resume)>
                                                                     <div class="m-widget5__stats1">
                                                                         <span class="m-widget5__number m--font-danger" data-toggle="m-popover" title="Your percentile amongst all the resumes scored by RezScore.">
                                                                             {{resume.percentile}}
@@ -83,13 +99,20 @@
                                                                 <div class="widget5__desc" *ngIf=!displayStats(resume) id="scoreResume">
                                                                     <button type="button" class="btn m-btn--pill btn-primary" [disabled]="scoreResumeButtonDisabled" (click)="scoreResume(resume)">{{scoreResumeText}}</button>
                                                                 </div>
+                                                                <div class="widget5__desc">
+                                                                    <br>
+                                                                        <i>Uploaded on {{resume.date}}</i>
+                                                                </div>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                    <div [hidden]="resumes.length != 0" class="my-5 text-center">
+                                                        <strong>Upload your first resume and get it scored!</strong>
                                                     </div>
                                                 </div>
 
                                             </div>
-                                    </div>
+                                        </div>
                                 </div>
                                     <div class= "row">
                                         <div>
@@ -101,7 +124,7 @@
                                                         Choose a .doc or .docx file...
                                                     </label>
                                                 </div>
-                                                <button type="button" class="btn m-btn--pill btn-primary" (click)="uploadResume()">Upload Resume</button>
+                                                <button type="button" class="btn m-btn--pill btn-primary" [disabled]="resumeUploadButtonDisabled" (click)="uploadResume()">{{resumeUploadText}}</button>
                                             </div>
                                         </div>
 

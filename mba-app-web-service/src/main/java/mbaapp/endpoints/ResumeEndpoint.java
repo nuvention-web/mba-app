@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,7 +47,7 @@ public class ResumeEndpoint extends EndpointBase {
             if (resumes == null) {
                 resumes = new ArrayList<>();
             }
-
+            Collections.reverse(resumes);
             JSONObject resumesJSON = new JSONObject();
             JSONArray resumesArray = new JSONArray();
             resumesJSON.put("resumes", resumesArray);
@@ -120,6 +121,41 @@ public class ResumeEndpoint extends EndpointBase {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+
+    @DeleteMapping("/{resumeID}")
+    @CrossOrigin
+    @ApiOperation(value = "Delete a resume")
+    public ResponseEntity<String> deleteResume(@PathVariable("resumeID") String resumeID,
+                                              @PathVariable String userEmail) {
+
+        try {
+
+            if (runValidations(userEmail, null) != null) {
+                return runValidations(userEmail, null);
+            }
+
+            User user = userDBProvider.getUser(userEmail);
+
+            Resume resume = userDBProvider.getResume(user, resumeID);
+
+            if(resume == null) {
+                return new ResponseEntity<String>("Did not find resume", HttpStatus.BAD_REQUEST);
+            }
+
+
+            userDBProvider.deleteResume(user, resume);
+
+            return new ResponseEntity<>("Deleted resume", HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
+
+    }
+
 
 
 }

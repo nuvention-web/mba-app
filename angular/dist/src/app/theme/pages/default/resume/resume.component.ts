@@ -32,6 +32,8 @@ export class ResumeComponent implements OnInit{
     disableUpload = false;
     scoreResumeText = "";
     scoreResumeButtonDisabled = false;
+    resumeUploadText = "";
+    resumeUploadButtonDisabled = false;
 
 
     constructor(private route:ActivatedRoute, _script:ScriptLoaderService, private _schools:SchoolsService,
@@ -41,6 +43,8 @@ export class ResumeComponent implements OnInit{
             this.resumes = d.resumes;
         })
         this.scoreResumeText="Score your resume";
+        this.resumeUploadText = "Upload your resume";
+
     }
 
     getResumes(){
@@ -51,13 +55,18 @@ export class ResumeComponent implements OnInit{
         return this.disableUpload;
     }
     uploadResume() {
+        this.resumeUploadText = "Uploading resume";
+        this.resumeUploadButtonDisabled = true;
         this._schools.uploadResume(this.fileUpload).subscribe(
             (response:Response) => {
                 this._schools.getResumes(). subscribe(d => {
                     this.resumes = d.resumes;
+                    this.resumeUploadText = "Upload your resume";
+                    this.resumeUploadButtonDisabled = false;
                 })
-                // document.getElementById("openModalButton").click();
             }, (error:Response) => {
+                this.resumeUploadText = "Upload your resume";
+                this.resumeUploadButtonDisabled = false;
             }
         );
     }
@@ -83,7 +92,7 @@ export class ResumeComponent implements OnInit{
 
 
     initializePopover() {
-        (<any>$)('#grammarContainer').popover({
+        (<any>$)('#resumeContainer').popover({
             selector: '[data-toggle="m-popover"]',
             placement: 'right',
             trigger: 'hover'
@@ -98,7 +107,7 @@ export class ResumeComponent implements OnInit{
 
 
 
-    public displayStats(resume) {
+    displayStats(resume) {
         if(resume["analysisDone"]=="True"){
             return true;
         }
@@ -118,6 +127,22 @@ export class ResumeComponent implements OnInit{
             }, (error:Response) => {
                 this.scoreResumeText="Score your resume";
                 this.scoreResumeButtonDisabled = false;
+            },
+        );
+    }
+
+    downloadResume(resume) {
+        this._schools.downloadResume(resume["resumeID"]);
+    }
+
+
+    deleteResume(resume) {
+        this._schools.deleteResume(resume["resumeID"]).subscribe(
+            (response:Response) => {
+                this._schools.getResumes(). subscribe(d => {
+                    this.resumes = d.resumes;
+                })
+            }, (error:Response) => {
             },
         );
     }

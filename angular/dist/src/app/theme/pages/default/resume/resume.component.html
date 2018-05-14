@@ -1,0 +1,114 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Resume
+            </h3>
+        </div>
+    </div>
+</div>
+<div class="m-content">
+    <div>
+                    <div class="row">
+                        <div class="m-stack m-stack--ver m-stack--general">
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle"></div>
+                            <div class="m-stack__item m-stack__item--middle m-stack__item--fluid">
+                                <div class="m-content">
+                                    <div class="row">
+                                        <div class="m-portlet m-portlet--tab">
+                                            <div class="m-portlet__head">
+                                                <div class="m-portlet__head-caption">
+                                                    <div class="m-portlet__head-title">
+                                                        <div><h6 class="m-portlet__head-text">
+                                                            <br>Resumes</h6>
+                                                        </div>
+                                                        <div>
+                                                            <br>
+                                                            <br>
+                                                            <p>You can review the results of our proof reading service below, that was carried out by AI and Machine Learning driven tools. Place your cursor over the highlighted phrases to view the suggestions.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="m-portlet__body">
+                                                <div>
+                                                    <div class="m-widget5">
+                                                        <div *ngFor="let resume of resumes" class="m-widget5__item">
+                                                            <div class="m-widget5__content">
+                                                                <div class="m-widget5__title">
+                                                                    {{resume.resumeName}}
+                                                                </div>
+                                                                <div id="grammarContainer" *ngIf=displayStats(resume)>
+                                                                    <div class="m-widget5__stats1">
+                                                                        <span class="m-widget5__number m--font-danger" data-toggle="m-popover" title="Your percentile amongst all the resumes scored by RezScore.">
+                                                                            {{resume.percentile}}
+                                                                        </span>
+                                                                        <br>
+                                                                        <span class="m-widget5__sales">
+                                                                            Percentile
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="m-widget5__stats1">
+                                                                        <span class="m-widget5__number m--font-info" data-toggle="m-popover" title="The level of detail provided about your experiences listed on your resume.">
+                                                                            {{resume.depthScore}}%
+                                                                        </span>
+                                                                        <br>
+                                                                        <span class="m-widget5__sales">
+                                                                        Depth Score
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="m-widget5__stats1">
+                                                                        <span class="m-widget5__number m--font-primary" data-toggle="m-popover" title="The impact score measures how effectively you chose your words in your resume.">
+                                                                            {{resume.impactScore}}%
+                                                                        </span>
+                                                                        <br>
+                                                                        <span class="m-widget5__sales">
+                                                                        Impact Score
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="m-widget5__stats1">
+                                                                        <span class="m-widget5__number m--font-success" data-toggle="m-popover" title="RezScore has studied the optimal length of resumes to make sure the person reviewing your resume is engaged. This score is a measure of your resume against the optimal length.">
+                                                                            {{resume.brevityScore}}%
+                                                                        </span>
+                                                                        <br>
+                                                                        <span class="m-widget5__sales">
+                                                                        Brevity Score
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                                <div class="widget5__desc" *ngIf=displayStats(resume)>
+                                                                    <b>Analysis:</b> {{resume.gradeBlurb}}
+                                                                </div>
+                                                                <div class="widget5__desc" *ngIf=!displayStats(resume) id="scoreResume">
+                                                                    <button type="button" class="btn m-btn--pill btn-primary" [disabled]="scoreResumeButtonDisabled" (click)="scoreResume(resume)">{{scoreResumeText}}</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                    </div>
+                                </div>
+                                    <div class= "row">
+                                        <div>
+                                            <h4>Upload a new resume</h4>
+                                            <div class="form-group m-form__group">
+                                                <div class="mb-3 custom-file">
+                                                    <input class="custom-file-input" id="customFile" type="file" (change)="uploadFile($event)" accept=".doc,.docx">
+                                                    <label class="custom-file-label" for="customFile">
+                                                        Choose a .doc or .docx file...
+                                                    </label>
+                                                </div>
+                                                <button type="button" class="btn m-btn--pill btn-primary" (click)="uploadResume()">Upload Resume</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</div>
+</div>

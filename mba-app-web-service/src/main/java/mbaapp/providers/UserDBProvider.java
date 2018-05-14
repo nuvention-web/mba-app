@@ -48,6 +48,8 @@ public interface UserDBProvider {
 
     public void addEssayDraftUpload(User user, UserSchool userSchool, MultipartFile file, String essayID) throws Exception;
 
+    public void addResume(User user, MultipartFile file) throws Exception;
+
     public void addNote(User user, UserSchool userSchool, NotesRequest notesRequest) throws Exception;
 
     public void updateNote(User user, UserSchool userSchool, NotesRequest notesRequest, String noteID) throws Exception;
@@ -71,6 +73,10 @@ public interface UserDBProvider {
     public void setDeadlineForSchool(User user, UserSchool userSchool, String deadline) throws Exception;
 
     public ByteArrayOutputStream getEssayDraftUploaded(User user, UserSchool school, String essayID, String draftID) throws Exception;
+
+    public ByteArrayOutputStream getResumeUpload(User user, Resume resume) throws Exception;
+
+    public Resume getResume(User user, String resumeID) throws Exception;
 
     public ByteArrayOutputStream getFileUploaded(String id) throws Exception;
 

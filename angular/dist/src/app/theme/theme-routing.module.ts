@@ -50,6 +50,10 @@ const routes: Routes = [
                 "loadChildren": ".\/pages\/default\/information\/information.module#InformationModule"
             },
             {
+                "path": "resume",
+                "loadChildren": ".\/pages\/default\/resume\/resume.module#ResumeModule"
+            },
+            {
                 "path": "",
                 "redirectTo": "index.html",
                 "pathMatch": "full"

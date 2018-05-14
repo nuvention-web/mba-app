@@ -1,7 +1,7 @@
 // The URL of the website
 import {Headers, RequestOptions} from "@angular/http";
 
-export const URL = "https://portal.myapp.mba";
+export const URL = "http://localhost:8080";
 
 export function getCurrentUser() {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));

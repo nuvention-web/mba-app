@@ -27,6 +27,8 @@ export class ProofreadComponent implements OnInit{
     draftID = "";
     draft = {};
     submitted: any = false;
+    proofReadText = "";
+    proofReadButtonDisabled = false;
 
 
     constructor(private route:ActivatedRoute, _script:ScriptLoaderService, private _schools:SchoolsService,
@@ -40,7 +42,8 @@ export class ProofreadComponent implements OnInit{
         });
         this._schools.getDraft(this.school, this.essayID, this.draftID). subscribe(d => {
             this.draft = d;
-        })
+        });
+        this.proofReadText = "Proofread your essay!"
     }
 
 
@@ -89,6 +92,8 @@ export class ProofreadComponent implements OnInit{
     }
 
     public runProofRead() {
+        this.proofReadText = "Proofreading in progress"
+        this.proofReadButtonDisabled = true;
         this._schools.runProofRead(this.school, this.essayID, this.draftID).subscribe(
             (response: Response) => {
                 this._schools.getDraft(this.school, this.essayID, this.draftID).subscribe(d => {

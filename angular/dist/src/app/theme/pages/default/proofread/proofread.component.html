@@ -74,8 +74,8 @@
                                             </div>
                                             <div class="m-portlet__body">
                                                 <div *ngIf='displayProofReadButton()' class="m-section">
-                                                    <button class="btn btn-brand" (click)="runProofRead()">
-                                                        Proofread your essay!
+                                                    <button class="btn btn-brand" [disabled]="proofReadButtonDisabled" (click)="runProofRead()">
+                                                        {{proofReadText}}
                                                     </button>
                                                 </div>
 

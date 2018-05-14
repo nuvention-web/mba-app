@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -300,6 +301,32 @@ public class MongoUserDBProvider implements UserDBProvider {
     }
 
 
+    public void addResume(User user, MultipartFile file) throws Exception {
+
+        File convFile = new File(file.getOriginalFilename());
+        convFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+
+        DBObject dbObject = new BasicDBObject();
+        GridFSFile gridFSID = gridFsTemplate.store(file.getInputStream(), file.getOriginalFilename(), dbObject);
+        String uploadID = gridFSID.getId().toString();
+        Resume resume = new Resume();
+        int resumeNum = user.getResumes().size() + 1;
+        String resumeName = MessageFormat.format("{0}_Resume_{1}",user.getName().split("\\s+")[0], Integer.toString(resumeNum));
+        resume.setResumeName(resumeName);
+        resume.setUploadID(uploadID);
+
+        user.addResume(resume);
+        convFile.delete();
+
+        userRepository.save(user);
+
+    }
+
+
+
     public void addReviewDraft(User user, UserSchool userSchool, MultipartFile file, ReviewComments reviewComments) throws Exception {
 
         String gridFSID = addFileToMongo(file);
@@ -320,6 +347,26 @@ public class MongoUserDBProvider implements UserDBProvider {
         convFile.delete();
         return gridFSID.getId().toString();
 
+    }
+
+    public ByteArrayOutputStream getResumeUpload(User user, Resume resume) throws Exception {
+        GridFSDBFile gridfsfile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(resume.getUploadID())));
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        gridfsfile.writeTo(outputStream);
+
+        return outputStream;
+
+    }
+
+
+    public Resume getResume(User user, String resumeID) throws Exception {
+        for(Resume resume : user.getResumes()) {
+            if(resume.getResumeID().equalsIgnoreCase(resumeID)) {
+                return resume;
+            }
+        }
+
+        return null;
     }
 
 

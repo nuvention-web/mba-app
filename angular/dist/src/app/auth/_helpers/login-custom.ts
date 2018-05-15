@@ -88,11 +88,14 @@ export class LoginCustom {
             e.preventDefault();
             LoginCustom.displaySignInForm();
         });
-
         $('#m_login_verify_resend').click((e) => {
             e.preventDefault();
             LoginCustom.displaySignInForm();
-        })
+        });
+        $('#m_login_verify').click( (e) => {
+            e.preventDefault();
+            LoginCustom.displayVerificationCode();
+        });
     }
 
     static handleSignUpFormSubmit() {

@@ -5,6 +5,7 @@ import { SchoolsService } from '../../../../_services/schools.service';
 import { forEach } from '@angular/router/src/utils/collection';
 import { Response } from '@angular/http';
 
+let infoDir = '../../../../../../assets/app/media/img/schools/schools.csv';
 @Component({
     selector: "app-index",
     templateUrl: "./index.component.html",
@@ -15,11 +16,32 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
     schools: any = undefined;
     allSchools: any = undefined;
+    schoolsInfo: any = undefined;
     chosenValue: string;
+    chosenDeadline: string;
+    updated;
 
     constructor(private _script: ScriptLoaderService, private _schools:SchoolsService) {
         this.getSchools();
-        this._schools.getAllSchools().subscribe(d => this.allSchools = d);
+        this.getSchoolsInfo();
+        this._schools.getAllSchools().subscribe(d => {this.allSchools = d;});
+
+    }
+
+    getSchoolsInfo() {
+        let i = 0;
+        let j = 1;
+        this._schools.getSchoolInfos().subscribe(d => {
+            this.schoolsInfo = d;
+            for (i = 0; i < this.schoolsInfo.length; i++) {
+                j = 1;
+                this.schoolsInfo[i]['Deadline'] = [];
+                while (this.schoolsInfo[i]['Deadline' + j] != null && this.schoolsInfo[i]['Deadline' + j] !== '') {
+                    this.schoolsInfo[i]['Deadline'].push(this.schoolsInfo[i]['Deadline' + j]);
+                    j++;
+                }
+            }
+        });
     }
 
     getSchools() {
@@ -29,6 +51,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
     deleteSchool(event, index, schoolName: string) {
         event.stopPropagation();
         this.schools.splice(index, 1);
+        this.updated = new Date();
         this._schools.userDeleteSchool(schoolName);
     }
 
@@ -50,9 +73,14 @@ export class IndexComponent implements OnInit, AfterViewInit {
     addSchool() {
         for (var i = 0; i < this.allSchools.length; i++) {
             if (this.allSchools[i].name === this.chosenValue) {
-                this._schools.userAddSchool(this.allSchools[i].shortName).subscribe(
+                var name = this.allSchools[i].shortName;
+                this._schools.userAddSchool(name).subscribe(
                     (response:Response) => {
                         this.getSchools();
+                        this._schools.getSchoolDetails(name).subscribe(d => {
+                           d.deadline = this.chosenValue;
+                           this._schools.updateSchoolDetails(name, d);
+                        });
                     }, (error:Response) => {
                     }
                 );

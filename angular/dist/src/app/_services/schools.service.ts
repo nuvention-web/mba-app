@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import { URL, getCurrentUser, jwt} from './url-infos'
 
+export const schoolInfoDir = "../../assets/app/info/schools/schools.json";
+
 @Injectable()
 export class SchoolsService {
 
@@ -16,11 +18,16 @@ export class SchoolsService {
         return this.http.get(URL+"/mba" + "/schools", jwt()).map((response:Response) => response.json());
     }
 
+    getSchoolInfos() {
+        return this.http.get(schoolInfoDir).map((response: Response) => response.json());
+    }
+
     userDeleteSchool(schoolName:string) {
         this.http.delete(URL+"/mba/users/"+getCurrentUser()+"/school/" + schoolName, jwt());
     }
 
     userAddSchool(schoolName:string) {
+        console.log(schoolName);
         return this.http.put(URL+"/mba/users/"+getCurrentUser()+"/school", {"schools": [schoolName]}
             , jwt(1));
     }
@@ -30,7 +37,7 @@ export class SchoolsService {
     }
 
     updateSchoolDetails(schoolName: string, schoolDetail) {
-        return this.http.post(URL+"/mba/users/"+getCurrentUser()+"/school/" + schoolName, schoolDetail, jwt())
+        return this.http.put(URL+"/mba/users/"+getCurrentUser()+"/school/" + schoolName, schoolDetail, jwt(1))
     }
 
     getEssay(schoolName:string, essayID:string) {

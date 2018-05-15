@@ -9,7 +9,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="datas != undefined" class="m-portlet__body">
+        <div *ngIf="datas != null && datas != undefined" class="m-portlet__body">
             <div *ngIf="types[i] == 0">
                 <textarea-editor [(ngModel)]="datas[i].content" maxheight="200px" (onSave)="save()" placeholder="empty"></textarea-editor>
             </div>

@@ -8,7 +8,7 @@ export class ProfileService {
 
  constructor(private http: Http) { }
 
- getProfile(token) {
+ getProfile() {
     return this.http.get(URL+"/mba/users/"+getCurrentUser()+"/profile", jwt())
         .map((response: Response) => response.json());
  }

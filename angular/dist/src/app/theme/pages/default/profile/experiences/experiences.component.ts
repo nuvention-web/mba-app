@@ -32,6 +32,7 @@ export class ExperiencesComponent implements OnInit {
         //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
         //Add '${implements OnChanges}' to the class.
         if (this.isInit && changes['profile'] && this.profile != undefined) {
+            console.log(this.profile);
             for (let i = 0; i < this.count; i++) {
                 this.datas[i] = ProfileData.wrap(this.profile[this.questionNames[i]]);
             }

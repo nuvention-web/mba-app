@@ -48,7 +48,7 @@ export class EssayComponent implements OnInit {
         this._schools.getEssayReviews(this.school, this.essayID).subscribe(d => this.reviews = d.reviews);
         this._schools.getAllEssays().subscribe(d => this.allEssays = this.transformJSON(d));
         this._schools.getSchoolDetails(this.school).subscribe(d => this.schoolDetails = d);
-        this._profile.getProfile().subscribe(p => {this.profile = p; this.profile['name'] = null; this.profile['email'] = null; this.profile['id'] = null;});
+        this._profile.getProfile().subscribe(p => {this.profile = p; delete this.profile['name']; delete this.profile['email']; delete this.profile['id']; delete this.profile['resumes']});
     }
 
     ngOnInit() {
@@ -122,7 +122,12 @@ export class EssayComponent implements OnInit {
     public findProfile(requestedQuestion) {
         let theProfile = {}
         if (this.profile) {
-            return this.profile[requestedQuestion];
+            var data = this.profile[requestedQuestion];
+            if (data instanceof Array) {
+               var res = data.join('</p><p>');
+               return '<p>' + res + '</p>';
+            }
+            return data;
         }
         return theProfile;
     }

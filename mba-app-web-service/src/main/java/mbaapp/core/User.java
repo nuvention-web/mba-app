@@ -38,6 +38,11 @@ public class User {
     public List<String> accomplishments;
     public List<String> hobbiesOrInterests;
     public List<Resume> resumes;
+    public String greScore;
+    public String gmatScore;
+    public String targetGreScore;
+    public String targetGmatScore;
+    public String gpa;
 
 
     public String whatDoYouBring;
@@ -60,6 +65,10 @@ public class User {
         accomplishments = new ArrayList<>();
         hobbiesOrInterests = new ArrayList<>();
         resumes = new ArrayList<>();
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getId() {
@@ -143,6 +152,46 @@ public class User {
         }
 
         resumes.add(resume);
+    }
+
+    public String getGreScore() {
+        return greScore;
+    }
+
+    public String getGmatScore() {
+        return gmatScore;
+    }
+
+    public String getTargetGreScore() {
+        return targetGreScore;
+    }
+
+    public String getTargetGmatScore() {
+        return targetGmatScore;
+    }
+
+    public String getGpa() {
+        return gpa;
+    }
+
+    public void setGpa(String gpa) {
+        this.gpa = gpa;
+    }
+
+    public void setGreScore(String greScore) {
+        this.greScore = greScore;
+    }
+
+    public void setGmatScore(String gmatScore) {
+        this.gmatScore = gmatScore;
+    }
+
+    public void setTargetGreScore(String targetGreScore) {
+        this.targetGreScore = targetGreScore;
+    }
+
+    public void setTargetGmatScore(String targetGmatScore) {
+        this.targetGmatScore = targetGmatScore;
     }
 
     public void addActivity(String message) {

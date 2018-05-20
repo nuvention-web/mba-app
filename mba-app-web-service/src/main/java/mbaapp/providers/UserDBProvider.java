@@ -3,7 +3,6 @@ package mbaapp.providers;
 import mbaapp.core.*;
 import mbaapp.requests.*;
 import org.json.JSONObject;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
@@ -90,5 +89,12 @@ public interface UserDBProvider {
 
     public void addReviewDraft(User user, UserSchool userSchool, MultipartFile file, ReviewComments reviewComments) throws Exception;
 
+    public void addScores(User user, ScoreRequest userDBProvider) throws Exception;
+
+    public JSONObject getScores(User user) throws Exception;
+
+    public void forgotPassword(User user) throws Exception;
+
+    public void changePassword(User user, ChangePasswordRequest request) throws Exception;
 
 }

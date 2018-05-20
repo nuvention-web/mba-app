@@ -1,12 +1,11 @@
 package mbaapp.endpoints;
 
 import io.swagger.annotations.ApiOperation;
-import mbaapp.requests.AddRecommendersRequest;
-import mbaapp.requests.CreateUserRequest;
-import mbaapp.requests.AddSchoolsRequest;
+import mbaapp.requests.*;
 import mbaapp.core.User;
 import mbaapp.providers.SchoolInfoDBProvider;
 import mbaapp.providers.UserDBProvider;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -198,5 +197,93 @@ public class UsersEndpoint extends EndpointBase{
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+
+    @PostMapping("/{userEmail}/scores")
+    @CrossOrigin
+    @ApiOperation(value = "Add scores for a user ")
+    public ResponseEntity<String> addScore(@RequestBody ScoreRequest scoreRequest, @PathVariable String userEmail) {
+
+        try {
+
+            if(runValidations(userEmail, null)!=null){
+                return runValidations(userEmail, null);
+            }
+
+            User user = userDBProvider.getUser(userEmail);
+            if (user == null) {
+                return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
+            }
+
+            userDBProvider.addScores(user, scoreRequest);
+
+            return new ResponseEntity<>("Added scores.", HttpStatus.OK);
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @GetMapping(value =  "/{userEmail}/scores", produces = "application/json")
+    @CrossOrigin
+    @ApiOperation(value = "Get scores for a user. ")
+    public ResponseEntity<String> getScores(@PathVariable String userEmail) {
+
+        try {
+
+            if(runValidations(userEmail, null)!=null){
+                return runValidations(userEmail, null);
+            }
+
+            User user = userDBProvider.getUser(userEmail);
+            if (user == null) {
+                return new ResponseEntity<String>("User does not exist!", HttpStatus.NOT_ACCEPTABLE);
+            }
+
+            JSONObject scoresJSON = userDBProvider.getScores(user);
+
+            return new ResponseEntity<>(scoresJSON.toString(), HttpStatus.OK);
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @PostMapping("/{userEmail}/changePassword")
+    @CrossOrigin
+    @ApiOperation(value = "Change password")
+    public ResponseEntity<String> forgotPassword(@RequestBody ChangePasswordRequest request,
+                                                 @PathVariable String userEmail) {
+
+        try {
+            User user = userDBProvider.getUserByEmail(userEmail);
+
+            if (user == null) {
+                return new ResponseEntity<>("Did not find an account with this email", HttpStatus.BAD_REQUEST);
+
+            }
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            if(!bCryptPasswordEncoder.matches(java.nio.CharBuffer.wrap(request.getCurrentPassword()), user.getPassword())) {
+                return new ResponseEntity<>("The password supplied does not match with the current password", HttpStatus.BAD_REQUEST);
+            }
+
+            userDBProvider.changePassword(user, request);
+
+            return new ResponseEntity<>("Changed password", HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+
+    }
+
+
+
 
 }

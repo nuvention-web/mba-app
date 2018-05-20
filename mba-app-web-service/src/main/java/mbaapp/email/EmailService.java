@@ -52,13 +52,6 @@ public class EmailService {
         String subject = MessageFormat.format("{0} has sent you a draft of his {1} essay to review", user.getName(),
                 userSchool.getShortName());
 
-//        String text = MessageFormat.format("Hi {0},<p> You have received an essay from {1} to review. Please use this " +
-//                        "<a href=\"http://myapp.mba/mba/users/{2}/school/{3}/essay/{4}/draft/{5}/review/{6}\">personalized link</a></p>" +
-//                        " to review the essay and leave some feedback. The essay is also included as an attachment to this email. <p>" +
-//                        "<p>Thank you! <p> The MyApp.MBA team<p>",
-//                draftRequest.getName(), user.getName(), user.getEmail(), userSchool.getShortName(), essayID, draftID, reviewID);
-
-
         Resource resource = new ClassPathResource("email/draft.html");
         InputStream resourceInputStream = resource.getInputStream();
         String html = IOUtils.toString(resourceInputStream, StandardCharsets.UTF_8.name());
@@ -83,9 +76,30 @@ public class EmailService {
     }
 
 
+    public void sendForgotPasswordEmail(JavaMailSender emailSender, User user, String password) throws Exception {
 
+        String subject = "Temporary password for your myapp.MBA account";
 
-    public void sentActivationEmail(JavaMailSender emailSender, InactiveUser user) throws Exception{
+        MimeMessage message = emailSender.createMimeMessage();
+
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(user.getEmail());
+        helper.setSubject(subject);
+        Resource resource = new ClassPathResource("email/verify.html");
+        InputStream resourceInputStream = resource.getInputStream();
+        String html = IOUtils.toString(resourceInputStream, StandardCharsets.UTF_8.name());
+        html = html.replace("{replaceName}", user.getName().split(" ")[0]);
+        html = html.replace("{replaceCode}", "Temporary Password: " + password);
+        html = html.replace("{replaceText}","Please use this temporary password to login to your account.");
+        html = html.replace("{buttonText}","Login");
+
+        helper.setText(html, true);
+        helper.setFrom("mail@mail.myapp.mba", "myapp.MBA");
+        emailSender.send(message);
+
+    }
+
+    public void sendActivationEmail(JavaMailSender emailSender, InactiveUser user) throws Exception{
 
         String subject = "Please verify your myapp.MBA account";
 
@@ -104,14 +118,14 @@ public class EmailService {
         InputStream resourceInputStream = resource.getInputStream();
         String html = IOUtils.toString(resourceInputStream, StandardCharsets.UTF_8.name());
         html = html.replace("{replaceName}", user.getName().split(" ")[0]);
-        html = html.replace("{replaceCode}", user.getCode());
+        html = html.replace("{replaceCode}", "Verification Code: " + user.getCode());
+        html = html.replace("{replaceText}","Please use the following verification code to verify your account");
+        html = html.replace("{buttonText}","Verify Account");
 
         helper.setText(html, true);
         helper.setFrom("mail@mail.myapp.mba", "myapp.MBA");
         emailSender.send(message);
 
-
     }
-
 
 }

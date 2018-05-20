@@ -5,15 +5,18 @@ import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSFile;
 import mbaapp.core.*;
+import mbaapp.email.EmailService;
 import mbaapp.requests.*;
 import mbaapp.providers.UserDBProvider;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -43,6 +45,11 @@ public class MongoUserDBProvider implements UserDBProvider {
     @Autowired
     Keywords keywords;
 
+    @Autowired
+    EmailService emailService;
+
+    @Autowired
+    public JavaMailSender emailSender;
 
     @Override
     public User getUser(String email) {
@@ -328,12 +335,82 @@ public class MongoUserDBProvider implements UserDBProvider {
 
 
     public void addReviewDraft(User user, UserSchool userSchool, MultipartFile file, ReviewComments reviewComments) throws Exception {
-
         String gridFSID = addFileToMongo(file);
         reviewComments.setUploadID(gridFSID);
         userRepository.save(user);
 
     }
+
+
+    public void addScores(User user, ScoreRequest scoreRequest) throws Exception {
+
+        if(scoreRequest.getGmatScore()!=null) {
+            user.setGmatScore(scoreRequest.getGmatScore());
+        }
+
+        if(scoreRequest.getTargetGmatScore()!=null) {
+            user.setTargetGmatScore(scoreRequest.getTargetGmatScore());
+        }
+
+        if(scoreRequest.getGreScore()!=null) {
+            user.setGreScore(scoreRequest.getGreScore());
+        }
+
+        if(scoreRequest.getTargetGreScore()!=null) {
+            user.setTargetGreScore(scoreRequest.getTargetGreScore());
+        }
+
+        if(scoreRequest.getGpa()!=null) {
+            user.setGpa(scoreRequest.getGpa());
+        }
+
+        saveUser(user);
+
+    }
+
+    public JSONObject getScores(User user) throws Exception {
+
+        JSONObject schoolsInfoJSON = new JSONObject();
+        List<UserSchool> userSchools = user.getSchools();
+
+        for(UserSchool school : userSchools) {
+            SchoolInfo info =  schoolInfoRepository.findByShortName(school.getShortName());
+            JSONObject schoolInfoJSON = new JSONObject();
+            schoolInfoJSON.put("AvgGMAT", info.getAvgGMAT());
+            schoolInfoJSON.put("MedianGMAT", info.getMedianGMAT());
+            schoolInfoJSON.put("AvgGPA", info.getAvgGPA());
+            schoolsInfoJSON.put(info.getName(), schoolInfoJSON);
+        }
+
+        JSONObject userJSON = new JSONObject();
+        userJSON.put("gpa", user.getGpa());
+        userJSON.put("gmatScore", user.getGmatScore());
+        userJSON.put("targetGmatScore", user.getTargetGmatScore());
+        userJSON.put("greScore", user.getTargetGreScore());
+        userJSON.put("targetGreScore", user.getTargetGreScore());
+        userJSON.put("schools", schoolsInfoJSON);
+
+        return userJSON;
+    }
+
+
+    public void forgotPassword(User user) throws Exception {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()-_=+[{]}\\|;:,<.>/?";
+        String tempPassword = RandomStringUtils.random( 10, characters );
+
+        emailService.sendForgotPasswordEmail(emailSender, user, tempPassword);
+        String hashedPassword = new BCryptPasswordEncoder().encode(java.nio.CharBuffer.wrap(tempPassword));
+        user.setPassword(hashedPassword);
+        saveUser(user);
+
+    }
+
+    public void changePassword(User user, ChangePasswordRequest request) throws Exception {
+        String hashedPassword = new BCryptPasswordEncoder().encode(java.nio.CharBuffer.wrap(request.getNewPassword()));
+        user.setPassword(hashedPassword);
+        saveUser(user);
+    }
+
 
 
     private String addFileToMongo(MultipartFile file) throws Exception{

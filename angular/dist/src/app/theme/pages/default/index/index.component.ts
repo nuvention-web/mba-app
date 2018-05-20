@@ -5,7 +5,6 @@ import { SchoolsService } from '../../../../_services/schools.service';
 import { forEach } from '@angular/router/src/utils/collection';
 import { Response } from '@angular/http';
 
-let infoDir = '../../../../../../assets/app/media/img/schools/schools.csv';
 @Component({
     selector: "app-index",
     templateUrl: "./index.component.html",
@@ -14,8 +13,8 @@ let infoDir = '../../../../../../assets/app/media/img/schools/schools.csv';
 })
 export class IndexComponent implements OnInit, AfterViewInit {
 
-    schools: any = undefined;
-    allSchools: any = undefined;
+    schools: any;
+    allSchools: any;
     schoolsInfo: any = undefined;
     chosenValue: string;
     chosenDeadline: string;
@@ -24,7 +23,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
     constructor(private _script: ScriptLoaderService, private _schools:SchoolsService) {
         this.getSchools();
         this.getSchoolsInfo();
-        this._schools.getAllSchools().subscribe(d => {this.allSchools = d;});
+        this._schools.getAllSchools().subscribe(d => {this.allSchools = d; console.log(d)});
 
     }
 
@@ -45,8 +44,9 @@ export class IndexComponent implements OnInit, AfterViewInit {
     }
 
     getSchools() {
-        this._schools.getSchools().subscribe(d => this.schools = d);
+        this._schools.getSchools().subscribe(d => {this.schools = d;});
     }
+
 
     deleteSchool(event, index, schoolName: string) {
         event.stopPropagation();
@@ -71,22 +71,23 @@ export class IndexComponent implements OnInit, AfterViewInit {
     }
 
     addSchool() {
-        for (var i = 0; i < this.allSchools.length; i++) {
-            if (this.allSchools[i].name === this.chosenValue) {
-                var name = this.allSchools[i].shortName;
-                this._schools.userAddSchool(name).subscribe(
-                    (response:Response) => {
-                        this.getSchools();
-                        this._schools.getSchoolDetails(name).subscribe(d => {
-                           d.deadline = this.chosenValue;
-                           this._schools.updateSchoolDetails(name, d);
-                        });
-                    }, (error:Response) => {
-                    }
-                );
-                break;
-            }
+        if (this.chosenValue === "blank") {
+            return;
         }
+        let name = this.chosenValue;
+        this._schools.userAddSchool(name).subscribe(
+            (response: Response) => {
+                this.getSchools();
+                this._schools.getSchoolDetails(name).subscribe(d => {
+                    d.deadline = this.chosenDeadline;
+                    this._schools.updateSchoolDetails(name, d);
+                });
+            }, (error: Response) => {
+            }
+        );
+        this.chosenValue = "blank";
     }
+
+
 
 }

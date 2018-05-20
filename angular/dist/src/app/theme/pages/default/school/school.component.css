@@ -1,3 +1,7 @@
+.inline-edit { text-decoration: none; border-bottom: none 0;}
+.inline-no-edit { text-decoration: none; border-bottom: none 0;}
+.inline-edit-empty{ text-decoration: none; border-bottom: none 0;}
+
 .school-basic-info * {
     color: white;
 }
@@ -7,13 +11,13 @@
 .info-end {
     padding-bottom: 10px;
 }
-h2 {
+.school-info-title {
     position: relative;
     margin-bottom: 40px;
     margin-left: 20px;
     font-size: 35px;
 }
-p {
+.school-info-content {
     position: relative;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -41,6 +45,7 @@ p {
     font-variant: normal;
     font-weight: bolder;
     line-height: 30px;
+    word-break: break-all;
 }
 
 .overview {

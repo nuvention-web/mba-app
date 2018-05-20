@@ -136,10 +136,10 @@
                                 <div class="m-stack__item m-stack__item--fluid">
                                     <div class="school-basic-info" [style.background-image]="schoolInfo.Picture" style="background-size: 100% 100%">
                                         <div class="info-start"></div>
-                                        <h2><b>{{schoolInfo.Rank.split("Tie")[0]}}</b><span style="display:inline-block; width: 25px;"></span><b>{{schoolInfo.Schoolname}}</b></h2>
-                                        <p>{{schoolInfo.Address}}</p>
-                                        <p>{{schoolInfo.Phone}}</p>
-                                        <p>{{schoolInfo.Email}}</p>
+                                        <h2 class="school-info-title"><b>{{schoolInfo.Rank.split("Tie")[0]}}</b><span style="display:inline-block; width: 25px;"></span><b>{{schoolInfo.Schoolname}}</b></h2>
+                                        <p class="school-info-content">{{schoolInfo.Address}}</p>
+                                        <p class="school-info-content">{{schoolInfo.Phone}}</p>
+                                        <p class="school-info-content">{{schoolInfo.Email}}</p>
                                         <div class="info-end"></div>
                                     </div>
                                 </div>
@@ -147,11 +147,11 @@
                                     <div class="m-demo__preview">
                                         <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
                                             <div class="m-stack__item application-information" style="width: 130%">
-                                                <div class="m-portlet m-portlet--creative m-portlet--bordered-semi" style="height: 415px">
+                                                <div class="m-portlet m-portlet--creative m-portlet--bordered-semi">
                                                     <div class="m-portlet__head">
                                                         <div class="m-portlet__head-caption">
                                                             <div class="m-portlet__head-title">
-                                                                <h2 class="m-portlet__head-label m-portlet__head-label--primary">
+                                                                <h2 class="m-portlet__head-label m-portlet__head-label--primary school-info-title">
                                                                     <span class="school-info-label">Application information</span>
                                                                 </h2>
                                                             </div>
@@ -164,7 +164,7 @@
                                                                    <span>Tuition:</span>
                                                                </div>
                                                                <div class="col-8" align="right">
-                                                                   <p *ngFor="let t of schoolInfo.Tuition.split('; ')"><b>{{t}}</b></p>
+                                                                   <p class="school-info-content" *ngFor="let t of schoolInfo.Tuition.split('; ')"><b>{{t}}</b></p>
                                                                </div>
                                                            </div>
 
@@ -213,7 +213,7 @@
                                                                    <span>Application Site:</span>
                                                                </div>
                                                                <div class="col-8" align="right">
-                                                                   <b>{{schoolInfo.Site}}</b>
+                                                                  <p class="school-info-content"><b>{{schoolInfo.Site}}</b>
                                                                </div>
                                                            </div>
                                                        </div>
@@ -221,11 +221,11 @@
                                                 </div>
                                             </div>
                                             <div class="m-stack__item m-stack__item--fluid overview">
-                                                <div class="m-portlet m-portlet--creative m-portlet--bordered-semi" style="height: 415px">
+                                                <div class="m-portlet m-portlet--creative m-portlet--bordered-semi">
                                                     <div class="m-portlet__head">
                                                         <div class="m-portlet__head-caption">
                                                             <div class="m-portlet__head-title">
-                                                                <h2 class="m-portlet__head-label m-portlet__head-label--primary">
+                                                                <h2 class="m-portlet__head-label m-portlet__head-label--primary school-info-title">
                                                                     <span class="school-info-label">Overview</span>
                                                                 </h2>
                                                             </div>

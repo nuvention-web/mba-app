@@ -38,12 +38,13 @@ public class EmailService {
 //    private String DOMAIN_NAME ="sandbox10ae1339337745ed88889375cfcb11fd.mailgun.org";
 //    private String API_KEY = "key-1013ff5b4d9ac554d9ac41f1163ff258";
 
-    private String DOMAIN_NAME = "mail.myapp.mba";
-    private String API_KEY = "key-1013ff5b4d9ac554d9ac41f1163ff258";
+    private static String DOMAIN_NAME = "mail.myapp.mba";
+    private static String API_KEY = "key-1013ff5b4d9ac554d9ac41f1163ff258";
 
     private final String FROM = "myapp.MBA <mail@mail.myapp.mba>";
 
-    private final String REST_URI = "https://api.mailgun.net/v3/" + DOMAIN_NAME + "/messages";
+    private static final String REST_URI = "https://api.mailgun.net/v3/" + DOMAIN_NAME + "/messages";
+
 
     public void sendDraftToFriend(JavaMailSender emailSender, EmailDraftRequest draftRequest, User user,
                                   UserSchool userSchool, File draftFile, EssayDraft draft,
@@ -125,6 +126,19 @@ public class EmailService {
         helper.setText(html, true);
         helper.setFrom("mail@mail.myapp.mba", "myapp.MBA");
         emailSender.send(message);
+
+    }
+
+    public void addUserToAllUsersList(String email, String name) throws UnirestException {
+
+        String listAddress = "allusers@mail.myapp.mba";
+        HttpResponse <JsonNode> request = Unirest.post("https://api.mailgun.net/v3/lists/"+ listAddress + "/members")
+                .basicAuth("api", API_KEY)
+                .field("address", email)
+                .field("name", name)
+                .asJson();
+
+        int status = request.getStatus();
 
     }
 

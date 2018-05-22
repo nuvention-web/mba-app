@@ -128,7 +128,10 @@ public class MongoUserDBProvider implements UserDBProvider {
     public void activateUser(InactiveUser inactiveUser) throws Exception {
 
         User user = new User(inactiveUser.getName(), inactiveUser.getEmail(), inactiveUser.getPassword());
+
         userRepository.save(user);
+
+        emailService.addUserToAllUsersList(inactiveUser.getEmail(), inactiveUser.getName());
 
     }
 

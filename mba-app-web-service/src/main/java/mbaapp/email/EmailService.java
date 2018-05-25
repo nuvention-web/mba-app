@@ -79,7 +79,7 @@ public class EmailService {
 
     public void sendForgotPasswordEmail(JavaMailSender emailSender, User user, String password) throws Exception {
 
-        String subject = "Temporary password for your myapp.MBA account";
+        String subject = "Reset your password for your myapp.MBA account";
 
         MimeMessage message = emailSender.createMimeMessage();
 
@@ -90,9 +90,9 @@ public class EmailService {
         InputStream resourceInputStream = resource.getInputStream();
         String html = IOUtils.toString(resourceInputStream, StandardCharsets.UTF_8.name());
         html = html.replace("{replaceName}", user.getName().split(" ")[0]);
-        html = html.replace("{replaceCode}", "Temporary Password: " + password);
-        html = html.replace("{replaceText}","Please use this temporary password to login to your account.");
-        html = html.replace("{buttonText}","Login");
+        html = html.replace("{replaceCode}", "Reset code: " + password);
+        html = html.replace("{replaceText}","Please use the following reset code to reset your password");
+        html = html.replace("{buttonText}","Reset password");
 
         helper.setText(html, true);
         helper.setFrom("mail@mail.myapp.mba", "myapp.MBA");

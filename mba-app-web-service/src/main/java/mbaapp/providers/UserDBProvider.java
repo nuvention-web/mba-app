@@ -95,6 +95,6 @@ public interface UserDBProvider {
 
     public void forgotPassword(User user) throws Exception;
 
-    public void changePassword(User user, ChangePasswordRequest request) throws Exception;
+    public void changePassword(User user, char[] password, boolean resetPasswordResetCode) throws Exception;
 
 }

@@ -39048,6 +39048,10 @@ select.m-select2 {
 .m-login.m-login--1.m-login--signin .m-login__verify {
     display: none }
 
+.m-login.m-login--1.m-login--signin .m-login__reset-password {
+    display: none;
+}
+
 .m-login.m-login--1.m-login--signup .m-login__signup {
     display: block; }
 
@@ -39063,6 +39067,10 @@ select.m-select2 {
 .m-login.m-login--1.m-login--signup .m-login__verify {
     display: none; }
 
+.m-login.m-login--1.m-login--signup .m-login__reset-password {
+    display: none;
+}
+
 .m-login.m-login--1.m-login--forget-password .m-login__signup {
     display: none; }
 
@@ -39075,6 +39083,10 @@ select.m-select2 {
 .m-login.m-login--1.m-login--forget-password .m-login__verify {
     display: none; }
 
+.m-login.m-login--1.m-login--forget-password .m-login__reset-password {
+    display: none;
+}
+
 .m-login.m-login--1.m-login--verify .m-login__signup {
     display: none; }
 
@@ -39086,6 +39098,27 @@ select.m-select2 {
 
 .m-login.m-login--1.m-login--verify .m-login__verify {
     display: block; }
+
+.m-login.m-login--1.m-login--verify .m-login__reset-password {
+    display: none;
+}
+
+.m-login.m-login--1.m-login--reset-password .m-login__signup {
+    display: none; }
+
+.m-login.m-login--1.m-login--reset-password .m-login__signin {
+    display: none; }
+
+.m-login.m-login--1.m-login--reset-password .m-login__forget-password {
+    display: none; }
+
+.m-login.m-login--1.m-login--reset-password .m-login__verify {
+    display: none; }
+
+.m-login.m-login--1.m-login--reset-password .m-login__reset-password {
+    display: block;
+}
+
 
 @media (min-width: 993px) and (max-width: 1200px) {
     .m-login.m-login--1 .m-login__aside {

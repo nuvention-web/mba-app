@@ -398,19 +398,21 @@ public class MongoUserDBProvider implements UserDBProvider {
 
 
     public void forgotPassword(User user) throws Exception {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()-_=+[{]}\\|;:,<.>/?";
-        String tempPassword = RandomStringUtils.random( 10, characters );
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String resetCode = RandomStringUtils.random( 10, characters );
 
-        emailService.sendForgotPasswordEmail(emailSender, user, tempPassword);
-        String hashedPassword = new BCryptPasswordEncoder().encode(java.nio.CharBuffer.wrap(tempPassword));
-        user.setPassword(hashedPassword);
+        emailService.sendForgotPasswordEmail(emailSender, user, resetCode);
+        user.setPasswordResetCode(resetCode);
         saveUser(user);
 
     }
 
-    public void changePassword(User user, ChangePasswordRequest request) throws Exception {
-        String hashedPassword = new BCryptPasswordEncoder().encode(java.nio.CharBuffer.wrap(request.getNewPassword()));
+    public void changePassword(User user, char[] password, boolean resetPasswordResetCode) throws Exception {
+        String hashedPassword = new BCryptPasswordEncoder().encode(java.nio.CharBuffer.wrap(password));
         user.setPassword(hashedPassword);
+        if(resetPasswordResetCode) {
+            user.setPasswordResetCode("");
+        }
         saveUser(user);
     }
 

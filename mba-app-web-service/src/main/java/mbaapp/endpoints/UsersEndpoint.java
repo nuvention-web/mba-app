@@ -271,7 +271,7 @@ public class UsersEndpoint extends EndpointBase{
                 return new ResponseEntity<>("The password supplied does not match with the current password", HttpStatus.BAD_REQUEST);
             }
 
-            userDBProvider.changePassword(user, request);
+            userDBProvider.changePassword(user, request.getNewPassword().toCharArray(), false);
 
             return new ResponseEntity<>("Changed password", HttpStatus.CREATED);
 

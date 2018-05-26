@@ -7,10 +7,7 @@ import mbaapp.email.EmailService;
 import mbaapp.providers.InactiveUserDBProvider;
 import mbaapp.providers.SchoolInfoDBProvider;
 import mbaapp.providers.UserDBProvider;
-import mbaapp.requests.ActivateUserRequest;
-import mbaapp.requests.CreateUserRequest;
-import mbaapp.requests.ForgotPasswordRequest;
-import mbaapp.requests.ChangePasswordRequest;
+import mbaapp.requests.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -134,6 +131,35 @@ public class AccountEndpoint {
 
 
     }
+
+    @PostMapping("/resetPassword")
+    @CrossOrigin
+    @ApiOperation(value = "Forgot password")
+    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request) {
+
+        try {
+            User user = userDBProvider.getUserByEmail(request.getEmail());
+
+            if (user == null) {
+                return new ResponseEntity<>("Did not find an account with this email", HttpStatus.BAD_REQUEST);
+
+            }
+
+            if (user.getPasswordResetCode() != null && !request.getResetCode().equalsIgnoreCase(user.getPasswordResetCode())) {
+                return new ResponseEntity<>("The reset code does not match the reset code that was sent to your email. Please check your email for the reset code.", HttpStatus.BAD_REQUEST);
+            }
+            userDBProvider.changePassword(user, request.getNewPassword().toCharArray(), true);
+
+            return new ResponseEntity<>("Password reset", HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+
+    }
+
 
     @PostMapping("/activate")
     @CrossOrigin

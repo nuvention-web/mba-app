@@ -43,6 +43,7 @@ public class User {
     public String targetGreScore;
     public String targetGmatScore;
     public String gpa;
+    public String passwordResetCode;
 
 
     public String whatDoYouBring;
@@ -69,6 +70,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setPasswordResetCode(String code){
+        this.passwordResetCode = code;
+    }
+
+    public String getPasswordResetCode() {
+        return this.passwordResetCode;
     }
 
     public String getId() {

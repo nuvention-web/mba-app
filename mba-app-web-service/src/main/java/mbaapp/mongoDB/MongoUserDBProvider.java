@@ -25,6 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -173,10 +174,10 @@ public class MongoUserDBProvider implements UserDBProvider {
                 school.put("round2_deadline", schoolInfo.getRound2Deadline());
                 school.put("round3_deadline", schoolInfo.getRound3Deadline());
                 school.put("round4_deadline", schoolInfo.getRound4Deadline());
-                school.put("medianGMAT", schoolInfo.getMedianGMAT());
+//                school.put("medianGMAT", schoolInfo.getMedianGMAT());
                 school.put("avgGMAT", schoolInfo.getAvgGMAT());
                 school.put("avgGPA", schoolInfo.getAvgGPA());
-                school.put("acceptanceRate", schoolInfo.getAcceptanceRate());
+//                school.put("acceptanceRate", schoolInfo.getAcceptanceRate());
                 school.put("logoURL", schoolInfo.getLogoURL());
                 int numRequiredEssays = 0;
                 for(SchoolInfoEssay essay : schoolInfo.getEssays()) {
@@ -380,7 +381,7 @@ public class MongoUserDBProvider implements UserDBProvider {
             SchoolInfo info =  schoolInfoRepository.findByShortName(school.getShortName());
             JSONObject schoolInfoJSON = new JSONObject();
             schoolInfoJSON.put("AvgGMAT", info.getAvgGMAT());
-            schoolInfoJSON.put("MedianGMAT", info.getMedianGMAT());
+//            schoolInfoJSON.put("MedianGMAT", info.getMedianGMAT());
             schoolInfoJSON.put("AvgGPA", info.getAvgGPA());
             schoolsInfoJSON.put(info.getName(), schoolInfoJSON);
         }
@@ -656,8 +657,18 @@ public class MongoUserDBProvider implements UserDBProvider {
         userSchoolJSON.put("logoURL", schoolInfo.getLogoURL());
         userSchoolJSON.put("name", schoolInfo.getName());
         userSchoolJSON.put("location", schoolInfo.getLocation());
-        return userSchoolJSON;
 
+        JSONObject schoolJSON = schoolInfo.toJSON();
+        Iterator<?> keys = schoolJSON.keys();
+
+        while(keys.hasNext()){
+            String key = (String)keys.next();
+            if(!key.equalsIgnoreCase("essays")){
+                userSchoolJSON.put(key, schoolJSON.get(key));
+            }
+        }
+
+        return userSchoolJSON;
     }
 
 

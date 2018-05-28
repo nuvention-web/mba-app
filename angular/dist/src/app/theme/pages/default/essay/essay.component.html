@@ -70,8 +70,7 @@
                     </div>
                     <div class="m-portlet__body">
                         <div class="tab-content">
-                            <div class="tab-pane active show" id="m_tabs_6_1" role="tabpanel">
-                                {{ essay.prompt }}
+                            <div class="tab-pane active show" id="m_tabs_6_1" role="tabpanel" [innerHTML]="essay.prompt">
                             </div>
                             <div class="tab-pane show" id="m_tabs_6_2" role="tabpanel">
                                 <div class="row">

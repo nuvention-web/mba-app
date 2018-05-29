@@ -17,6 +17,7 @@ const schoolImageDir = "../../assets/app/media/img/schools/";
 export class SchoolComponent implements OnInit {
     school = "";
     schoolDetails: any = [];
+    essays = [];
     schoolInfo: any = null;
 
     constructor(private route: ActivatedRoute, private _script: ScriptLoaderService, private _schools:SchoolsService, private _sanitizer: DomSanitizer) {

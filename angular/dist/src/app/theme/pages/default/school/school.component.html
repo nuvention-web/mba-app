@@ -181,8 +181,20 @@
                 </div>
             </div>
             <div class="tab-pane" id="m_tabs_1_2" role="tabpanel">
-                <div class="row">
-                    <div *ngFor="let essay of schoolDetails.essays" class="col-xl-4 col-md-6">
+                <div class="row align-items-center">
+                    <h5>Essay prompts for the 2018-2019 application cycle:</h5><br><br><br>
+                </div>
+                <div [hidden]="essays.length != 0" class="my-5 text-center">
+                    <div class="m-portlet m-portlet--mobile">
+                        <div class="m-portlet__body">
+                        <strong><p>{{schoolDetails.name}} is yet to release the essay prompts for the 2018-2019 application cycle.
+                            We will notify you when the essay prompts have been released.</p>
+                        </strong>
+                        </div>
+                    </div>
+                </div>
+                <div [hidden]="essays.length == 0" class="row">
+                    <div *ngFor="let essay of essays" class="col-xl-4 col-md-6">
                         <div class="m-portlet show-hand" routerLink="/school/{{school}}/essay/{{ essay.essayID }}">
                             <!--<div class="m-portlet__body">-->
                                 <!--{{ essay.prompt }}-->
@@ -193,6 +205,16 @@
                 </div>
             </div>
             <div class="tab-pane" id="m_tabs_1_3" role="tabpanel">
+                <div [hidden]="schoolDetails.notes != 0" class="my-5 text-center">
+                    <div class="m-portlet m-portlet--mobile">
+                        <div class="m-portlet__body">
+                            <p><strong>Start adding your notes for {{schoolDetails.name}}!</strong></p>
+                            <p>Have you spoken to any current students, alumni or admissions officers at {{schoolDetails.shortName}}? Are there any specific programs
+                                or courses at {{schoolDetails.shortName}} that you are interested in? Make sure to keep notes of the research you are doing, and use it in your
+                                essays and interviews to demonstrate your interest in {{schoolDetails.shortName}}.</p>
+                        </div>
+                    </div>
+                </div>
                 <div class="row mt-3">
                     <div *ngFor="let note of schoolDetails.notes; let i = index;" class="col-xl-4">
                         <div class="m-portlet">
@@ -229,7 +251,7 @@
                             <span>
                                 <i class="la la-plus"></i>
                                 <span>
-                                    New Note
+                                    Add Note
                                 </span>
                             </span>
                         </button>

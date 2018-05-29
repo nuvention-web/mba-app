@@ -194,32 +194,5 @@ public class AccountEndpoint {
     }
 
 
-//    @PostMapping("/login")
-//    @CrossOrigin
-//    @ApiOperation(value = "Create a new user")
-//    public ResponseEntity<String> loginUser(@RequestBody LoginRequest loginRequest) {
-//        try {
-//
-//            User user = userDBProvider.getUserByEmail(loginRequest.getEmail());
-//
-//            if (user == null) {
-//                return new ResponseEntity<String>("Did not find the user", HttpStatus.NOT_FOUND);
-//            }
-//
-//
-//            if(userDBProvider.authenticateUser(user, loginRequest)){
-//                return new ResponseEntity<>("Accepted", HttpStatus.OK);
-//            }
-//
-//            else return new ResponseEntity<>("Incorrect credentials", HttpStatus.UNAUTHORIZED);
-//
-//
-//
-//        } catch (Exception e) {
-//            logger.log(Level.SEVERE, e.getMessage(), e);
-//            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//        }
-//    }
-
 
 }

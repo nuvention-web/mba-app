@@ -17,6 +17,7 @@ const schoolImageDir = "../../assets/app/media/img/schools/";
 export class SchoolComponent implements OnInit {
     school = "";
     schoolDetails: any = [];
+    essays = [];
     schoolInfo: any = null;
 
     constructor(private route: ActivatedRoute, private _script: ScriptLoaderService, private _schools:SchoolsService, private _sanitizer: DomSanitizer) {
@@ -24,7 +25,7 @@ export class SchoolComponent implements OnInit {
             this.school = params.school
 
         );
-        this._schools.getSchoolDetails(this.school).subscribe(d => {this.schoolDetails = d; console.log(d)});
+        this._schools.getSchoolDetails(this.school).subscribe(d => {this.schoolDetails = d; this.essays = d.essays; console.log(d)});
         this._schools.getSchoolInfos().subscribe(d => this.getSchoolInfo(d));
     }
 

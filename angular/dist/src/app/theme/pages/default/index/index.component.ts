@@ -30,17 +30,17 @@ export class IndexComponent implements OnInit, AfterViewInit {
     getSchoolsInfo() {
         let i = 0;
         let j = 1;
-        this._schools.getSchoolInfos().subscribe(d => {
-            this.schoolsInfo = d;
-            for (i = 0; i < this.schoolsInfo.length; i++) {
-                j = 1;
-                this.schoolsInfo[i]['Deadline'] = [];
-                while (this.schoolsInfo[i]['Deadline' + j] != null && this.schoolsInfo[i]['Deadline' + j] !== '') {
-                    this.schoolsInfo[i]['Deadline'].push(this.schoolsInfo[i]['Deadline' + j]);
-                    j++;
-                }
-            }
-        });
+        // this._schools.getSchoolInfos().subscribe(d => {
+        //     this.schoolsInfo = d;
+        //     for (i = 0; i < this.schoolsInfo.length; i++) {
+        //         j = 1;
+        //         this.schoolsInfo[i]['Deadline'] = [];
+        //         while (this.schoolsInfo[i]['Deadline' + j] != null && this.schoolsInfo[i]['Deadline' + j] !== '') {
+        //             this.schoolsInfo[i]['Deadline'].push(this.schoolsInfo[i]['Deadline' + j]);
+        //             j++;
+        //         }
+        //     }
+        // });
     }
 
     getSchools() {

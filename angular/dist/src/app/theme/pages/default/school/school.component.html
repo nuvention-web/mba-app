@@ -55,7 +55,7 @@
                                         <!--<p class="school-info-content">{{schoolInfo.email}}</p>-->
                                         <!--<div class="info-end"></div>-->
                                     <!--</div>-->
-                                    <img src="{{schoolInfo.pictureURL}}" style="width: 100%; height: 80%;">
+                                    <img src="{{schoolInfo.pictureURL}}" style="width: 100%; height: 150px;">
                                 </div>
 
                                 <div class="m-stack__item m-stack__item--fluid">
@@ -71,9 +71,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="m-portlet__body overview">
-                                                    <h2 class="school-info-title"> {{schoolInfo.name}}  </h2>
-                                                    <p  class="school-info-content">{{schoolInfo.info}}</p>
+                                                <div class="m-portlet__body">
+                                                    {{schoolInfo.info}}
                                                 </div>
                                             </div>
                                         </div>
@@ -92,7 +91,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="m-portlet__body application-information">
+                                                <div class="m-portlet__body">
                                                     <div class="row">
                                                         <div class="col-4">
                                                             <span>Tuition:</span>
@@ -134,7 +133,7 @@
 
                                                     <div class="row">
                                                         <div class="col-4">
-                                                            <span>GPA: </span>
+                                                            <span>Average Undergraduate GPA: </span>
                                                         </div>
                                                         <div class="col-4"></div>
                                                         <div class="col-4" align="right">
@@ -144,7 +143,7 @@
 
                                                     <div class="row">
                                                         <div class="col-4">
-                                                            <span>Average GMAT: </span>
+                                                            <span>Average / Median GMAT: </span>
                                                         </div>
                                                         <div class="col-4"></div>
                                                         <div class="col-4" align="right">
@@ -155,7 +154,7 @@
 
                                                     <div class="row">
                                                         <div class="col-4">
-                                                            <span>Experience: </span>
+                                                            <span>Average Work Experience (in years): </span>
                                                         </div>
                                                         <div class="col-4"></div>
                                                         <div class="col-4" align="right">
@@ -190,7 +189,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="m-portlet__body overview">
+                                                <div class="m-portlet__body">
                                                     <!--<div class="container">-->
                                                         <!--<div class="info-start"></div>-->
                                                         <p>Address: {{schoolInfo.location}}</p>
@@ -213,7 +212,7 @@
                 <div class="row align-items-center">
                     <h5>Essay prompts for the 2018-2019 application cycle:</h5><br><br><br>
                 </div>
-                <div [hidden]="essays.length != 0" class="my-5 text-center">
+                <div [hidden]="schoolDetails.essays.length != 0" class="my-5 text-center">
                     <div class="m-portlet m-portlet--mobile">
                         <div class="m-portlet__body">
                         <strong><p>{{schoolDetails.name}} is yet to release the essay prompts for the 2018-2019 application cycle.
@@ -222,8 +221,8 @@
                         </div>
                     </div>
                 </div>
-                <div [hidden]="essays.length == 0" class="row">
-                    <div *ngFor="let essay of essays" class="col-xl-4 col-md-6">
+                <div [hidden]="schoolDetails.essays.length == 0" class="row">
+                    <div *ngFor="let essay of schoolDetails.essays" class="col-xl-4 col-md-6">
                         <div class="m-portlet show-hand" routerLink="/school/{{school}}/essay/{{ essay.essayID }}">
                             <!--<div class="m-portlet__body">-->
                                 <!--{{ essay.prompt }}-->

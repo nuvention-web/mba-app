@@ -1,9 +1,9 @@
 <div class="m-subheader">
     <div class="d-flex align-items-center">
         <div class="mr-auto">
-            <h3 class="m-subheader__title m-subheader__title--separator">
-                {{school}}
-            </h3>
+            <h1 class="m-subheader__title m-subheader__title--separator">
+                {{schoolDetails.name}}
+            </h1>
             <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                 <li class="m-nav__item m-nav__item--home">
                     <a routerLink="/" class="m-nav__link m-nav__link--icon">
@@ -18,36 +18,231 @@
 <div class="m-content">
     <div>
         <ul class="nav nav-tabs  m-tabs-line m-tabs-line--brand" role="tablist">
-            <li class="nav-item  m-tabs__item">
+            <li class="nav-item m-tabs__item">
                 <a class="nav-link m-tabs__link show-hand-light" data-toggle="tab" href="#m_tabs_1_1" ng-reflect-href="#m_tabs_2_1">
+                    <strong>Overview</strong>
+                </a>
+            </li>
+            <li class="nav-item  m-tabs__item">
+                <a class="nav-link m-tabs__link show-hand-light" data-toggle="tab" href="#m_tabs_1_2" ng-reflect-href="#m_tabs_2_2">
                     <strong>Essays</strong>
                 </a>
             </li>
             <li class="nav-item  m-tabs__item">
-                <a class="nav-link m-tabs__link show-hand-light" data-toggle="tab" href="#m_tabs_1_2"  ng-reflect-href="#m_tabs_2_2">
+                <a class="nav-link m-tabs__link show-hand-light" data-toggle="tab" href="#m_tabs_1_3"  ng-reflect-href="#m_tabs_2_3">
                     <strong>Notes</strong>
                 </a>
             </li>
-            <li class="nav-item  m-tabs__item">
-                <a class="nav-link m-tabs__link show-hand-light" data-toggle="tab" href="#m_tabs_1_3" ng-reflect-href="#m_tabs_2_3">
-                    <strong>Recommenders</strong>
-                </a>
-            </li>
+            <!--<li class="nav-item  m-tabs__item">-->
+                <!--<a class="nav-link m-tabs__link show-hand-light" data-toggle="tab" href="#m_tabs_1_4" ng-reflect-href="#m_tabs_2_4">-->
+                    <!--<strong>Recommenders</strong>-->
+                <!--</a>-->
+            <!--</li>-->
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane active" id="m_tabs_1_1" role="tabpanel">
-                <div class="row">
-                    <div *ngFor="let essay of schoolDetails.essays" class="col-xl-4 col-md-6">
-                        <div class="m-portlet show-hand" routerLink="/school/{{school}}/essay/{{ essay.essayID }}">
-                            <div class="m-portlet__body">
-                                {{ essay.prompt }}
+            <div *ngIf="schoolInfo != null;" class="tab-pane active" id="m_tabs_1_1" role="tabpanel">
+                <div class="row mt-3">
+                    <div class="m-content">
+                        <div class="m-portlet">
+                            <div class="m-stack m-stack--hor m-stack--general m-stack--demo" style="border-width: 0px">
+                                <div class="m-stack__item m-stack__item--fluid">
+                                    <!--<div class="school-basic-info" [style.background-image]="schoolInfo.picture" style="background-size: 100% 100%">-->
+                                        <!--<div class="info-start"></div>-->
+                                        <!--<h2 class="school-info-title"> {{schoolInfo.name}}  </h2>-->
+                                        <!--<p class="school-info-content">{{schoolInfo.location}}</p>-->
+                                        <!--<p class="school-info-content">{{schoolInfo.phone}}</p>-->
+                                        <!--<p class="school-info-content">{{schoolInfo.email}}</p>-->
+                                        <!--<div class="info-end"></div>-->
+                                    <!--</div>-->
+                                    <img src="{{schoolInfo.pictureURL}}" style="width: 100%; height: 150px;">
+                                </div>
+
+                                <div class="m-stack__item m-stack__item--fluid">
+                                    <div class="m-stack m-stack--ver m-stack--general m-stack--demo" style="border-width: 0px">
+                                        <div class="m-stack__item">
+                                            <div class="m-portlet m-portlet--creative m-portlet--bordered-semi">
+                                                <div class="m-portlet__head">
+                                                    <div class="m-portlet__head-caption">
+                                                        <div class="m-portlet__head-title">
+                                                            <h2 class="m-portlet__head-label m-portlet__head-label--primary">
+                                                                <span >Overview</span>
+                                                            </h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="m-portlet__body">
+                                                    {{schoolInfo.info}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-stack__item m-stack__item--fluid">
+                                    <div class="m-stack m-stack--ver m-stack--general m-stack--demo" style="border-width: 0px">
+                                        <div class="m-stack__item">
+                                            <div class="m-portlet m-portlet--creative m-portlet--bordered-semi">
+                                                <div class="m-portlet__head">
+                                                    <div class="m-portlet__head-caption">
+                                                        <div class="m-portlet__head-title">
+                                                            <h2 class="m-portlet__head-label m-portlet__head-label--primary">
+                                                                <span class>Application information</span>
+                                                            </h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="m-portlet__body">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <span>Tuition:</span>
+                                                        </div>
+                                                        <div class="col-8" align="right">
+                                                            <b>{{schoolInfo.tuition}}</b>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <span>Application deadline: </span>
+                                                            <div class="vertical-separtor"></div>
+                                                            <div *ngFor="let d of [1,2,3,4]">
+                                                                <div *ngIf = "getDeadline(d) !== ''" class="row round">
+                                                                    <div class="col-4 round-head">
+                                                                        Round {{d}}:
+                                                                    </div>
+                                                                    <div class="col-4"></div>
+                                                                    <div class="col-4" align="right" style="color: red">
+                                                                        <b>{{getDeadline(d)}}</b>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <hr>
+
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <span>Enrollment (fulltime): </span>
+                                                        </div>
+                                                        <div class="col-4"></div>
+                                                        <div class="col-4" align="right">
+                                                            <b>{{schoolInfo.enrollment}}</b>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <span>Average Undergraduate GPA: </span>
+                                                        </div>
+                                                        <div class="col-4"></div>
+                                                        <div class="col-4" align="right">
+                                                            <b>{{schoolInfo.avgGPA}}</b>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <span>Average / Median GMAT: </span>
+                                                        </div>
+                                                        <div class="col-4"></div>
+                                                        <div class="col-4" align="right">
+                                                            <b>{{schoolInfo.avgGMAT}}</b>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <span>Average Work Experience (in years): </span>
+                                                        </div>
+                                                        <div class="col-4"></div>
+                                                        <div class="col-4" align="right">
+                                                            <b>{{schoolInfo.experience}}</b>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <span>Application Site:</span>
+                                                        </div>
+                                                        <div class="col-8" align="right">
+                                                            <b>{{schoolInfo.applicationSite}}</b>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="m-stack__item m-stack__item--fluid">
+                                    <div class="m-stack m-stack--ver m-stack--general m-stack--demo" style="border-width: 0px">
+                                        <div class="m-stack__item">
+                                            <div class="m-portlet m-portlet--creative m-portlet--bordered-semi">
+                                                <div class="m-portlet__head">
+                                                    <div class="m-portlet__head-caption">
+                                                        <div class="m-portlet__head-title">
+                                                            <h2 class="m-portlet__head-label m-portlet__head-label--primary">
+                                                                <span class>Contact Info</span>
+                                                            </h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="m-portlet__body">
+                                                    <!--<div class="container">-->
+                                                        <!--<div class="info-start"></div>-->
+                                                        <p>Address: {{schoolInfo.location}}</p>
+                                                        <p>Phone: {{schoolInfo.phone}}</p>
+                                                        <p>Email: {{schoolInfo.email}}</p>
+                                                        <!--<div class="info-end"></div>-->
+                                                    <!--</div>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
             <div class="tab-pane" id="m_tabs_1_2" role="tabpanel">
+                <div class="row align-items-center">
+                    <h5>Essay prompts for the 2018-2019 application cycle:</h5><br><br><br>
+                </div>
+                <div [hidden]="essays.length != 0" class="my-5 text-center">
+                    <div class="m-portlet m-portlet--mobile">
+                        <div class="m-portlet__body">
+                        <strong><p>{{schoolDetails.name}} is yet to release the essay prompts for the 2018-2019 application cycle.
+                            We will notify you when the essay prompts have been released.</p>
+                        </strong>
+                        </div>
+                    </div>
+                </div>
+                <div [hidden]="essays.length == 0" class="row">
+                    <div *ngFor="let essay of schoolDetails.essays" class="col-xl-4 col-md-6">
+                        <div class="m-portlet show-hand" routerLink="/school/{{school}}/essay/{{ essay.essayID }}">
+                            <!--<div class="m-portlet__body">-->
+                                <!--{{ essay.prompt }}-->
+                            <!--</div>-->
+                            <div class="m-portlet__body" [innerHTML]="essay.prompt"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="m_tabs_1_3" role="tabpanel">
+                <div [hidden]="schoolDetails.notes != 0" class="my-5 text-center">
+                    <div class="m-portlet m-portlet--mobile">
+                        <div class="m-portlet__body">
+                            <p><strong>Start adding your notes for {{schoolDetails.name}}!</strong></p>
+                            <p>Have you spoken to any current students, alumni or admissions officers at {{schoolDetails.shortName}}? Are there any specific programs
+                                or courses at {{schoolDetails.shortName}} that you are interested in? Make sure to keep notes of the research you are doing, and use it in your
+                                essays and interviews to demonstrate your interest in {{schoolDetails.shortName}}.</p>
+                        </div>
+                    </div>
+                </div>
                 <div class="row mt-3">
                     <div *ngFor="let note of schoolDetails.notes; let i = index;" class="col-xl-4">
                         <div class="m-portlet">
@@ -84,7 +279,7 @@
                             <span>
                                 <i class="la la-plus"></i>
                                 <span>
-                                    New Note
+                                    Add Note
                                 </span>
                             </span>
                         </button>
@@ -92,37 +287,37 @@
                 </div>
 
             </div>
-            <div class="tab-pane" id="m_tabs_1_3" role="tabpanel">
-                <div class="row mt-3">
-                    <div *ngFor="let recommendation of schoolDetails.recommendations" class="col-xl-4">
-                        <div class="m-portlet">
-                            <div class="m-portlet__head">
-                                <div class="m-portlet__head-caption">
-                                    <div class="m-portlet__head-title">
-                                        <span class="m-portlet__head-icon">
-								            <i class="la la-user"></i>
-                                        </span>
-                                        <h3 class="m-portlet__head-text">
-                                            {{ recommendation.recommender }}
-                                        </h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="m-portlet__body">
-                                {{ recommendation.contents }}
-                            </div>
-                            <div class="m-portlet__foot">
-                                <div class="row align-items-center">
-                                    <button routerLink="/school/{{school}}/recommender/{{recommendation.id}}/edit" class="btn btn-brand"
-                                            type="submit">
-                                        Update
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!--<div class="tab-pane" id="m_tabs_1_4" role="tabpanel">-->
+                <!--<div class="row mt-3">-->
+                    <!--<div *ngFor="let recommendation of schoolDetails.recommendations" class="col-xl-4">-->
+                        <!--<div class="m-portlet">-->
+                            <!--<div class="m-portlet__head">-->
+                                <!--<div class="m-portlet__head-caption">-->
+                                    <!--<div class="m-portlet__head-title">-->
+                                        <!--<span class="m-portlet__head-icon">-->
+								            <!--<i class="la la-user"></i>-->
+                                        <!--</span>-->
+                                        <!--<h3 class="m-portlet__head-text">-->
+                                            <!--{{ recommendation.recommender }}-->
+                                        <!--</h3>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="m-portlet__body">-->
+                                <!--{{ recommendation.contents }}-->
+                            <!--</div>-->
+                            <!--<div class="m-portlet__foot">-->
+                                <!--<div class="row align-items-center">-->
+                                    <!--<button routerLink="/school/{{school}}/recommender/{{recommendation.id}}/edit" class="btn btn-brand"-->
+                                            <!--type="submit">-->
+                                        <!--Update-->
+                                    <!--</button>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
 
     </div>

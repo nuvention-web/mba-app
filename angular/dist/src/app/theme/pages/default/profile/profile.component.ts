@@ -15,9 +15,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     userInformation: any = {};
     id = 1;
     profile:any = undefined;
-    token: string;
     constructor(private _script: ScriptLoaderService, private _user: UsersService, private _profile: ProfileService) {
-        this._profile.getProfile(this.token).subscribe(p => this.profile = p);
+        this._profile.getProfile().subscribe(p => this.profile = p);
     }
     ngOnInit() {
         

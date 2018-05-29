@@ -5,15 +5,18 @@ import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSFile;
 import mbaapp.core.*;
+import mbaapp.email.EmailService;
 import mbaapp.requests.*;
 import mbaapp.providers.UserDBProvider;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -42,15 +46,20 @@ public class MongoUserDBProvider implements UserDBProvider {
     @Autowired
     Keywords keywords;
 
+    @Autowired
+    EmailService emailService;
+
+    @Autowired
+    public JavaMailSender emailSender;
 
     @Override
     public User getUser(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmailIgnoreCase(email);
     }
 
     @Override
     public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmailIgnoreCase(email);
     }
 
     @Override
@@ -120,7 +129,10 @@ public class MongoUserDBProvider implements UserDBProvider {
     public void activateUser(InactiveUser inactiveUser) throws Exception {
 
         User user = new User(inactiveUser.getName(), inactiveUser.getEmail(), inactiveUser.getPassword());
+
         userRepository.save(user);
+
+        emailService.addUserToAllUsersList(inactiveUser.getEmail(), inactiveUser.getName());
 
     }
 
@@ -162,10 +174,10 @@ public class MongoUserDBProvider implements UserDBProvider {
                 school.put("round2_deadline", schoolInfo.getRound2Deadline());
                 school.put("round3_deadline", schoolInfo.getRound3Deadline());
                 school.put("round4_deadline", schoolInfo.getRound4Deadline());
-                school.put("medianGMAT", schoolInfo.getMedianGMAT());
+//                school.put("medianGMAT", schoolInfo.getMedianGMAT());
                 school.put("avgGMAT", schoolInfo.getAvgGMAT());
                 school.put("avgGPA", schoolInfo.getAvgGPA());
-                school.put("acceptanceRate", schoolInfo.getAcceptanceRate());
+//                school.put("acceptanceRate", schoolInfo.getAcceptanceRate());
                 school.put("logoURL", schoolInfo.getLogoURL());
                 int numRequiredEssays = 0;
                 for(SchoolInfoEssay essay : schoolInfo.getEssays()) {
@@ -300,13 +312,111 @@ public class MongoUserDBProvider implements UserDBProvider {
     }
 
 
-    public void addReviewDraft(User user, UserSchool userSchool, MultipartFile file, ReviewComments reviewComments) throws Exception {
+    public void addResume(User user, MultipartFile file) throws Exception {
 
+        File convFile = new File(file.getOriginalFilename());
+        convFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+
+        DBObject dbObject = new BasicDBObject();
+        GridFSFile gridFSID = gridFsTemplate.store(file.getInputStream(), file.getOriginalFilename(), dbObject);
+        String uploadID = gridFSID.getId().toString();
+        Resume resume = new Resume();
+//        int resumeNum = user.getResumes().size() + 1;
+////        String resumeName = MessageFormat.format("{0}_Resume_{1}",user.getName().split("\\s+")[0], Integer.toString(resumeNum));
+        resume.setResumeName(file.getOriginalFilename());
+        resume.setUploadID(uploadID);
+
+        user.addResume(resume);
+        convFile.delete();
+
+        userRepository.save(user);
+
+    }
+
+
+
+    public void addReviewDraft(User user, UserSchool userSchool, MultipartFile file, ReviewComments reviewComments) throws Exception {
         String gridFSID = addFileToMongo(file);
         reviewComments.setUploadID(gridFSID);
         userRepository.save(user);
 
     }
+
+
+    public void addScores(User user, ScoreRequest scoreRequest) throws Exception {
+
+        if(scoreRequest.getGmatScore()!=null) {
+            user.setGmatScore(scoreRequest.getGmatScore());
+        }
+
+        if(scoreRequest.getTargetGmatScore()!=null) {
+            user.setTargetGmatScore(scoreRequest.getTargetGmatScore());
+        }
+
+        if(scoreRequest.getGreScore()!=null) {
+            user.setGreScore(scoreRequest.getGreScore());
+        }
+
+        if(scoreRequest.getTargetGreScore()!=null) {
+            user.setTargetGreScore(scoreRequest.getTargetGreScore());
+        }
+
+        if(scoreRequest.getGpa()!=null) {
+            user.setGpa(scoreRequest.getGpa());
+        }
+
+        saveUser(user);
+
+    }
+
+    public JSONObject getScores(User user) throws Exception {
+
+        JSONObject schoolsInfoJSON = new JSONObject();
+        List<UserSchool> userSchools = user.getSchools();
+
+        for(UserSchool school : userSchools) {
+            SchoolInfo info =  schoolInfoRepository.findByShortName(school.getShortName());
+            JSONObject schoolInfoJSON = new JSONObject();
+            schoolInfoJSON.put("AvgGMAT", info.getAvgGMAT());
+//            schoolInfoJSON.put("MedianGMAT", info.getMedianGMAT());
+            schoolInfoJSON.put("AvgGPA", info.getAvgGPA());
+            schoolsInfoJSON.put(info.getName(), schoolInfoJSON);
+        }
+
+        JSONObject userJSON = new JSONObject();
+        userJSON.put("gpa", user.getGpa());
+        userJSON.put("gmatScore", user.getGmatScore());
+        userJSON.put("targetGmatScore", user.getTargetGmatScore());
+        userJSON.put("greScore", user.getTargetGreScore());
+        userJSON.put("targetGreScore", user.getTargetGreScore());
+        userJSON.put("schools", schoolsInfoJSON);
+
+        return userJSON;
+    }
+
+
+    public void forgotPassword(User user) throws Exception {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String resetCode = RandomStringUtils.random( 10, characters );
+
+        emailService.sendForgotPasswordEmail(emailSender, user, resetCode);
+        user.setPasswordResetCode(resetCode);
+        saveUser(user);
+
+    }
+
+    public void changePassword(User user, char[] password, boolean resetPasswordResetCode) throws Exception {
+        String hashedPassword = new BCryptPasswordEncoder().encode(java.nio.CharBuffer.wrap(password));
+        user.setPassword(hashedPassword);
+        if(resetPasswordResetCode) {
+            user.setPasswordResetCode("");
+        }
+        saveUser(user);
+    }
+
 
 
     private String addFileToMongo(MultipartFile file) throws Exception{
@@ -320,6 +430,26 @@ public class MongoUserDBProvider implements UserDBProvider {
         convFile.delete();
         return gridFSID.getId().toString();
 
+    }
+
+    public ByteArrayOutputStream getResumeUpload(User user, Resume resume) throws Exception {
+        GridFSDBFile gridfsfile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(resume.getUploadID())));
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        gridfsfile.writeTo(outputStream);
+
+        return outputStream;
+
+    }
+
+
+    public Resume getResume(User user, String resumeID) throws Exception {
+        for(Resume resume : user.getResumes()) {
+            if(resume.getResumeID().equalsIgnoreCase(resumeID)) {
+                return resume;
+            }
+        }
+
+        return null;
     }
 
 
@@ -349,6 +479,12 @@ public class MongoUserDBProvider implements UserDBProvider {
         return outputStream;
     }
 
+    public ByteArrayOutputStream getResumeForDownload(Resume resume) throws Exception{
+        GridFSDBFile gridfsfile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(resume.getUploadID())));
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        gridfsfile.writeTo(outputStream);
+        return outputStream;
+    }
 
     public File getDraft(User user, UserSchool userSchool, String essayID, String draftID) throws Exception {
 
@@ -487,6 +623,14 @@ public class MongoUserDBProvider implements UserDBProvider {
         userRepository.save(user);
     }
 
+    public void deleteResume(User user, Resume resume) throws Exception {
+
+        gridFsTemplate.delete(new Query(Criteria.where("_id").is(resume.getUploadID())));
+        user.getResumes().remove(resume);
+        userRepository.save(user);
+
+    }
+
 
     public JSONObject getEssay(User user, UserSchool userSchool, String essayID) throws Exception {
         SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(userSchool.getShortName());
@@ -513,8 +657,18 @@ public class MongoUserDBProvider implements UserDBProvider {
         userSchoolJSON.put("logoURL", schoolInfo.getLogoURL());
         userSchoolJSON.put("name", schoolInfo.getName());
         userSchoolJSON.put("location", schoolInfo.getLocation());
-        return userSchoolJSON;
 
+        JSONObject schoolJSON = schoolInfo.toJSON();
+        Iterator<?> keys = schoolJSON.keys();
+
+        while(keys.hasNext()){
+            String key = (String)keys.next();
+            if(!key.equalsIgnoreCase("essays")){
+                userSchoolJSON.put(key, schoolJSON.get(key));
+            }
+        }
+
+        return userSchoolJSON;
     }
 
 

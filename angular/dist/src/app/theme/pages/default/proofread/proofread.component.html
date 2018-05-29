@@ -20,7 +20,11 @@
                 </li>
                 <li class="m-nav__separator">-</li>
                 <li class="m-nav__item">
-                    {{essay.essayID}}
+                    <a class="m-nav__link" routerLink="/school/{{school}}/essay/{{essayID}}">
+						<span class="m-nav__link-text">
+                            {{essayID}}
+                        </span>
+                    </a>
                 </li>
                 <li class="m-nav__separator">-</li>
                 <li class="m-nav__item">
@@ -74,8 +78,8 @@
                                             </div>
                                             <div class="m-portlet__body">
                                                 <div *ngIf='displayProofReadButton()' class="m-section">
-                                                    <button class="btn btn-brand" (click)="runProofRead()">
-                                                        Proofread your essay!
+                                                    <button class="btn btn-brand" [disabled]="proofReadButtonDisabled" (click)="runProofRead()">
+                                                        {{proofReadText}}
                                                     </button>
                                                 </div>
 

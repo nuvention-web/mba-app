@@ -1,0 +1,72 @@
+.inline-edit { text-decoration: none; border-bottom: none 0;}
+.inline-no-edit { text-decoration: none; border-bottom: none 0;}
+.inline-edit-empty{ text-decoration: none; border-bottom: none 0;}
+
+.school-basic-info * {
+    color: white;
+}
+.info-start {
+    padding-top: 10px;
+}
+.info-end {
+    padding-bottom: 10px;
+}
+.school-info-title {
+    position: relative;
+    margin-bottom: 40px;
+    margin-left: 20px;
+    font-size: 35px;
+}
+.school-info-content {
+    position: relative;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 20px;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 30px;
+}
+
+.vertical-separtor {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+
+
+.application-information {
+    color: black;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: bolder;
+    line-height: 30px;
+    word-break: break-all;
+}
+
+.overview {
+    color: black;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 30px;
+}
+
+.school-info-label {
+    font-size: 23px;
+}
+.round-head{
+    padding-left: 40px;
+}
+
+.round {
+    position: relative;
+    margin-top: -5px;
+}
+

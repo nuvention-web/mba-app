@@ -35,6 +35,8 @@ export class AuthComponent implements OnInit {
         { read: ViewContainerRef }) alertForgotPass: ViewContainerRef;
     @ViewChild('alertVerify',
         { read: ViewContainerRef }) alertVerify: ViewContainerRef;
+    @ViewChild('alertResetPass',
+        { read: ViewContainerRef }) alertResetPass: ViewContainerRef;
 
     constructor(
         private _router: Router,
@@ -70,7 +72,7 @@ export class AuthComponent implements OnInit {
             },
             error => {
                 this.showAlert('alertSignin');
-                this._alertService.error(error);
+                this._alertService.error("Invalid username or password");
                 this.loading = false;
             });
     }
@@ -124,12 +126,12 @@ export class AuthComponent implements OnInit {
         this.loading = true;
         this._userService.forgotPassword(this.model.email).subscribe(
             data => {
-                this.showAlert('alertSignin');
+                this.showAlert('alertResetPass');
                 this._alertService.success(
-                    'Cool! Password recovery instruction has been sent to your email.',
+                    'Cool! Password reset code has been sent to your email.',
                     true);
                 this.loading = false;
-                LoginCustom.displaySignInForm();
+                LoginCustom.displayResetPasswordForm();
                 this.model = {};
             },
             error => {
@@ -137,6 +139,26 @@ export class AuthComponent implements OnInit {
                 this._alertService.error(error);
                 this.loading = false;
             });
+    }
+
+    resetPass() {
+        this.loading = true;
+        this._userService.resetPassword(this.model.email, this.model.code, this.model.new_pass).subscribe(
+            data => {
+                this.showAlert('alertSignin');
+                this._alertService.success(
+                    'You already reset your password. Now sign in with new password!',
+                    true);
+                this.loading = false;
+                LoginCustom.displaySignInForm();
+                this.model = {};
+            },
+            error => {
+                this.showAlert('alertResetPass');
+                this._alertService.error(error);
+                this.loading = false;
+            });
+
     }
 
     showAlert(target) {

@@ -38,12 +38,13 @@ public class EmailService {
 //    private String DOMAIN_NAME ="sandbox10ae1339337745ed88889375cfcb11fd.mailgun.org";
 //    private String API_KEY = "key-1013ff5b4d9ac554d9ac41f1163ff258";
 
-    private String DOMAIN_NAME = "mail.myapp.mba";
-    private String API_KEY = "key-1013ff5b4d9ac554d9ac41f1163ff258";
+    private static String DOMAIN_NAME = "mail.myapp.mba";
+    private static String API_KEY = "key-1013ff5b4d9ac554d9ac41f1163ff258";
 
     private final String FROM = "myapp.MBA <mail@mail.myapp.mba>";
 
-    private final String REST_URI = "https://api.mailgun.net/v3/" + DOMAIN_NAME + "/messages";
+    private static final String REST_URI = "https://api.mailgun.net/v3/" + DOMAIN_NAME + "/messages";
+
 
     public void sendDraftToFriend(JavaMailSender emailSender, EmailDraftRequest draftRequest, User user,
                                   UserSchool userSchool, File draftFile, EssayDraft draft,
@@ -51,13 +52,6 @@ public class EmailService {
 
         String subject = MessageFormat.format("{0} has sent you a draft of his {1} essay to review", user.getName(),
                 userSchool.getShortName());
-
-//        String text = MessageFormat.format("Hi {0},<p> You have received an essay from {1} to review. Please use this " +
-//                        "<a href=\"http://myapp.mba/mba/users/{2}/school/{3}/essay/{4}/draft/{5}/review/{6}\">personalized link</a></p>" +
-//                        " to review the essay and leave some feedback. The essay is also included as an attachment to this email. <p>" +
-//                        "<p>Thank you! <p> The MyApp.MBA team<p>",
-//                draftRequest.getName(), user.getName(), user.getEmail(), userSchool.getShortName(), essayID, draftID, reviewID);
-
 
         Resource resource = new ClassPathResource("email/draft.html");
         InputStream resourceInputStream = resource.getInputStream();
@@ -83,9 +77,30 @@ public class EmailService {
     }
 
 
+    public void sendForgotPasswordEmail(JavaMailSender emailSender, User user, String password) throws Exception {
 
+        String subject = "Reset your password for your myapp.MBA account";
 
-    public void sentActivationEmail(JavaMailSender emailSender, InactiveUser user) throws Exception{
+        MimeMessage message = emailSender.createMimeMessage();
+
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(user.getEmail());
+        helper.setSubject(subject);
+        Resource resource = new ClassPathResource("email/verify.html");
+        InputStream resourceInputStream = resource.getInputStream();
+        String html = IOUtils.toString(resourceInputStream, StandardCharsets.UTF_8.name());
+        html = html.replace("{replaceName}", user.getName().split(" ")[0]);
+        html = html.replace("{replaceCode}", "Reset code: " + password);
+        html = html.replace("{replaceText}","Please use the following reset code to reset your password");
+        html = html.replace("{buttonText}","Reset password");
+
+        helper.setText(html, true);
+        helper.setFrom("mail@mail.myapp.mba", "myapp.MBA");
+        emailSender.send(message);
+
+    }
+
+    public void sendActivationEmail(JavaMailSender emailSender, InactiveUser user) throws Exception{
 
         String subject = "Please verify your myapp.MBA account";
 
@@ -104,14 +119,27 @@ public class EmailService {
         InputStream resourceInputStream = resource.getInputStream();
         String html = IOUtils.toString(resourceInputStream, StandardCharsets.UTF_8.name());
         html = html.replace("{replaceName}", user.getName().split(" ")[0]);
-        html = html.replace("{replaceCode}", user.getCode());
+        html = html.replace("{replaceCode}", "Verification Code: " + user.getCode());
+        html = html.replace("{replaceText}","Please use the following verification code to verify your account");
+        html = html.replace("{buttonText}","Verify Account");
 
         helper.setText(html, true);
         helper.setFrom("mail@mail.myapp.mba", "myapp.MBA");
         emailSender.send(message);
 
-
     }
 
+    public void addUserToAllUsersList(String email, String name) throws UnirestException {
+
+        String listAddress = "allusers@mail.myapp.mba";
+        HttpResponse <JsonNode> request = Unirest.post("https://api.mailgun.net/v3/lists/"+ listAddress + "/members")
+                .basicAuth("api", API_KEY)
+                .field("address", email)
+                .field("name", name)
+                .asJson();
+
+        int status = request.getStatus();
+
+    }
 
 }

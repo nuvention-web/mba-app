@@ -13,7 +13,11 @@ export class UserService {
     }
 
     forgotPassword(email: string) {
-        return this.http.post('/api/forgot-password', JSON.stringify({ email }), this.jwt(1)).map((response: Response) => response.json());
+        return this.http.post(URL + '/account/forgotPassword', {email: email}, {headers: header});
+    }
+
+    resetPassword(email:string, code: string, newPass: string) {
+        return this.http.post(URL + '/account/resetPassword', {email: email, resetCode: code, newPassword: newPass}, {headers: header});
     }
 
     getById(id: number) {

@@ -2,6 +2,7 @@
 import {Headers, RequestOptions} from "@angular/http";
 
 export const URL = "https://portal.myapp.mba";
+//export const URL = "http://myappmba-199623.appspot.com";
 
 export function getCurrentUser() {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));

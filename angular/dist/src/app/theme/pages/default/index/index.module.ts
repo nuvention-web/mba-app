@@ -7,7 +7,7 @@ import { DefaultComponent } from '../default.component';
 import { ControlsInputGroupComponent } from '../components/forms/controls/controls-input-group/controls-input-group.component';
 import { FormsModule } from '@angular/forms';
 import { AddSchool } from '../../../../_services/user-add-school.service';
-import { FilterSchoolsPipe } from './school.pipe';
+import { FilterSchoolsPipe, FilterSchoolsDeadlinePipe } from './school.pipe';
 
 
 const routes: Routes = [
@@ -29,7 +29,7 @@ const routes: Routes = [
     ], exports: [
         RouterModule
     ], declarations: [
-        IndexComponent,ControlsInputGroupComponent, FilterSchoolsPipe
+        IndexComponent,ControlsInputGroupComponent, FilterSchoolsPipe, FilterSchoolsDeadlinePipe
     ], providers: [
         
     ] 

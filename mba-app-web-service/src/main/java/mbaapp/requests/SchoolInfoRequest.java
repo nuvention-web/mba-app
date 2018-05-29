@@ -12,7 +12,9 @@ public class SchoolInfoRequest {
 
     private String name;
 
-    private String location;
+    private String schoolName;
+
+    private String address;
 
     private String shortName;
 
@@ -24,14 +26,62 @@ public class SchoolInfoRequest {
 
     private String round4Deadline;
 
+    private List<String> keywords;
+
+    private String avgGPA;
+
+    private String avgGMAT;
+
+    private String experience;
+
+    private String logoURL;
+
+    private String applicationSite;
+
+    private String contactInfo;
+
+    private String info;
+
+    private String pictureURL;
+
     private List<SchoolInfoEssayRequest> essays;
+
+    private String enrollment;
+
+    private String phone;
+
+    private String email;
+
+    private String tuition;
+
+    private String ranking;
+
+    public String getRanking() {
+        return ranking;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getTuition() {
+        return tuition;
+    }
+
+    public String getEnrollment() {
+        return enrollment;
+    }
 
     public String getName() {
         return name;
     }
 
-    public String getLocation() {
-        return location;
+    public String getAddress() {
+        return address;
     }
 
     public String getShortName() {
@@ -56,4 +106,43 @@ public class SchoolInfoRequest {
 
     public List<SchoolInfoEssayRequest> getEssays() { return essays;}
 
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    public String getAvgGPA() {
+        return avgGPA;
+    }
+
+    public String getAvgGMAT() {
+        return avgGMAT;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public String getLogoURL() {
+        return logoURL;
+    }
+
+    public String getApplicationSite() {
+        return applicationSite;
+    }
+
+    public String getContactInfo() {
+        return contactInfo;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public String getPictureURL() {
+        return pictureURL;
+    }
 }

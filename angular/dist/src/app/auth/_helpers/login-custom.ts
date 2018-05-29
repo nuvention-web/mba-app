@@ -27,6 +27,7 @@ export class LoginCustom {
         login.removeClass('m-login--forget-password');
         login.removeClass('m-login--signin');
         login.removeClass('m-login--signup');
+        login.removeClass('m-login--reset-password');
 
         login.addClass('m-login--verify');
         (<any>login.find('.m-login__verify')).animateClass('flipInX animated');
@@ -38,6 +39,7 @@ export class LoginCustom {
         login.removeClass('m-login--forget-password');
         login.removeClass('m-login--signin');
         login.removeClass('m-login--verify');
+        login.removeClass('m-login--reset-password');
 
         login.addClass('m-login--signup');
         (<any>login.find('.m-login__signup')).animateClass('flipInX animated');
@@ -48,6 +50,8 @@ export class LoginCustom {
         login.removeClass('m-login--forget-password');
         login.removeClass('m-login--signup');
         login.removeClass('m-login--verify');
+        login.removeClass('m-login--reset-password');
+
         try {
             $('form').data('validator').resetForm();
         } catch (e) {
@@ -62,9 +66,22 @@ export class LoginCustom {
         login.removeClass('m-login--signin');
         login.removeClass('m-login--signup');
         login.removeClass('m-login--verify');
+        login.removeClass('m-login--reset-password');
 
         login.addClass('m-login--forget-password');
         (<any>login.find('.m-login__forget-password')).animateClass(
+            'flipInX animated');
+    }
+
+    static displayResetPasswordForm() {
+        let login = $('#m_login');
+        login.removeClass('m-login--signin');
+        login.removeClass('m-login--signup');
+        login.removeClass('m-login--verify');
+        login.removeClass('m-login--forget-password');
+
+        login.addClass('m-login--reset-password');
+        (<any>login.find('.m-login__reset-password')).animateClass(
             'flipInX animated');
     }
 
@@ -88,8 +105,15 @@ export class LoginCustom {
             e.preventDefault();
             LoginCustom.displaySignInForm();
         });
-
         $('#m_login_verify_resend').click((e) => {
+            e.preventDefault();
+            LoginCustom.displaySignInForm();
+        });
+        $('#m_login_verify').click( (e) => {
+            e.preventDefault();
+            LoginCustom.displayVerificationCode();
+        });
+        $('#m_login_reset_password_cancel').click ((e) => {
             e.preventDefault();
             LoginCustom.displaySignInForm();
         })
@@ -163,11 +187,39 @@ export class LoginCustom {
         });
     }
 
+    static handleResetPasswordFormSubmit() {
+        $('#m_login_reset_password_submit').click((e) => {
+            let btn = $(e.target);
+            let form = $(e.target).closest('form');
+            form.validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email:true,
+                    },
+                    code: {
+                        required: true,
+                    },
+                    new_pass: {
+                        required: true
+                    }
+                },
+            });
+            if (!form.valid()) {
+                e.preventDefault();
+                return;
+            }
+
+        })
+
+    }
+
     static init() {
         LoginCustom.handleFormSwitch();
         LoginCustom.handleSignInFormSubmit();
         LoginCustom.handleSignUpFormSubmit();
         LoginCustom.handleForgetPasswordFormSubmit();
         LoginCustom.handleVerifyCodeFormSubmit();
+        LoginCustom.handleResetPasswordFormSubmit();
     }
 }

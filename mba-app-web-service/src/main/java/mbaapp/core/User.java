@@ -37,6 +37,15 @@ public class User {
 
     public List<String> accomplishments;
     public List<String> hobbiesOrInterests;
+    public List<Resume> resumes;
+    public String greScore;
+    public String gmatScore;
+    public String targetGreScore;
+    public String targetGmatScore;
+    public String gpa;
+    public String passwordResetCode;
+    public String lastLogin;
+
 
     public String whatDoYouBring;
 
@@ -57,6 +66,19 @@ public class User {
         failureExperience = new ArrayList<>();
         accomplishments = new ArrayList<>();
         hobbiesOrInterests = new ArrayList<>();
+        resumes = new ArrayList<>();
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPasswordResetCode(String code){
+        this.passwordResetCode = code;
+    }
+
+    public String getPasswordResetCode() {
+        return this.passwordResetCode;
     }
 
     public String getId() {
@@ -125,6 +147,69 @@ public class User {
 
     public List<String> getRecommenders() {
         return recommenders;
+    }
+
+    public List<Resume> getResumes(){
+        if(resumes==null) {
+            resumes = new ArrayList<>();
+        }
+        return resumes;
+    }
+
+    public void addResume(Resume resume) {
+        if(resumes == null) {
+            resumes = new ArrayList<>();
+        }
+
+        resumes.add(resume);
+    }
+
+    public String getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(String lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public String getGreScore() {
+        return greScore;
+    }
+
+    public String getGmatScore() {
+        return gmatScore;
+    }
+
+    public String getTargetGreScore() {
+        return targetGreScore;
+    }
+
+    public String getTargetGmatScore() {
+        return targetGmatScore;
+    }
+
+    public String getGpa() {
+        return gpa;
+    }
+
+    public void setGpa(String gpa) {
+        this.gpa = gpa;
+    }
+
+    public void setGreScore(String greScore) {
+        this.greScore = greScore;
+    }
+
+    public void setGmatScore(String gmatScore) {
+        this.gmatScore = gmatScore;
+    }
+
+    public void setTargetGreScore(String targetGreScore) {
+        this.targetGreScore = targetGreScore;
+    }
+
+    public void setTargetGmatScore(String targetGmatScore) {
+        this.targetGmatScore = targetGmatScore;
     }
 
     public void addActivity(String message) {

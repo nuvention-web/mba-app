@@ -73,4 +73,6 @@ public class EndpointBase {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         return dateFormat.format(date);
     }
+
+
 }

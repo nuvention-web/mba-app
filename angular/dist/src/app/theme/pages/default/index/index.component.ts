@@ -13,23 +13,56 @@ import { Response } from '@angular/http';
 })
 export class IndexComponent implements OnInit, AfterViewInit {
 
-    schools: any = undefined;
-    allSchools: any = undefined;
+    schools: any;
+    allSchools: any;
+    schoolsInfo: any = undefined;
     chosenValue: string;
+    chosenDeadline: string;
+    user: string;
+    updated;
 
     constructor(private _script: ScriptLoaderService, private _schools:SchoolsService) {
         this.getSchools();
-        this._schools.getAllSchools().subscribe(d => this.allSchools = d);
+        this.getSchoolsInfo();
+        this._schools.getAllSchools().subscribe(d => {this.allSchools = d; console.log(d)});
+
+    }
+
+    getSchoolsInfo() {
+        let i = 0;
+        let j = 1;
+        // this._schools.getSchoolInfos().subscribe(d => {
+        //     this.schoolsInfo = d;
+        //     for (i = 0; i < this.schoolsInfo.length; i++) {
+        //         j = 1;
+        //         this.schoolsInfo[i]['Deadline'] = [];
+        //         while (this.schoolsInfo[i]['Deadline' + j] != null && this.schoolsInfo[i]['Deadline' + j] !== '') {
+        //             this.schoolsInfo[i]['Deadline'].push(this.schoolsInfo[i]['Deadline' + j]);
+        //             j++;
+        //         }
+        //     }
+        // });
     }
 
     getSchools() {
-        this._schools.getSchools().subscribe(d => this.schools = d);
+        this._schools.getSchools().subscribe(d => {this.schools = d["schools"]; this.user = d["name"]});
     }
+
 
     deleteSchool(event, index, schoolName: string) {
         event.stopPropagation();
         this.schools.splice(index, 1);
+        this.updated = new Date();
         this._schools.userDeleteSchool(schoolName);
+    }
+
+    getUser() {
+        if(this.user!=null) {
+            return this.user.split(' ')[0];
+        }
+        else{
+            return "";
+        }
     }
 
     ngOnInit() {
@@ -48,17 +81,23 @@ export class IndexComponent implements OnInit, AfterViewInit {
     }
 
     addSchool() {
-        for (var i = 0; i < this.allSchools.length; i++) {
-            if (this.allSchools[i].name === this.chosenValue) {
-                this._schools.userAddSchool(this.allSchools[i].shortName).subscribe(
-                    (response:Response) => {
-                        this.getSchools();
-                    }, (error:Response) => {
-                    }
-                );
-                break;
-            }
+        if (this.chosenValue === "blank") {
+            return;
         }
+        let name = this.chosenValue;
+        this._schools.userAddSchool(name).subscribe(
+            (response: Response) => {
+                this.getSchools();
+                this._schools.getSchoolDetails(name).subscribe(d => {
+                    d.deadline = this.chosenDeadline;
+                    this._schools.updateSchoolDetails(name, d);
+                });
+            }, (error: Response) => {
+            }
+        );
+        this.chosenValue = "blank";
     }
+
+
 
 }

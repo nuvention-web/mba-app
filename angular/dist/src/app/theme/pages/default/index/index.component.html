@@ -86,6 +86,16 @@
 		</div>
 	</div>
 	<!--End::Section-->
+	<div [hidden]="schools != 0" class="my-5 text-center">
+		<div class="m-portlet m-portlet--mobile">
+			<div class="m-portlet__body">
+				<p> <strong>Welcome to myapp.MBA - your centralized portal to manage all your MBA applications!</strong></p>
+				<p>Please take a moment to review our <a routerLink="/gettingStarted">Getting Started</a> guide to understand how myapp.MBA can help you with the application process.
+					Go ahead and add the schools you are interested in to your portal to get started!  </p>
+				<p>Good luck with your MBA applications, {{getUser()}}!</p>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div *ngIf="notEmpty()" class="modal fade" id="m_modal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" style="padding-right: 17px;">
@@ -105,8 +115,9 @@
 							Select a School...
 						</label>
 						<div class="col-lg-12 col-md-12">
-							<select  [(ngModel)]="chosenValue" class="form-control m-input" name="option">
-								<option *ngFor="let school of (allSchools | filterSchools: schools)">
+							<select [(ngModel)]="chosenValue" class="form-control m-input" name="option">
+								<option [ngValue]="blank"> -- select a school -- </option>
+								<option *ngFor="let school of (allSchools | filterSchools: schools: updated);" [ngValue]="school.shortName">
 									{{school.name}}
 								</option>
 							</select>
@@ -121,4 +132,4 @@
 		</div>
 		</div>
 	</div>
-	</div>
+</div>

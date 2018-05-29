@@ -24,6 +24,7 @@ export class EssayComponent implements OnInit {
     essayID = "";
     fileUpload = "";
     reviews = [];
+    drafts = [];
     schoolDetails: any;
     profile: {"": ""};
     @Input()
@@ -44,7 +45,7 @@ export class EssayComponent implements OnInit {
             this.school = params.school;
             this.essayID = params.id;
         });
-        this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
+        this._schools.getEssay(this.school, this.essayID).subscribe(d => {this.essay = d; this.drafts = d["drafts"]});
         this._schools.getEssayReviews(this.school, this.essayID).subscribe(d => this.reviews = d.reviews);
         this._schools.getAllEssays().subscribe(d => this.allEssays = this.transformJSON(d));
         this._schools.getSchoolDetails(this.school).subscribe(d => this.schoolDetails = d);
@@ -66,7 +67,7 @@ export class EssayComponent implements OnInit {
     public deleteDraft(draftID) {
         this._schools.deleteEssayDraft(this.school, this.essayID, draftID).subscribe(
             (response:Response) => {
-                this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
+                this._schools.getEssay(this.school, this.essayID).subscribe(d => {this.essay = d; this.drafts = d["drafts"]});
                 this._schools.getAllEssays().subscribe(d => this.allEssays = this.transformJSON(d));
             }, (error:Response) => {
             }
@@ -153,7 +154,7 @@ export class EssayComponent implements OnInit {
     uploadDraft() {
         this._schools.uploadEssayDraft(this.fileUpload, this.school, this.essayID).subscribe(
             (response:Response) => {
-                this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
+                this._schools.getEssay(this.school, this.essayID).subscribe(d => {this.essay = d; this.drafts = d["drafts"]});
                 this._schools.getAllEssays().subscribe(d => this.allEssays = this.transformJSON(d));
                 document.getElementById("openModalButton").click();
             }, (error:Response) => {

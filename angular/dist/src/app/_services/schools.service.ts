@@ -11,7 +11,7 @@ export class SchoolsService {
     }
 
     getSchools() {
-        return this.http.get(URL + "/mba/users/" + getCurrentUser(), jwt()).map((response:Response) => response.json().schools);
+        return this.http.get(URL + "/mba/users/" + getCurrentUser(), jwt()).map((response:Response) => response.json());
     }
 
     getAllSchools() {

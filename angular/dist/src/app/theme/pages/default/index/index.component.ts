@@ -18,6 +18,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
     schoolsInfo: any = undefined;
     chosenValue: string;
     chosenDeadline: string;
+    user: string;
     updated;
 
     constructor(private _script: ScriptLoaderService, private _schools:SchoolsService) {
@@ -44,7 +45,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
     }
 
     getSchools() {
-        this._schools.getSchools().subscribe(d => {this.schools = d;});
+        this._schools.getSchools().subscribe(d => {this.schools = d["schools"]; this.user = d["name"]});
     }
 
 
@@ -53,6 +54,15 @@ export class IndexComponent implements OnInit, AfterViewInit {
         this.schools.splice(index, 1);
         this.updated = new Date();
         this._schools.userDeleteSchool(schoolName);
+    }
+
+    getUser() {
+        if(this.user!=null) {
+            return this.user.split(' ')[0];
+        }
+        else{
+            return "";
+        }
     }
 
     ngOnInit() {

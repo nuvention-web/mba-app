@@ -212,7 +212,7 @@
                 <div class="row align-items-center">
                     <h5>Essay prompts for the 2018-2019 application cycle:</h5><br><br><br>
                 </div>
-                <div [hidden]="schoolDetails.essays.length != 0" class="my-5 text-center">
+                <div [hidden]="essays.length != 0" class="my-5 text-center">
                     <div class="m-portlet m-portlet--mobile">
                         <div class="m-portlet__body">
                         <strong><p>{{schoolDetails.name}} is yet to release the essay prompts for the 2018-2019 application cycle.
@@ -221,7 +221,7 @@
                         </div>
                     </div>
                 </div>
-                <div [hidden]="schoolDetails.essays.length == 0" class="row">
+                <div [hidden]="essays.length == 0" class="row">
                     <div *ngFor="let essay of schoolDetails.essays" class="col-xl-4 col-md-6">
                         <div class="m-portlet show-hand" routerLink="/school/{{school}}/essay/{{ essay.essayID }}">
                             <!--<div class="m-portlet__body">-->

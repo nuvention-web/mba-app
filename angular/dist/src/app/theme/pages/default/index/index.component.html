@@ -86,6 +86,15 @@
 		</div>
 	</div>
 	<!--End::Section-->
+	<div [hidden]="schools != 0" class="my-5 text-center">
+		<div class="m-portlet m-portlet--mobile">
+			<div class="m-portlet__body">
+				<p> <strong>Welcome to myapp.MBA - your centralized portal to manage all your MBA applications!</strong></p>
+				<p>Please take a moment to review our Get Started guide to understand how myapp.MBA can help you with your applications.
+					Go ahead and add the schools you are interested in to your portal, and good luck with your applications, {{getUser()}}!  </p>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div *ngIf="notEmpty()" class="modal fade" id="m_modal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" style="padding-right: 17px;">

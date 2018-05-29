@@ -26,7 +26,7 @@ export class SchoolComponent implements OnInit {
                 this._schools.getSchoolInfos(this.school).subscribe(d => this.getSchoolInfo(d));
             }
         );
-        this._schools.getSchoolDetails(this.school).subscribe(d => {this.schoolDetails = d; console.log(d)});
+        this._schools.getSchoolDetails(this.school).subscribe(d => {this.schoolDetails = d; console.log(d); this.essays = d["essays"]});
     }
 
     saveSchool(i) {

@@ -15,11 +15,11 @@ export class SchoolsService {
     }
 
     getAllSchools() {
-        return this.http.get(URL+"/mba" + "/schools", jwt()).map((response:Response) => response.json());
+        return this.http.get(URL + "/mba" + "/schools", jwt()).map((response:Response) => response.json());
     }
 
-    getSchoolInfos() {
-        return this.http.get(schoolInfoDir).map((response: Response) => response.json());
+    getSchoolInfos(schoolName) {
+        return this.http.get(URL + "/mba/users/" + getCurrentUser() + "/school/" + schoolName, jwt(1)).map((response: Response) => response.json());
     }
 
     userDeleteSchool(schoolName:string) {

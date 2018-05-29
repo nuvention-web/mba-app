@@ -20,12 +20,12 @@ export class SchoolComponent implements OnInit {
     schoolInfo: any = null;
 
     constructor(private route: ActivatedRoute, private _script: ScriptLoaderService, private _schools:SchoolsService, private _sanitizer: DomSanitizer) {
-        this.route.params.subscribe( params =>
-            this.school = params.school
-
+        this.route.params.subscribe( params => {
+                this.school = params.school;
+                this._schools.getSchoolInfos(this.school).subscribe(d => this.getSchoolInfo(d));
+            }
         );
         this._schools.getSchoolDetails(this.school).subscribe(d => {this.schoolDetails = d; console.log(d)});
-        this._schools.getSchoolInfos().subscribe(d => this.getSchoolInfo(d));
     }
 
     saveSchool(i) {
@@ -33,21 +33,16 @@ export class SchoolComponent implements OnInit {
     }
 
     getSchoolInfo(info) {
-        var path:string;
+        this.schoolInfo = info;
+        console.log(info);
+        this.schoolInfo.picture = this._sanitizer.bypassSecurityTrustStyle(`url(${this.schoolInfo.pictureURL})`);
+        this.schoolInfo.logo = this._sanitizer.bypassSecurityTrustStyle(`url(${this.schoolInfo.logoURL})`);
 
-        for (var i = 0; i < info.length; i++) {
-            if (info[i].Shortname === this.school) {
-                this.schoolInfo = info[i];
-                path = schoolImageDir + this.schoolInfo.Shortname + '.jpg';
-                this.schoolInfo.Picture = this._sanitizer.bypassSecurityTrustStyle(`url(${path})`);
-                console.log(this.schoolInfo);
-                return;
-            }
-        }
+
     }
 
     getDeadline(d) {
-        let name = 'Deadline' + d.toString();
+        let name = 'round' + d.toString() + "Deadline";
         return this.schoolInfo[name];
     }
 

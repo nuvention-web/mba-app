@@ -61,9 +61,14 @@ public class UsersEndpoint extends EndpointBase{
             }
 
             User mbaUser = userDBProvider.getUser(userEmail);
+
             if (mbaUser == null) {
                 return new ResponseEntity<>("User does not exist!", HttpStatus.BAD_REQUEST);
             }
+
+            mbaUser.setLastLogin(getDate());
+            userDBProvider.saveUser(mbaUser);
+
             return new ResponseEntity<>(userDBProvider.getUserSchoolDetails(mbaUser).toString(), HttpStatus.OK);
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);

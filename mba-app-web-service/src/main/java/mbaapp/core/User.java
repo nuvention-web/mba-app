@@ -44,6 +44,7 @@ public class User {
     public String targetGmatScore;
     public String gpa;
     public String passwordResetCode;
+    public String lastLogin;
 
 
     public String whatDoYouBring;
@@ -161,6 +162,14 @@ public class User {
         }
 
         resumes.add(resume);
+    }
+
+    public String getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(String lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
     public String getGreScore() {

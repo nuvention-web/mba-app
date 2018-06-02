@@ -26,6 +26,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
     deadlineList = [];
     deletedSchool: string = null;
     deletedIndex: number = -1;
+    user: string;
     updated;
 
     constructor(private _script: ScriptLoaderService, private _schools:SchoolsService) {
@@ -52,7 +53,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
     }
 
     getSchools() {
-        this._schools.getSchools().subscribe(d => {this.schools = d;});
+        this._schools.getSchools().subscribe(d => {this.schools = d["schools"]; this.user = d["name"]});
     }
 
 
@@ -73,6 +74,15 @@ export class IndexComponent implements OnInit, AfterViewInit {
         this.deletedIndex = -1;
         this.deletedSchool = null;
         (<any>$(this.deletedModal.nativeElement)).modal('hide');
+    }
+
+    getUser() {
+        if(this.user!=null) {
+            return this.user.split(' ')[0];
+        }
+        else{
+            return "";
+        }
     }
 
     ngOnInit() {

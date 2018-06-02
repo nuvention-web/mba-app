@@ -2,71 +2,146 @@
 .inline-no-edit { text-decoration: none; border-bottom: none 0;}
 .inline-edit-empty{ text-decoration: none; border-bottom: none 0;}
 
-.school-basic-info * {
-    color: white;
-}
-.info-start {
-    padding-top: 10px;
-}
-.info-end {
-    padding-bottom: 10px;
-}
-.school-info-title {
-    position: relative;
-    margin-bottom: 40px;
-    margin-left: 20px;
-    font-size: 35px;
-}
-.school-info-content {
-    position: relative;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: 20px;
-    font-family: "Arial Narrow", Arial, sans-serif;
-    font-size: 20px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 400;
-    line-height: 30px;
+@media screen and (min-width: 1024px){
+    .school-basic-info * {
+        color: white;
+    }
+    .info-start {
+        padding-top: 10px;
+    }
+    .info-end {
+        padding-bottom: 10px;
+    }
+    .school-info-title {
+        position: relative;
+        margin-bottom: 40px;
+        margin-left: 20px;
+        font-size: 35px;
+        word-break: break-all;
+    }
+    .school-info-content {
+        position: relative;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-left: 20px;
+        font-family: "Arial Narrow", Arial, sans-serif;
+        font-size: 1.25em;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        line-height: 30px;
+        word-break: break-all;
+    }
+
+    .vertical-separtor {
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+
+
+    .application-information {
+        color: black;
+        font-family: "Arial Narrow", Arial, sans-serif;
+        font-size: 1.125em;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: bolder;
+        line-height: 1.9em;
+        word-break: break-all;
+    }
+
+    .overview {
+        color: black;
+        font-family: "Arial Narrow", Arial, sans-serif;
+        font-size: 1.125em;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        line-height: 25px;
+    }
+
+    .school-info-label {
+        font-size: 1.9em;
+    }
+    .round-head{
+        padding-left: 40px;
+    }
+
+    .round {
+        position: relative;
+        margin-top: -5px;
+    }
+
+    #school-info-contact {
+        display: none;
+    }
+
+    #school-info-small-title {
+        display: none;
+    }
 }
 
-.vertical-separtor {
-    padding-top: 4px;
-    padding-bottom: 4px;
-}
+@media screen and (max-width: 1024px) {
 
+    .school-basic-info * {
+        color: white;
+    }
 
+    .info-start {
+        padding-top: 10px;
+    }
 
-.application-information {
-    color: black;
-    font-family: "Arial Narrow", Arial, sans-serif;
-    font-size: 18px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: bolder;
-    line-height: 30px;
-    word-break: break-all;
-}
+    .info-end {
+        padding-bottom: 10px;
+    }
 
-.overview {
-    color: black;
-    font-family: "Arial Narrow", Arial, sans-serif;
-    font-size: 18px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: 400;
-    line-height: 30px;
-}
+    .school-info-title {
+        position: relative;
+        margin-bottom: 2em;
+        margin-left: 1em;
+        font-size: 1.5em;
+        word-break: break-all;
+    }
+    .school-info-content {
+        position: relative;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-left: 1em;
+        font-family: "Arial Narrow", Arial, sans-serif;
+        font-size: 1em;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        line-height: 30px;
+        word-break: break-all;
+    }
 
-.school-info-label {
-    font-size: 23px;
-}
-.round-head{
-    padding-left: 40px;
-}
+    .application-information {
+        position: relative;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        font-family: "Arial Narrow", Arial, sans-serif;
+        font-size: 1em;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        line-height: 20px;
+        word-break: break-all;
+    }
 
-.round {
-    position: relative;
-    margin-top: -5px;
+    .overview {
+        color: black;
+        font-family: "Arial Narrow", Arial, sans-serif;
+        font-size: 1em;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        line-height: 25px;
+    }
+
+    #school-info-big-title {
+        display: none;
+    }
 }
 

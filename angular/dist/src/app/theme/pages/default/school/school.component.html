@@ -45,42 +45,21 @@
                 <div class="row mt-3">
                     <div class="m-content">
                         <div class="m-portlet">
-                            <div class="m-stack m-stack--hor m-stack--general m-stack--demo" style="border-width: 0px">
+                            <div class="m-stack m-stack--hor m-stack--general m-stack--demo m-stack--desktop-and-tablet" style="border-width: 0px">
                                 <div class="m-stack__item m-stack__item--fluid">
-                                    <!--<div class="school-basic-info" [style.background-image]="schoolInfo.picture" style="background-size: 100% 100%">-->
-                                        <!--<div class="info-start"></div>-->
-                                        <!--<h2 class="school-info-title"> {{schoolInfo.name}}  </h2>-->
-                                        <!--<p class="school-info-content">{{schoolInfo.location}}</p>-->
-                                        <!--<p class="school-info-content">{{schoolInfo.phone}}</p>-->
-                                        <!--<p class="school-info-content">{{schoolInfo.email}}</p>-->
-                                        <!--<div class="info-end"></div>-->
-                                    <!--</div>-->
-                                    <img src="{{schoolInfo.pictureURL}}" style="width: 100%; height: 150px;">
-                                </div>
-
-                                <div class="m-stack__item m-stack__item--fluid">
-                                    <div class="m-stack m-stack--ver m-stack--general m-stack--demo" style="border-width: 0px">
-                                        <div class="m-stack__item">
-                                            <div class="m-portlet m-portlet--creative m-portlet--bordered-semi">
-                                                <div class="m-portlet__head">
-                                                    <div class="m-portlet__head-caption">
-                                                        <div class="m-portlet__head-title">
-                                                            <h2 class="m-portlet__head-label m-portlet__head-label--primary">
-                                                                <span >Overview</span>
-                                                            </h2>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="m-portlet__body">
-                                                    {{schoolInfo.info}}
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="school-basic-info" id="school-info-big-title" [style.background-image]="schoolInfo.picture" style="background-size: 100% 100%">
+                                        <div class="info-start"></div>
+                                        <h2 class="school-info-title"> {{schoolInfo.name}}</h2>
+                                        <p class="school-info-content">{{schoolInfo.location}}</p>
+                                        <p class="school-info-content">{{schoolInfo.phone}}</p>
+                                        <p class="school-info-content">{{schoolInfo.email}}</p>
+                                        <div class="info-end"></div>
                                     </div>
+                                    <img src="{{schoolInfo.pictureURL}}" id="school-info-small-title" style="width: 100%; height: 80%;">
                                 </div>
                                 <div class="m-stack__item m-stack__item--fluid">
-                                    <div class="m-stack m-stack--ver m-stack--general m-stack--demo" style="border-width: 0px">
-                                        <div class="m-stack__item">
+                                    <div class="m-stack m-stack--ver m-stack--desktop-and-tablet m-stack--demo">
+                                        <div class="m-stack__item m-stack__item--fluid">
                                             <div class="m-portlet m-portlet--creative m-portlet--bordered-semi">
                                                 <div class="m-portlet__head">
                                                     <div class="m-portlet__head-caption">
@@ -97,7 +76,7 @@
                                                             <span>Tuition:</span>
                                                         </div>
                                                         <div class="col-8" align="right">
-                                                            <b>{{schoolInfo.tuition}}</b>
+                                                            {{schoolInfo.tuition}}
                                                         </div>
                                                     </div>
 
@@ -107,11 +86,10 @@
                                                             <div class="vertical-separtor"></div>
                                                             <div *ngFor="let d of [1,2,3,4]">
                                                                 <div *ngIf = "getDeadline(d) !== ''" class="row round">
-                                                                    <div class="col-4 round-head">
+                                                                    <div class="col-5 round-head">
                                                                         Round {{d}}:
                                                                     </div>
-                                                                    <div class="col-4"></div>
-                                                                    <div class="col-4" align="right" style="color: red">
+                                                                    <div class="col-7" align="right" style="color: red">
                                                                         <b>{{getDeadline(d)}}</b>
                                                                     </div>
                                                                 </div>
@@ -122,12 +100,11 @@
                                                     <hr>
 
                                                     <div class="row">
-                                                        <div class="col-4">
+                                                        <div class="col-7">
                                                             <span>Enrollment (fulltime): </span>
                                                         </div>
-                                                        <div class="col-4"></div>
-                                                        <div class="col-4" align="right">
-                                                            <b>{{schoolInfo.enrollment}}</b>
+                                                        <div class="col-5" align="right">
+                                                            {{schoolInfo.enrollment}}
                                                         </div>
                                                     </div>
 
@@ -135,19 +112,17 @@
                                                         <div class="col-4">
                                                             <span>Average Undergraduate GPA: </span>
                                                         </div>
-                                                        <div class="col-4"></div>
-                                                        <div class="col-4" align="right">
-                                                            <b>{{schoolInfo.avgGPA}}</b>
+                                                        <div class="col-8" align="right">
+                                                            {{schoolInfo.avgGPA}}
                                                         </div>
                                                     </div>
 
                                                     <div class="row">
-                                                        <div class="col-4">
-                                                            <span>Average / Median GMAT: </span>
+                                                        <div class="col-6">
+                                                            <span>Average GMAT: </span>
                                                         </div>
-                                                        <div class="col-4"></div>
-                                                        <div class="col-4" align="right">
-                                                            <b>{{schoolInfo.avgGMAT}}</b>
+                                                        <div class="col-6" align="right">
+                                                            {{schoolInfo.avgGMAT}}
                                                         </div>
                                                     </div>
 
@@ -156,29 +131,41 @@
                                                         <div class="col-4">
                                                             <span>Average Work Experience (in years): </span>
                                                         </div>
-                                                        <div class="col-4"></div>
-                                                        <div class="col-4" align="right">
-                                                            <b>{{schoolInfo.experience}}</b>
+                                                        <div class="col-8" align="right">
+                                                            {{schoolInfo.experience}}
                                                         </div>
                                                     </div>
 
                                                     <div class="row">
-                                                        <div class="col-4">
+                                                        <div class="col-5">
                                                             <span>Application Site:</span>
                                                         </div>
-                                                        <div class="col-8" align="right">
-                                                            <b>{{schoolInfo.applicationSite}}</b>
+                                                        <div class="col-7" align="right">
+                                                            {{schoolInfo.applicationSite}}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                        <div class="m-stack__item m-stack__item--fluid">
+                                            <div class="m-portlet m-portlet--creative m-portlet--bordered-semi">
+                                                <div class="m-portlet__head">
+                                                    <div class="m-portlet__head-caption">
+                                                        <div class="m-portlet__head-title">
+                                                            <h2 class="m-portlet__head-label m-portlet__head-label--primary">
+                                                                <span >Overview</span>
+                                                            </h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="m-portlet__body overview">
+                                                    <!--<h2 class="school-info-title"> {{schoolInfo.name}}  </h2>-->
+                                                    <p>{{schoolInfo.info}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                <div class="m-stack__item m-stack__item--fluid">
-                                    <div class="m-stack m-stack--ver m-stack--general m-stack--demo" style="border-width: 0px">
-                                        <div class="m-stack__item">
+                                        <div class="m-stack__item m-stack__item--fluid" id="school-info-contact">
                                             <div class="m-portlet m-portlet--creative m-portlet--bordered-semi">
                                                 <div class="m-portlet__head">
                                                     <div class="m-portlet__head-caption">
@@ -189,21 +176,16 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="m-portlet__body">
-                                                    <!--<div class="container">-->
-                                                        <!--<div class="info-start"></div>-->
-                                                        <p>Address: {{schoolInfo.location}}</p>
-                                                        <p>Phone: {{schoolInfo.phone}}</p>
-                                                        <p>Email: {{schoolInfo.email}}</p>
-                                                        <!--<div class="info-end"></div>-->
-                                                    <!--</div>-->
+                                                <div class="m-portlet__body overview">
+                                                    <p>Address: <br>{{schoolInfo.location}}</p>
+                                                    <p>Phone: <br>{{schoolInfo.phone}}</p>
+                                                    <p>Email: <br>{{schoolInfo.email}}</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
+                                </div>
                         </div>
                     </div>
                 </div>

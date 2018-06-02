@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
-import { Helpers } from '../../../../helpers';
+import { Component, OnInit, ViewEncapsulation, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
+import { Helpers } from '../../../../helpers'
 import { ScriptLoaderService } from '../../../../_services/script-loader.service';
 import { SchoolsService } from '../../../../_services/schools.service';
 import { forEach } from '@angular/router/src/utils/collection';
 import { Response } from '@angular/http';
+
+declare var $:JQueryStatic;
 
 @Component({
     selector: "app-index",
@@ -13,11 +15,17 @@ import { Response } from '@angular/http';
 })
 export class IndexComponent implements OnInit, AfterViewInit {
 
+    @ViewChild('deletedModal') deletedModal: ElementRef;
+    @ViewChild('deadlineModal') deadlineModal: ElementRef;
+
     schools: any;
     allSchools: any;
-    schoolsInfo: any = undefined;
     chosenValue: string;
-    chosenDeadline: string;
+    chosenDeadlineSchool: string = null;
+    chosenDeadline: string = null;
+    deadlineList = [];
+    deletedSchool: string = null;
+    deletedIndex: number = -1;
     user: string;
     updated;
 
@@ -49,11 +57,23 @@ export class IndexComponent implements OnInit, AfterViewInit {
     }
 
 
-    deleteSchool(event, index, schoolName: string) {
+    confirmDeleteSchool(event, index, schoolName) {
         event.stopPropagation();
-        this.schools.splice(index, 1);
+        this.deletedIndex = index;
+        this.deletedSchool = schoolName;
+        console.log(this.deletedModal);
+        (<any>$(this.deletedModal.nativeElement)).modal('show');
+
+
+    }
+    deleteSchool(event) {
+        event.stopPropagation();
+        this.schools.splice(this.deletedIndex, 1);
         this.updated = new Date();
-        this._schools.userDeleteSchool(schoolName);
+        this._schools.userDeleteSchool(this.deletedSchool);
+        this.deletedIndex = -1;
+        this.deletedSchool = null;
+        (<any>$(this.deletedModal.nativeElement)).modal('hide');
     }
 
     getUser() {
@@ -74,6 +94,34 @@ export class IndexComponent implements OnInit, AfterViewInit {
         this._script.loadScripts('app-index',
             ['assets/app/js/dashboard.js']);
 
+    }
+
+    chooseDeadline(event, schoolName) {
+        event.stopPropagation();
+        this._schools.getSchoolInfos(schoolName).subscribe(d => this.deadlineList = this.getDeadline(d));
+        this.chosenDeadlineSchool = schoolName;
+        (<any>$(this.deadlineModal.nativeElement)).modal('show');
+    }
+
+    getDeadline(schoolInfo) {
+        let i = 1;
+        let name = 'round' + i.toString() + "Deadline";
+        let res = [];
+        console.log(schoolInfo);
+        while (schoolInfo[name] != null && schoolInfo[name] !== '') {
+            res.push(schoolInfo[name]);
+            i++;
+            name = 'round' + i.toString() + "Deadline";
+        }
+
+        return res;
+    }
+
+    addDeadline() {
+        (<any>$(this.deadlineModal.nativeElement)).modal('hide');
+        this.deadlineList = [];
+        this.chosenDeadlineSchool = null;
+        this.chosenDeadline = null;
     }
 
     notEmpty() {

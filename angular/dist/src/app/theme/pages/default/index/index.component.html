@@ -48,10 +48,18 @@
 											<div class="m-dropdown__content">
 												<ul class="m-nav">
 													<li class="m-nav__item">
-														<a (click)="deleteSchool($event, i, school.shortName)" class="m-nav__link">
+														<a (click)="confirmDeleteSchool($event, i, school.shortName)" class="m-nav__link">
 															<i class="m-nav__link-icon flaticon-circle"></i>
-															<span class="m-nav__link-text">
+															<span class="m-nav__link-text" >
 																Remove
+															</span>
+														</a>
+													</li>
+													<li class="m-nav__item">
+														<a (click)="chooseDeadline($event, school.shortName)" class="m-nav__link">
+															<i class="m-nav__link-icon flaticon-calendar-2"></i>
+															<span class="m-nav__link-text" >
+																Deadline
 															</span>
 														</a>
 													</li>
@@ -130,6 +138,65 @@
 			<button type="button" class="btn btn-primary" (click)="addSchool()" data-dismiss="modal">Add</button>
 			<button type="button" class="btn btn-secondary" data-dismiss="modal" #closeBtn>Close</button>
 		</div>
+		</div>
+	</div>
+</div>
+
+<div #deletedModal class="modal fade" id="deletedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="padding-right: 15px;">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Do you want to remove this school?</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-3"></div>
+					<div class="col-6" style="text-align: center">
+						<button type="button" class="btn btn-brand" (click)="deleteSchool($event)">Confirm</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					</div>
+					<div class="col-3"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div #deadlineModal class="modal fade" id="deadlineModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="padding-right: 15px;">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Deadline</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="m-form m-form--fit">
+					<div class="m-portlet__body">
+						<div class="form-group m-form__group row">
+							<label class="col-form-label col-md-12">
+								Select a Deadline...
+							</label>
+							<div class="col-lg-12 col-md-12">
+								<select [(ngModel)]="chosenDeadline" class="form-control m-input" name="option">
+									<option [ngValue]="blank"> -- select a deadline -- </option>
+									<option *ngFor="let d of deadlineList" [ngValue]="d">
+										{{d}}
+									</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" (click)="addDeadline()" data-dismiss="modal">Add</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" #closeBtn>Close</button>
+			</div>
 		</div>
 	</div>
 </div>

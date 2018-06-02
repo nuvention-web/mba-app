@@ -25,6 +25,7 @@ import { Helpers } from '../helpers';
 export class AuthComponent implements OnInit {
     model: any = {};
     loading = false;
+    signupEmail: string;
     returnUrl: string;
 
     @ViewChild('alertSignin',
@@ -65,7 +66,10 @@ export class AuthComponent implements OnInit {
 
     signin() {
         this.loading = true;
-        this._authService.login(this.model.email, this.model.password).subscribe(
+        let email = this.model.email;
+        if (this.signupEmail != null)
+            email = this.signupEmail;
+        this._authService.login(email, this.model.password).subscribe(
             data => {
                 this._router.navigate([this.returnUrl]);
                 // setUser(this.model.email);
@@ -94,7 +98,8 @@ export class AuthComponent implements OnInit {
                     true);
                 this.loading = false;
                 LoginCustom.displayVerificationCode();
-                this.model = {};
+                this.signupEmail = this.model.email;
+                // this.model = {};
             },
             error => {
                 this.showAlert('alertSignup');
@@ -105,15 +110,16 @@ export class AuthComponent implements OnInit {
 
     verify() {
         this.loading = true;
-        this._userService.verify(this.model.email, this.model.code).subscribe(
+        this._userService.verify(this.signupEmail, this.model.code).subscribe(
             data => {
                 this.showAlert('alertSignin');
                 this._alertService.success(
                     'Congratulation! You have created your account successfully!',
                     true);
                 this.loading = false;
-                LoginCustom.displaySignInForm();
-                this.model = {};
+                this.signin();
+                // LoginCustom.displaySignInForm();
+                // this.model = {};
             },
             error => {
                 this.showAlert('alertVerify');
@@ -132,7 +138,7 @@ export class AuthComponent implements OnInit {
                     true);
                 this.loading = false;
                 LoginCustom.displayResetPasswordForm();
-                this.model = {};
+                // this.model = {};
             },
             error => {
                 this.showAlert('alertForgotPass');
@@ -143,6 +149,14 @@ export class AuthComponent implements OnInit {
 
     resetPass() {
         this.loading = true;
+
+        if (this.model.new_pass!== this.model.new_pass_confirm) {
+            this.showAlert('alertResetPass');
+            this._alertService.error('Two passwords are not equal.');
+            this.loading = false;
+            return;
+        }
+        console.log(this.model.email);
         this._userService.resetPassword(this.model.email, this.model.code, this.model.new_pass).subscribe(
             data => {
                 this.showAlert('alertSignin');

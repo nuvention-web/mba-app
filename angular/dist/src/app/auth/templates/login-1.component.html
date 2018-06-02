@@ -98,9 +98,6 @@
 						<form (ngSubmit)="f.form.valid && verify()" #f="ngForm" class="m-login__form m-form" action="">
 							<ng-template #alertVerify></ng-template>
 							<div class="form-group m-form__group">
-								<input class="form-control m-input" type="text" placeholder="Email" name="email" [(ngModel)]="model.email" #email="ngModel" autocomplete="off">
-							</div>
-							<div class="form-group m-form__group">
 								<input class="form-control m-input" type="text" placeholder="Code" name="code" [(ngModel)]="model.code" #email="ngModel" id="m_code" autocomplete="off">
 							</div>
 							<div class="m-login__form-action">
@@ -142,9 +139,15 @@
 						<form (ngSubmit)="f.form.valid && resetPass()" #f="ngForm" class="m-login__form m-form" action="">
 							<ng-template #alertResetPass></ng-template>
 							<div class="form-group m-form__group">
+<<<<<<< HEAD
 								<input class="form-control m-input" type="text" placeholder="Reset email" name="email" [(ngModel)]="model.email" #email="ngModel" id="m_reset_email" autocomplete="off">
 								<input class="form-control m-input" type="text" placeholder="Reset code" name="code" [(ngModel)]="model.code" #email="ngModel" id="m_reset_code" autocomplete="off">
 								<input class="form-control m-input" type="password" placeholder="New password" name="new_pass" [(ngModel)]="model.new_pass" #email="ngModel" id="m_reset_new_pass" autocomplete="off">
+=======
+								<input class="form-control m-input" type="text" placeholder="Reset code" name="code" [(ngModel)]="model.code" #email="ngModel" id="m_reset_code" autocomplete="off">
+								<input class="form-control m-input" type="password" placeholder="New password" name="new_pass" [(ngModel)]="model.new_pass" #email="ngModel" id="m_reset_new_pass" autocomplete="off">
+								<input class="form-control m-input" type="password" placeholder="Confirm password" name="new_pass_confirm" [(ngModel)]="model.new_pass_confirm" #email="ngModel" id="m_reset_new_pass_confirm" autocomplete="off">
+>>>>>>> sprint10
 							</div>
 							<div class="m-login__form-action">
 								<button [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--light': loading}" id="m_login_reset_password_submit" class="btn btn-brand m-btn m-btn--pill m-btn--custom">

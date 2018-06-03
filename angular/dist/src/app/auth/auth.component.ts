@@ -85,7 +85,7 @@ export class AuthComponent implements OnInit {
         this.loading = true;
         if (this.model.password !== this.model.rpassword) {
             this.showAlert('alertSignup');
-            this._alertService.error('Two passwords are not equal.');
+            this._alertService.error('The passwords you entered do not match.');
             this.loading = false;
             return;
         }
@@ -94,7 +94,7 @@ export class AuthComponent implements OnInit {
             data => {
                 this.showAlert('alertVerify');
                 this._alertService.success(
-                    'Thank you.  The code has sent to your email. To complete your registration please fill in the code.',
+                    'Thank you! An activation code has been sent to your email. Please enter the code below to complete creating your account.',
                     true);
                 this.loading = false;
                 LoginCustom.displayVerificationCode();
@@ -134,7 +134,7 @@ export class AuthComponent implements OnInit {
             data => {
                 this.showAlert('alertResetPass');
                 this._alertService.success(
-                    'Cool! Password reset code has been sent to your email.',
+                    'A password reset code has been sent to your email, you will need to provide the code to reset your password.',
                     true);
                 this.loading = false;
                 LoginCustom.displayResetPasswordForm();
@@ -152,7 +152,7 @@ export class AuthComponent implements OnInit {
 
         if (this.model.new_pass!== this.model.new_pass_confirm) {
             this.showAlert('alertResetPass');
-            this._alertService.error('Two passwords are not equal.');
+            this._alertService.error('The passwords you entered do not match.');
             this.loading = false;
             return;
         }
@@ -161,7 +161,7 @@ export class AuthComponent implements OnInit {
             data => {
                 this.showAlert('alertSignin');
                 this._alertService.success(
-                    'You already reset your password. Now sign in with new password!',
+                    'You have successfully reset your password! Please sign in with the new password.',
                     true);
                 this.loading = false;
                 LoginCustom.displaySignInForm();

@@ -24,9 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by jnag on 2/15/18.
@@ -225,7 +225,65 @@ public class MongoUserDBProvider implements UserDBProvider {
         userJSON = removeExtraJSONKey(userJSON, "shortTermGoals");
         userJSON = removeExtraJSONKey(userJSON, "accomplishments");
 
+        userJSON.put("deadlines", getDeadlines(user));
+
         return userJSON;
+
+    }
+
+    private JSONArray getDeadlines(User user) {
+
+        JSONArray finalDeadlinesArray = new JSONArray();
+        JSONArray deadlinesArray = new JSONArray();
+
+        List<Deadline> deadlines = new ArrayList<>();
+
+        for (UserSchool school : user.getSchools()) {
+
+            SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(school.getShortName());
+
+            if (school.getDeadline() != null) {
+
+                String deadlineInString = school.getDeadline();
+                SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+                try {
+                    Date date = formatter.parse(deadlineInString);
+                    Deadline deadline = new Deadline();
+                    deadline.setDeadline(date);
+                    deadline.setDescription(schoolInfo.getName() + " deadline");
+                    deadlines.add(deadline);
+
+                } catch (ParseException e) {
+                    JSONObject schoolDeadlineJSON = new JSONObject();
+                    schoolDeadlineJSON.put("name", schoolInfo.getName() + " deadline");
+                    schoolDeadlineJSON.put("deadline", deadlineInString);
+                    deadlinesArray.put(schoolDeadlineJSON);
+                }
+            } else {
+                JSONObject schoolDeadlineJSON = new JSONObject();
+                schoolDeadlineJSON.put("name", schoolInfo.getName() + " deadline");
+                schoolDeadlineJSON.put("deadline", "Deadline not picked");
+                deadlinesArray.put(schoolDeadlineJSON);
+
+            }
+        }
+
+        deadlines.sort(Comparator.comparing(Deadline::getDeadline));
+
+        for(Deadline deadline : deadlines){
+            JSONObject schoolDeadlineJSON = new JSONObject();
+            schoolDeadlineJSON.put("name", deadline.getDescription());
+            SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+            String deadlineString = formatter.format(deadline.getDeadline());
+            schoolDeadlineJSON.put("deadline", deadlineString);
+            finalDeadlinesArray.put(schoolDeadlineJSON);
+        }
+
+        for(int i=0; i< deadlinesArray.length(); i++) {
+            finalDeadlinesArray.put(deadlinesArray.getJSONObject(i));
+        }
+
+        return finalDeadlinesArray;
 
     }
 

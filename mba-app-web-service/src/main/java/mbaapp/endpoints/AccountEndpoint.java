@@ -89,7 +89,7 @@ public class AccountEndpoint {
 
         try {
             if (userDBProvider.getUserByEmail(userEmail) != null) {
-                return new ResponseEntity<>("Your account has already been activated", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Your account has already been activated - please login!", HttpStatus.BAD_REQUEST);
 
             }
 
@@ -118,7 +118,7 @@ public class AccountEndpoint {
             User user = userDBProvider.getUserByEmail(request.getEmail());
 
             if (user == null) {
-                return new ResponseEntity<>("Did not find an account with this email", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("We did not find an account with this email.", HttpStatus.BAD_REQUEST);
 
             }
             userDBProvider.forgotPassword(user);
@@ -141,7 +141,7 @@ public class AccountEndpoint {
             User user = userDBProvider.getUserByEmail(request.getEmail());
 
             if (user == null) {
-                return new ResponseEntity<>("Did not find an account with this email", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("We did not find an account with this email.", HttpStatus.BAD_REQUEST);
 
             }
 
@@ -180,7 +180,7 @@ public class AccountEndpoint {
                 userDBProvider.activateUser(inactiveUser);
                 inactiveDBProvider.deleteInactiveUser(inactiveUser);
             } else {
-                return new ResponseEntity<>("Invalid activation code.", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("You have entered an invalid activation code - please check your email for the activation code.", HttpStatus.BAD_REQUEST);
 
             }
 

@@ -3,6 +3,7 @@ package mbaapp.endpoints;
 import io.swagger.annotations.ApiOperation;
 import mbaapp.core.User;
 import mbaapp.core.UserSchool;
+import mbaapp.requests.SetDeadlineRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -51,7 +52,7 @@ public class UsersSchoolEndpoint extends EndpointBase {
     @ApiOperation(value = "Set deadline")
     public ResponseEntity setDeadline(@PathVariable String userEmail,
                                       @PathVariable String schoolShortName,
-                                      @RequestBody String deadline) {
+                                      @RequestBody SetDeadlineRequest deadline) {
 
 
         try {
@@ -61,7 +62,7 @@ public class UsersSchoolEndpoint extends EndpointBase {
 
             User user = userDBProvider.getUser(userEmail);
             UserSchool userSchool = getSchoolForUser(user, schoolShortName);
-            userDBProvider.setDeadlineForSchool(user, userSchool, deadline);
+            userDBProvider.setDeadlineForSchool(user, userSchool, deadline.getDeadline());
 
             return new ResponseEntity<>("Added deadline", HttpStatus.CREATED);
         } catch (Exception e) {

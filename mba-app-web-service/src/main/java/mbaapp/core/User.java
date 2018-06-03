@@ -46,12 +46,64 @@ public class User {
     public String passwordResetCode;
     public String lastLogin;
 
+    public List<Task> tasks;
+    public List <Deadline> deadlines;
+
 
     public String whatDoYouBring;
 
     public User(){
 
     }
+
+    public void addTask(String taskName, String details) {
+        Task task = new Task(taskName, details);
+        if(tasks == null) {
+            tasks = new ArrayList<>();
+        }
+
+        tasks.add(task);
+    }
+
+
+    public void deleteTask(String taskID) throws Exception {
+
+        Task taskToDelete = null;
+        for(Task task : tasks) {
+            if(task.getId().equalsIgnoreCase(taskID)) {
+                taskToDelete = task;
+                break;
+            }
+        }
+
+        if(taskToDelete!=null) {
+            tasks.remove(taskToDelete);
+        }
+        else{
+            throw new Exception("Did not find task");
+        }
+    }
+
+    public void updateTask(String taskID, String taskName, String details) throws Exception{
+
+
+        Task taskToUpdate = null;
+        for(Task task : tasks) {
+            if(task.getId().equalsIgnoreCase(taskID)) {
+                taskToUpdate = task;
+                task.setName(taskName);
+                task.setDetails(details);
+                break;
+            }
+        }
+
+        if(taskToUpdate==null) {
+            throw new Exception("Did not find task");
+        }
+
+    }
+
+
 
     public User(String name, String email, String password) {
 //        userID = UUID.randomUUID().toString();

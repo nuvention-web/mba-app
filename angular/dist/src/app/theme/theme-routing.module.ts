@@ -54,6 +54,10 @@ const routes: Routes = [
                 "loadChildren": ".\/pages\/default\/resume\/resume.module#ResumeModule"
             },
             {
+                "path": "testprep",
+                "loadChildren": ".\/pages\/default\/testprep\/testprep.module#TestPrepModule"
+            },
+            {
                 "path": "gettingStarted",
                 "loadChildren": ".\/pages\/default\/getting-started\/gettingStarted.module#GettingStartedModule"
             },

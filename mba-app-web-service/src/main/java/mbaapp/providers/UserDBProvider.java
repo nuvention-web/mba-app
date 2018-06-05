@@ -97,4 +97,7 @@ public interface UserDBProvider {
 
     public void changePassword(User user, char[] password, boolean resetPasswordResetCode) throws Exception;
 
+
+    public void generateRecommendation(User user) throws Exception;
+
 }

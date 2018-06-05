@@ -299,4 +299,48 @@ public class User {
         return userJSON;
 
     }
+
+    public String getWhyMBA() {
+        return whyMBA;
+    }
+
+    public String getShortTermGoals() {
+        return shortTermGoals;
+    }
+
+    public String getLongTermGoals() {
+        return longTermGoals;
+    }
+
+    public List<String> getLeadershipExperience() {
+        return leadershipExperience;
+    }
+
+    public List<String> getTeamPlayerExperience() {
+        return teamPlayerExperience;
+    }
+
+    public List<String> getFailureExperience() {
+        return failureExperience;
+    }
+
+    public List<String> getAccomplishments() {
+        return accomplishments;
+    }
+
+    public List<String> getHobbiesOrInterests() {
+        return hobbiesOrInterests;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public List<Deadline> getDeadlines() {
+        return deadlines;
+    }
+
+    public String getWhatDoYouBring() {
+        return whatDoYouBring;
+    }
 }

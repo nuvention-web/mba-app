@@ -55,10 +55,10 @@
                                         <p class="school-info-content">{{schoolInfo.email}}</p>
                                         <div class="info-end"></div>
                                     </div>
-                                    <img src="{{schoolInfo.pictureURL}}" id="school-info-small-title" style="width: 100%; height: 80%;">
+                                    <img src="{{schoolInfo.pictureURL}}" id="school-info-small-title" style="width: 100%; height: 50%;">
                                 </div>
                                 <div class="m-stack__item m-stack__item--fluid">
-                                    <div class="m-stack m-stack--ver m-stack--desktop-and-tablet m-stack--demo">
+                                    <div class="m-stack m-stack--ver m-stack--flex-desktop m-stack--demo">
                                         <div class="m-stack__item m-stack__item--fluid">
                                             <div class="m-portlet m-portlet--creative m-portlet--bordered-semi">
                                                 <div class="m-portlet__head">
@@ -140,8 +140,11 @@
                                                         <div class="col-5">
                                                             <span>Application Site:</span>
                                                         </div>
-                                                        <div class="col-7" align="right">
+                                                        <div class="col-7 application-site-text" align="right">
                                                             {{schoolInfo.applicationSite}}
+                                                        </div>
+                                                        <div class="col-7 application-site-button" align="right">
+                                                            <a class="btn btn-brand m-btn m-btn--custom m-btn--icon" href="{{schoolInfo.applicationSite}}">Click</a>
                                                         </div>
                                                     </div>
                                                 </div>

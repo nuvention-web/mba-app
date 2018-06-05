@@ -75,8 +75,10 @@ export class AuthComponent implements OnInit {
                 // setUser(this.model.email);
             },
             error => {
+                error = JSON.parse(error._body);
+                console.log(error);
                 this.showAlert('alertSignin');
-                this._alertService.error("Invalid username or password");
+                this._alertService.error(error.message);
                 this.loading = false;
             });
     }
@@ -102,6 +104,7 @@ export class AuthComponent implements OnInit {
                 // this.model = {};
             },
             error => {
+                error = error._body;
                 this.showAlert('alertSignup');
                 this._alertService.error(error);
                 this.loading = false;
@@ -123,7 +126,7 @@ export class AuthComponent implements OnInit {
             },
             error => {
                 this.showAlert('alertVerify');
-                this._alertService.error(error);
+                this._alertService.error("Invalid email or verifiy code");
                 this.loading = false;
             });
     }
@@ -141,6 +144,7 @@ export class AuthComponent implements OnInit {
                 // this.model = {};
             },
             error => {
+                error = error._body;
                 this.showAlert('alertForgotPass');
                 this._alertService.error(error);
                 this.loading = false;
@@ -168,6 +172,7 @@ export class AuthComponent implements OnInit {
                 this.model = {};
             },
             error => {
+                error = error._body;
                 this.showAlert('alertResetPass');
                 this._alertService.error(error);
                 this.loading = false;

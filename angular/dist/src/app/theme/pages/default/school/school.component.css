@@ -2,7 +2,7 @@
 .inline-no-edit { text-decoration: none; border-bottom: none 0;}
 .inline-edit-empty{ text-decoration: none; border-bottom: none 0;}
 
-@media screen and (min-width: 1024px){
+@media screen and (min-width: 1600px){
     .school-basic-info * {
         color: white;
     }
@@ -24,7 +24,7 @@
         margin-top: 5px;
         margin-bottom: 5px;
         margin-left: 20px;
-        font-family: "Arial Narrow", Arial, sans-serif;
+        /*font-family: "Arial Narrow", Arial, sans-serif;*/
         font-size: 1.25em;
         font-style: normal;
         font-variant: normal;
@@ -42,7 +42,7 @@
 
     .application-information {
         color: black;
-        font-family: "Arial Narrow", Arial, sans-serif;
+        /*font-family: "Arial Narrow", Arial, sans-serif;*/
         font-size: 1.125em;
         font-style: normal;
         font-variant: normal;
@@ -53,7 +53,7 @@
 
     .overview {
         color: black;
-        font-family: "Arial Narrow", Arial, sans-serif;
+        /*font-family: "Arial Narrow", Arial, sans-serif;*/
         font-size: 1.125em;
         font-style: normal;
         font-variant: normal;
@@ -82,7 +82,7 @@
     }
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1600px) {
 
     .school-basic-info * {
         color: white;
@@ -108,7 +108,7 @@
         margin-top: 5px;
         margin-bottom: 5px;
         margin-left: 1em;
-        font-family: "Arial Narrow", Arial, sans-serif;
+        /*font-family: "Arial Narrow", Arial, sans-serif;*/
         font-size: 1em;
         font-style: normal;
         font-variant: normal;
@@ -121,7 +121,7 @@
         position: relative;
         margin-top: 5px;
         margin-bottom: 5px;
-        font-family: "Arial Narrow", Arial, sans-serif;
+        /*font-family: "Arial Narrow", Arial, sans-serif;*/
         font-size: 1em;
         font-style: normal;
         font-variant: normal;
@@ -132,7 +132,7 @@
 
     .overview {
         color: black;
-        font-family: "Arial Narrow", Arial, sans-serif;
+        /*font-family: "Arial Narrow", Arial, sans-serif;*/
         font-size: 1em;
         font-style: normal;
         font-variant: normal;
@@ -145,3 +145,25 @@
     }
 }
 
+@media screen and (min-width: 800px) {
+
+    .application-site-text {
+        display: block;
+    }
+
+    .application-site-button {
+        display: none;
+        color: white;
+    }
+}
+@media screen and (max-width: 800px) {
+    .application-site-text {
+        display: none;
+    }
+
+    .application-site-button {
+        display: block;
+        color: white;
+    }
+
+}

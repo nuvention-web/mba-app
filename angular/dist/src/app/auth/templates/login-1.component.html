@@ -98,6 +98,7 @@
 						<form (ngSubmit)="f.form.valid && verify()" #f="ngForm" class="m-login__form m-form" action="">
 							<ng-template #alertVerify></ng-template>
 							<div class="form-group m-form__group">
+								<input *ngIf="signupEmail == null" class="form-control m-input" type="text" placeholder="Email" name="code" [(ngModel)]="model.email" #email="ngModel" id="m_email" autocomplete="off">
 								<input class="form-control m-input" type="text" placeholder="Code" name="code" [(ngModel)]="model.code" #email="ngModel" id="m_code" autocomplete="off">
 							</div>
 							<div class="m-login__form-action">

@@ -1,10 +1,7 @@
 package mbaapp.endpoints;
 
 import io.swagger.annotations.ApiOperation;
-import mbaapp.core.EssayDraft;
-import mbaapp.core.Resume;
-import mbaapp.core.User;
-import mbaapp.core.UserSchool;
+import mbaapp.core.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -87,12 +84,53 @@ public class DownloadEndpoint extends EndpointBase{
 
         }
 
+    }
 
+
+    @GetMapping(value = "/users/{userEmail}/profilePDF/{uuid}", produces = "application/octet-stream")
+    @CrossOrigin
+    @ApiOperation(value = "Download a resume draft")
+    public ResponseEntity downloadProfilePDF(@PathVariable String userEmail, @PathVariable String uuid) {
+
+        try {
+            if (runValidations(userEmail, null) != null) {
+                return runValidations(userEmail, null);
+            }
+
+            User user = userDBProvider.getUser(userEmail);
+
+            ProfilePDF profilePDF = user.getProfilePDF();
+
+            if (profilePDF == null) {
+                return new ResponseEntity<String>("Did not find a profile PDF", HttpStatus.BAD_REQUEST);
+            }
+
+            if(!profilePDF.getUuid().equalsIgnoreCase(uuid)) {
+                return new ResponseEntity<String>("Incorrect UUID", HttpStatus.BAD_REQUEST);
+
+            }
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="+user.getName()+"Profile.pdf");
+
+            ResponseEntity responseEntity =  new ResponseEntity(userDBProvider.getFileUploaded(profilePDF.getUuid()).toByteArray(), headers,
+                    HttpStatus.OK) ;
+
+            return responseEntity;
+
+
+        }
+        catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
+        }
 
     }
 
 
-        protected ResponseEntity<String> runValidations(String userEmail, String schoolShortName) {
+
+    protected ResponseEntity<String> runValidations(String userEmail, String schoolShortName) {
 
         User user = userDBProvider.getUser(userEmail);
         if (user == null) {

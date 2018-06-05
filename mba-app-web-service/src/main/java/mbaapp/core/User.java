@@ -1,9 +1,7 @@
 package mbaapp.core;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.data.annotation.Id;
 
@@ -49,11 +47,21 @@ public class User {
     public List<Task> tasks;
     public List <Deadline> deadlines;
 
+    public ProfilePDF profileRecommendation;
+
 
     public String whatDoYouBring;
 
     public User(){
 
+    }
+
+    public ProfilePDF getProfilePDF() {
+        return profileRecommendation;
+    }
+
+    public void setProfilePDF(ProfilePDF profileRecommendation) {
+        this.profileRecommendation = profileRecommendation;
     }
 
     public void addTask(String taskName, String details) {

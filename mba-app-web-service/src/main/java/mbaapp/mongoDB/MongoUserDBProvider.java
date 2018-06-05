@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -484,7 +485,9 @@ public class MongoUserDBProvider implements UserDBProvider {
     public void generateRecommendation(User user) throws Exception {
 
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(user.getName() +".pdf"));
+        File file = new File(user.getName() +".pdf");
+        FileOutputStream fos = new FileOutputStream(file);
+        PdfWriter.getInstance(document, fos);
         document.open();
 
         Font headingFont = FontFactory.getFont(FontFactory.TIMES, 11, Font.BOLD, BaseColor.BLACK);
@@ -545,6 +548,16 @@ public class MongoUserDBProvider implements UserDBProvider {
 
         document.close();
 
+        String uuid = addFileToMongoDB(file);
+
+        ProfilePDF profilePDF = new ProfilePDF();
+        profilePDF.setUuid(uuid);
+
+        user.setProfilePDF(profilePDF);
+
+        saveUser(user);
+
+
     }
 
 
@@ -601,18 +614,29 @@ public class MongoUserDBProvider implements UserDBProvider {
 
 
 
-        private String addFileToMongo(MultipartFile file) throws Exception{
-        File convFile = new File(file.getOriginalFilename());
-        convFile.createNewFile();
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
+    private String addFileToMongo(MultipartFile file) throws Exception {
+            File convFile = new File(file.getOriginalFilename());
+            convFile.createNewFile();
+            FileOutputStream fos = new FileOutputStream(convFile);
+            fos.write(file.getBytes());
+            fos.close();
+            DBObject dbObject = new BasicDBObject();
+            GridFSFile gridFSID = gridFsTemplate.store(file.getInputStream(), dbObject);
+            convFile.delete();
+            return gridFSID.getId().toString();
+
+    }
+
+    private String addFileToMongoDB(File file) throws Exception {
+
+        FileInputStream fileInputStream = new FileInputStream(file);
         DBObject dbObject = new BasicDBObject();
-        GridFSFile gridFSID = gridFsTemplate.store(file.getInputStream(), dbObject);
-        convFile.delete();
+        GridFSFile gridFSID = gridFsTemplate.store(fileInputStream, dbObject);
+        file.delete();
         return gridFSID.getId().toString();
 
     }
+
 
     public ByteArrayOutputStream getResumeUpload(User user, Resume resume) throws Exception {
         GridFSDBFile gridfsfile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(resume.getUploadID())));

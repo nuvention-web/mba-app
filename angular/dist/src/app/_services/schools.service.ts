@@ -128,6 +128,15 @@ export class SchoolsService {
         window.open(URL+"/download/users/"+getCurrentUser()+"/resume/" + resumeID);
     }
 
+    downloadProfile(uuid:string) {
+        window.open(URL+"/download/users/"+getCurrentUser()+"/profilePDF/" + uuid);
+    }
+
+
+    generatePDF() {
+        return this.http.post(URL+"/mba/users/"+getCurrentUser()+"/recommendation", {}, jwt(0));
+    }
+
 
     saveEssayDraft(text, schoolName, essayID) {
         return this.http.post(URL+"/mba/users/"+getCurrentUser()+"/school/" + schoolName + "/essay/" + essayID + "/draft",{"contents": text}, jwt(1));
@@ -139,6 +148,10 @@ export class SchoolsService {
             "name": name,
             "message": message
         }, jwt(1));
+    }
+
+    getScores(){
+        return this.http.get(URL + "/mba/users/" + getCurrentUser() + "/scores", jwt()).map((response:Response) => response.json());
     }
 
 

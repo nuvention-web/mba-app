@@ -438,16 +438,16 @@ public class MongoUserDBProvider implements UserDBProvider {
 
     public JSONObject getScores(User user) throws Exception {
 
-        JSONObject schoolsInfoJSON = new JSONObject();
         List<UserSchool> userSchools = user.getSchools();
-
+        JSONArray schoolsArray = new JSONArray();
         for(UserSchool school : userSchools) {
             SchoolInfo info =  schoolInfoRepository.findByShortName(school.getShortName());
             JSONObject schoolInfoJSON = new JSONObject();
             schoolInfoJSON.put("AvgGMAT", info.getAvgGMAT());
 //            schoolInfoJSON.put("MedianGMAT", info.getMedianGMAT());
             schoolInfoJSON.put("AvgGPA", info.getAvgGPA());
-            schoolsInfoJSON.put(info.getName(), schoolInfoJSON);
+            schoolInfoJSON.put("name", info.getName());
+            schoolsArray.put(schoolInfoJSON);
         }
 
         JSONObject userJSON = new JSONObject();
@@ -456,7 +456,7 @@ public class MongoUserDBProvider implements UserDBProvider {
         userJSON.put("targetGmatScore", user.getTargetGmatScore());
         userJSON.put("greScore", user.getTargetGreScore());
         userJSON.put("targetGreScore", user.getTargetGreScore());
-        userJSON.put("schools", schoolsInfoJSON);
+        userJSON.put("schools", schoolsArray);
 
         return userJSON;
     }

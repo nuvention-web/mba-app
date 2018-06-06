@@ -1,7 +1,9 @@
 // The URL of the website
 import {Headers, RequestOptions} from "@angular/http";
 
-export const URL = "https://portal.myapp.mba";
+// export const URL = "https://portal.myapp.mba";
+ export const URL = "http://localhost:8080";
+
 // The reset password must use this endpoint. Otherwise the server report 400. export const URL = "http://myappmba-199623.appspot.com";
 
 export function getCurrentUser() {

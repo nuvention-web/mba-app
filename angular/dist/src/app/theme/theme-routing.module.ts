@@ -62,6 +62,10 @@ const routes: Routes = [
                 "loadChildren": ".\/pages\/default\/getting-started\/gettingStarted.module#GettingStartedModule"
             },
             {
+                "path": "recommendation",
+                "loadChildren": ".\/pages\/default\/profilePDF\/profilePDF.module#ProfilePDFModule"
+            },
+            {
                 "path": "",
                 "redirectTo": "index.html",
                 "pathMatch": "full"

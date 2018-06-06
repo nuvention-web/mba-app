@@ -1,0 +1,77 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Recommendation
+            </h3>
+        </div>
+    </div>
+</div>
+<div class="m-content">
+    <div>
+                    <div class="row">
+                        <div class="m-stack m-stack--ver m-stack--general">
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle"></div>
+                            <div class="m-stack__item m-stack__item--middle m-stack__item--fluid">
+                                <div class="m-content">
+                                    <div class="row">
+                                        <div class="m-portlet m-portlet--tab">
+                                            <div class="m-portlet__body">
+                                                <div>
+                                                    <div class="m-widget5">
+                                                        <div id="resumeContainer">
+                                                            <div class="row">
+                                                                <br>
+                                                                <p> When you reach out to your recommenders to ask for recommendations, it is helpful if you provide them with your goals, the reasons behind
+                                                                    you wanting to pursue an MBA, your leadership experiences and accomplishments. Your recommenders can use this information while drafting
+                                                                    your recommendation.
+                                                                </p>
+                                                                <p>
+                                                                    You can generate a PDF using your responses to the questions you answered in the <a routerLink="/profile/edit">My Profile</a> page and
+                                                                    provide your recommender with the PDF.
+                                                                </p>
+                                                            </div>
+                                                            <br>
+                                                            <div class="row">
+                                                                <div class="col-md-8">
+                                                                    <div class="list-group">
+                                                                        <div class="list-group-item">
+                                                                            <div class="row">
+                                                                                <div [hidden]="profilePDF == null"  class="col-md-6 m--align-left" >
+                                                                                    <strong>{{user}} Profile </strong></div>
+                                                                                <div [hidden]="profilePDF == null" class="col-md-6 m--align-right">
+                                                                                    <div class="btn-group m-btn-group m-btn-group--pill"
+                                                                                         role="group">
+                                                                                        <button (click)="downloadPDF()" class="m-btn btn-sm btn btn-outline-brand" type="button">
+                                                                                            <i class="fa fa-download"></i>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div [hidden]="profilePDF == null"  class="col-md-6 m--align-left" >
+                                                                                    <i>Generated: {{getDate()}} </i></div>
+                                                                                <div [hidden]="profilePDF != null" class="col-md-6 m--align-left">
+                                                                                    <strong><i>No pdfs generated.</i></strong>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <br>
+                                                            <br>
+
+                                                            <div class="row">
+                                                                <button type="button" class="btn m-btn--pill btn-primary" [disabled]="resumeUploadButtonDisabled" (click)="generatePDF()">{{resumeUploadText}}</button>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</div>
+</div>

@@ -16,7 +16,44 @@
 </div>
 <!-- END: Subheader -->
 <div class="m-content">
+    <h5 class="m-subheader__title m-subheader__title--separator">
+        Average GMAT and undergraduate GPA at your target schools:
+    </h5>
     <div>
-        We recommend you use our partners at Manhattan GMAT Prep.
+        <div class="row">
+                <div *ngFor="let school of schools; let i=index" class="col-xl-4 col-lg-6 col-sm-12">
+                    <!--begin:: Widgets/Top Products-->
+                    <div class="show-hand m-portlet m-portlet--bordered-semi">
+                        <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <h4 class="m-portlet__head-text">
+                                            {{ school.name }}
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div class="m-section__content">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <!-- <i class="flaticon-edit-1"></i>&nbsp;&nbsp;&nbsp;-->
+                                                Average / Median GMAT:&nbsp;  <strong>{{school.AvgGMAT}}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            <!--<i class="flaticon-notes"></i>&nbsp;&nbsp;&nbsp;-->
+                                                Average GPA: &nbsp;<strong>{{school.AvgGPA}}</strong></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                        </div>
+                    <!--end:: Widgets/Top Products-->
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -15,6 +15,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
@@ -532,10 +534,9 @@ public class MongoUserDBProvider implements UserDBProvider {
             addBulletsToDocument(document, "What are your hobbies / interests outside of work/school?", user.getHobbiesOrInterests());
         }
 
-
-
-        Path path = Paths.get(ClassLoader.getSystemResource("image/logo.png").toURI());
-        Image img = Image.getInstance(path.toAbsolutePath().toString());
+        //Path path = Paths.get(ClassLoader.getSystemResource("image/logo.png").toURI());
+        File imgFile = new ClassPathResource("image/logo.png").getFile();
+        Image img = Image.getInstance(imgFile.getAbsolutePath());
         img.setAlignment(Image.MIDDLE);
         document.add(img);
 

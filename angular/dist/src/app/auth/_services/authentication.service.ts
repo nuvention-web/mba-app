@@ -14,6 +14,8 @@ export class AuthenticationService {
                 // login successful if there's a jwt token in the response
                 let user = response.json();
                 if (user && user.AUTH_TOKEN) {
+                    var now = new Date();
+                    user.expires = now.setTime(now.getTime() + (10*60*60*1000));
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
                 }

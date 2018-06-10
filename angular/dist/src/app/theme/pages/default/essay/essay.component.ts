@@ -168,7 +168,8 @@ export class EssayComponent implements OnInit {
     }
 
     saveDraft() {
-        this._schools.saveEssayDraft("yo", this.school, this.essayID).subscribe(
+        var essay_code = (<any>$)("#draft_editor").summernote('code');
+        this._schools.saveEssayDraft(essay_code, this.school, this.essayID).subscribe(
             (response:Response) => {
                 this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
                 this._schools.getAllEssays().subscribe(d => this.allEssays = this.transformJSON(d));

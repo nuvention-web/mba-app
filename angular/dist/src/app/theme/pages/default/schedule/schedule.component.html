@@ -1,0 +1,176 @@
+<div class="m-subheader" appunwraptag="">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title">
+                Activity
+            </h3>
+        </div>
+        <div class="mr-right">
+            <a class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air" data-toggle="modal" data-target="#newEventModal" href="#" ng-reflect-href="#">
+				<span>
+					<i class="la la-plus"></i>
+					<span>
+						Add Event
+					</span>
+				</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-xl-6 col-lg-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet  m-portlet--full-height ">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Event
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide m-scroller ps ps--active-y" data-scrollbar-shown="true" data-scrollable="true" data-height="380" style="overflow: hidden; height: 380px; position: relative;">
+                        <!--Begin::Timeline 2 -->
+                        <div class="m-timeline-2">
+                            <div class="m-timeline-2__items  m--padding-top-25 m--padding-bottom-10">
+                                <div *ngFor="let a of activities; let i = index" class="m-timeline-2__item">
+                                    <span class="m-timeline-2__item-time">10:00</span>
+                                    <div class="m-timeline-2__item-cricle">
+                                        <i class="fa fa-genderless m--font-{{colors[i % colorsSize]}}"></i>
+                                    </div>
+                                    <div class="m-timeline-2__item-text">
+                                        <a (click)="modifyActivity(a)" href="#" ng-reflect-href="#" style="color: #0b0b0b">
+                                            <h5>{{a.name}}</h5>
+                                            <p>{{a.details}}</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End::Timeline 2 -->
+                        <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 380px; right: 4px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 221px;"></div></div></div>
+                </div>
+            </div>
+            <!--End::Portlet-->
+        </div>
+        <div class="col-xl-6 col-lg-12">
+            <!--Begin::Portlet-->
+            <div class="m-portlet m-portlet--full-height ">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                School Deadline
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="tab-content">
+                        <div class="tab-pane active show" id="m_widget2_tab1_content">
+                            <!--Begin::Timeline 3 -->
+                            <div class="m-timeline-3">
+                                <div class="m-timeline-3__items">
+                                    <div *ngFor="let d of deadlines; let i = index" class="m-timeline-3__item m-timeline-3__item--{{colors[i % colorsSize]}}" style="margin-bottom: 2rem">
+                                        <span class="m-timeline-3__item-time" style="vertical-align: middle; padding-top: 0; text-align: left; width: 12rem">{{d.deadline}}</span>
+                                        <div class="m-timeline-3__item-desc" style="vertical-align: middle; font-size: 1.5rem; padding-left: 14rem;">
+                                            {{d.name}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End::Timeline 3 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End::Portlet-->
+        </div>
+    </div>
+
+</div>
+
+
+<div #newEventModal class="modal fade" id="newEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="padding-right: 15px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Activity</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <input type="text" required class="form-control m-input" placeholder="Title" [(ngModel)]="activity.name">
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="input-group date">
+                            <input #newDate type="text" required readonly class="form-control m-input" id="m_datepicker_2" placeholder="Select date" [(ngModel)]="activity.time">
+                            <div class="input-group-append">
+							<span class="input-group-text">
+								<i class="la la-calendar-check-o"></i>
+							</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form_group row">
+                    <div class="col-12">
+                        <textarea class="form-control m-input" required rows="6" placeholder="Activity" [(ngModel)]="activity.description"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="addActivity()" data-dismiss="modal">Add</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" #closeBtn>Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div #updateEventModal class="modal fade" id="updateEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="padding-right: 15px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Activity</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group m-form__group row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <input type="text" class="form-control m-input" placeholder="Title" [(ngModel)]="activity.name">
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="input-group date">
+                            <input #updateDate type="text" class="form-control m-input" id="m_datepicker_1" readonly="" placeholder="Select date">
+                            <div class="input-group-append">
+							<span class="input-group-text">
+								<i class="la la-calendar-check-o"></i>
+							</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group m-form_group row">
+                    <div class="col-12">
+                        <textarea class="form-control m-input" rows="6" placeholder="Activity" [(ngModel)]="activity.description"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="updateActivity()" data-dismiss="modal">Update</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" #closeBtn>Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

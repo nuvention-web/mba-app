@@ -66,6 +66,10 @@ const routes: Routes = [
                 "loadChildren": ".\/pages\/default\/profilePDF\/profilePDF.module#ProfilePDFModule"
             },
             {
+                "path": "schedule",
+                "loadChildren": "./pages\/default\/schedule\/schedule.module#ScheduleModule"
+            },
+            {
                 "path": "",
                 "redirectTo": "index.html",
                 "pathMatch": "full"

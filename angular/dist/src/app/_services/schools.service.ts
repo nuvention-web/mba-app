@@ -154,5 +154,4 @@ export class SchoolsService {
         return this.http.get(URL + "/mba/users/" + getCurrentUser() + "/scores", jwt()).map((response:Response) => response.json());
     }
 
-
 }

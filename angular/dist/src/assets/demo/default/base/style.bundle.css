@@ -23710,9 +23710,9 @@ body.m-portlet--fullscreen.m-aside-left--fixed .m-aside-left {
     -ms-border-radius: .3rem;
     -o-border-radius: .3rem;
     border-radius: .3rem;
-    height: 70%;
-    left: 5.1rem;
-    top: .46rem;
+    height: 100%;
+    left: 12.5rem;
+    /*top: .30rem;*/
     content: ""
 }
 
@@ -23724,7 +23724,7 @@ body.m-portlet--fullscreen.m-aside-left--fixed .m-aside-left {
     font-size: 1.3rem;
     position: absolute;
     text-align: right;
-    width: 3.57rem
+    width: 3.75rem
 }
 
 .m-timeline-3 .m-timeline-3__item .m-timeline-3__item-desc {

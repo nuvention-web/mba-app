@@ -2,7 +2,7 @@
     <div class="d-flex align-items-center">
         <div class="mr-auto">
             <h3 class="m-subheader__title">
-                Activity
+                Activity and deadline
             </h3>
         </div>
         <div class="mr-right">
@@ -10,7 +10,7 @@
 				<span>
 					<i class="la la-plus"></i>
 					<span>
-						Add Event
+						Add activity
 					</span>
 				</span>
             </a>
@@ -28,7 +28,7 @@
                     <div class="m-portlet__head-caption">
                         <div class="m-portlet__head-title">
                             <h3 class="m-portlet__head-text">
-                                Event
+                                Activity
                             </h3>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                                         <i class="fa fa-genderless m--font-{{colors[i % colorsSize]}}"></i>
                                     </div>
                                     <div class="m-timeline-2__item-text">
-                                        <a (click)="modifyActivity(a)" href="#" ng-reflect-href="#" style="color: #0b0b0b">
+                                        <a class="activity" (click)="modifyActivity(a)" href="#" ng-reflect-href="#" style="color: #0b0b0b;">
                                             <h5>{{a.name}}</h5>
                                             <p>{{a.details}}</p>
                                         </a>

@@ -36,15 +36,19 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
 
     refresh() {
         this.tasks.getTasksAndDeadline().subscribe(d => {
-            console.log(d);
             this.deadlines = d.deadlines;
             this.activities = d.tasks;
-            console.log(this.activities);
+            this.deadlines.forEach(d => d.name = d.name.slice(0, -9));
         });
     }
 
     updateDatetime() {
         console.log(this.newDate.nativeElement.value);
+    }
+
+    newActivity() {
+        this.activity = {name: '', description: '', date: '', taskID: ''};
+        this.showForm(this.newEventModal);
     }
 
     addActivity() {

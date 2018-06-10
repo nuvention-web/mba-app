@@ -26,7 +26,12 @@ export class SchoolComponent implements OnInit {
                 this._schools.getSchoolInfos(this.school).subscribe(d => this.getSchoolInfo(d));
             }
         );
-        this._schools.getSchoolDetails(this.school).subscribe(d => {this.schoolDetails = d; console.log(d); this.essays = d["essays"]});
+        this._schools.getSchoolDetails(this.school).subscribe(d => {
+            this.schoolDetails = d;
+            console.log(d);
+            this.essays = d["essays"];
+            this.noteWrap();
+        });
     }
 
     saveSchool(i) {
@@ -38,8 +43,24 @@ export class SchoolComponent implements OnInit {
         console.log(info);
         this.schoolInfo.picture = this._sanitizer.bypassSecurityTrustStyle(`url(${this.schoolInfo.pictureURL})`);
         this.schoolInfo.logo = this._sanitizer.bypassSecurityTrustStyle(`url(${this.schoolInfo.logoURL})`);
+    }
 
+    noteWrap() {
+        this.schoolDetails.notes.forEach(n => {
+            if (n.title === "##")
+                n.title = "";
+            if (n.contents === "##")
+                n.contents = "";
+        });
+    }
 
+    noteunWrap() {
+        this.schoolDetails.notes.forEach(n => {
+            if (n.title === "")
+                n.title = "##";
+            if (n.contents === "")
+                n.contents = "##";
+        });
     }
 
     getDeadline(d) {
@@ -53,7 +74,7 @@ export class SchoolComponent implements OnInit {
     newNote() {
         let note = {title: "", contents:""};
         this.schoolDetails.notes.push(note);
-        this._schools.addNote(this.school, "Contents", "Title");
+        this._schools.addNote(this.school, "##", "##");
     }
 
     delNote(note) {

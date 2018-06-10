@@ -47,14 +47,14 @@
                         <div class="m-portlet">
                             <div class="m-stack m-stack--hor m-stack--general m-stack--demo m-stack--desktop-and-tablet" style="border-width: 0px">
                                 <div class="m-stack__item m-stack__item--fluid">
-                                    <div class="school-basic-info" id="school-info-big-title" [style.background-image]="schoolInfo.picture" style="background-size: 100% 100%">
-                                        <div class="info-start"></div>
-                                        <h2 class="school-info-title"> {{schoolInfo.name}}</h2>
-                                        <p class="school-info-content">{{schoolInfo.location}}</p>
-                                        <p class="school-info-content">{{schoolInfo.phone}}</p>
-                                        <p class="school-info-content">{{schoolInfo.email}}</p>
-                                        <div class="info-end"></div>
-                                    </div>
+                                    <!--<div class="school-basic-info" id="school-info-big-title" [style.background-image]="schoolInfo.picture" style="background-size: 100% 100%">-->
+                                        <!--<div class="info-start"></div>-->
+                                        <!--<h2 class="school-info-title"> {{schoolInfo.name}}</h2>-->
+                                        <!--<p class="school-info-content">{{schoolInfo.location}}</p>-->
+                                        <!--<p class="school-info-content">{{schoolInfo.phone}}</p>-->
+                                        <!--<p class="school-info-content">{{schoolInfo.email}}</p>-->
+                                        <!--<div class="info-end"></div>-->
+                                    <!--</div>-->
                                     <img src="{{schoolInfo.pictureURL}}" id="school-info-small-title" style="width: 100%; height: 180px;">
                                 </div>
                                 <div class="m-stack__item m-stack__item--fluid">
@@ -144,7 +144,7 @@
                                                             {{schoolInfo.applicationSite}}
                                                         </div>
                                                         <div class="col-7 application-site-button" align="right">
-                                                            <a class="btn btn-brand m-btn m-btn--custom m-btn--icon" href="{{schoolInfo.applicationSite}}">Click</a>
+                                                            <a class="btn btn-brand m-btn m-btn--custom m-btn--icon" [href]="schoolInfo.applicationSite" target="_blank">Click</a>
                                                         </div>
                                                     </div>
                                                 </div>

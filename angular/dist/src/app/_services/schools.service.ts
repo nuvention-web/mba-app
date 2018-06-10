@@ -154,4 +154,8 @@ export class SchoolsService {
         return this.http.get(URL + "/mba/users/" + getCurrentUser() + "/scores", jwt()).map((response:Response) => response.json());
     }
 
+    updateDeadline(schoolName, deadline) {
+        return this.http.put(URL + "/mba/users/" + getCurrentUser() + "/school/" + schoolName + "/deadline", {deadline: deadline}, jwt(1));
+    }
+
 }

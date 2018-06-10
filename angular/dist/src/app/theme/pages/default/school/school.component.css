@@ -73,13 +73,13 @@
         margin-top: -5px;
     }
 
-    #school-info-contact {
-        display: none;
-    }
+    /*#school-info-contact {*/
+        /*display: none;*/
+    /*}*/
 
-    #school-info-small-title {
-        display: none;
-    }
+    /*#school-info-small-title {*/
+        /*display: none;*/
+    /*}*/
 }
 
 @media screen and (max-width: 1600px) {
@@ -140,9 +140,9 @@
         line-height: 25px;
     }
 
-    #school-info-big-title {
-        display: none;
-    }
+    /*#school-info-big-title {*/
+        /*display: none;*/
+    /*}*/
 }
 
 @media screen and (min-width: 800px) {

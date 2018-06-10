@@ -119,6 +119,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
     addDeadline() {
         (<any>$(this.deadlineModal.nativeElement)).modal('hide');
+        this._schools.updateDeadline(this.chosenDeadlineSchool, this.chosenDeadline).subscribe();
         this.deadlineList = [];
         this.chosenDeadlineSchool = null;
         this.chosenDeadline = null;

@@ -23616,7 +23616,7 @@ body.m-portlet--fullscreen.m-aside-left--fixed .m-aside-left {
 .m-timeline-2:before {
     content: '';
     position: absolute;
-    left: 4.89rem;
+    left: 10.19rem;
     width: .214rem;
     height: 100%
 }
@@ -23644,7 +23644,7 @@ body.m-portlet--fullscreen.m-aside-left--fixed .m-aside-left {
     border: .89rem solid #fff;
     z-index: 1;
     top: .2rem;
-    left: 4.1rem;
+    left: 9.4rem;
     position: relative
 }
 
@@ -23661,7 +23661,7 @@ body.m-portlet--fullscreen.m-aside-left--fixed .m-aside-left {
     font-size: 1rem;
     font-weight: 400;
     padding-bottom: .3rem;
-    padding-left: 5rem
+    padding-left: 10.3rem
 }
 
 .m-timeline-2 .m-timeline-2__items .m-timeline-2__item .m-timeline-2__item-text.m-timeline-2__item-text--bold {

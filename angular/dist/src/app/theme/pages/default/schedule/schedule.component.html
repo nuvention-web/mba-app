@@ -6,7 +6,7 @@
             </h3>
         </div>
         <div class="mr-right">
-            <a class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air" data-toggle="modal" data-target="#newEventModal" href="#" ng-reflect-href="#">
+            <a class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--air" (click)="newActivity()" href="#" ng-reflect-href="#">
 				<span>
 					<i class="la la-plus"></i>
 					<span>
@@ -39,7 +39,8 @@
                         <div class="m-timeline-2">
                             <div class="m-timeline-2__items  m--padding-top-25 m--padding-bottom-10">
                                 <div *ngFor="let a of activities; let i = index" class="m-timeline-2__item">
-                                    <span class="m-timeline-2__item-time">10:00</span>
+                                    <span *ngIf="a.date != null && a.date !== ''" class="m-timeline-2__item-time">{{a.date}}</span>
+                                    <span *ngIf="a.date == null || a.date === ''" class="m-timeline-2__item-time">Date not picked</span>
                                     <div class="m-timeline-2__item-cricle">
                                         <i class="fa fa-genderless m--font-{{colors[i % colorsSize]}}"></i>
                                     </div>
@@ -53,7 +54,7 @@
                             </div>
                         </div>
                         <!--End::Timeline 2 -->
-                        <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 380px; right: 4px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 221px;"></div></div></div>
+                        <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 0px; right: 4px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
                 </div>
             </div>
             <!--End::Portlet-->

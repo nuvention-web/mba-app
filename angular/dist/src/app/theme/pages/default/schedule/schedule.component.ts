@@ -9,7 +9,7 @@ declare var $:JQueryStatic;
     selector: 'app-schedule',
     templateUrl: './schedule.component.html',
     encapsulation: ViewEncapsulation.None,
-    styles: ['.activity:hover {color: #BBBBBB}'],
+    styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent implements OnInit, AfterViewInit {
 

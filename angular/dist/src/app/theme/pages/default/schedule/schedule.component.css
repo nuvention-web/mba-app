@@ -1,0 +1,12 @@
+.activity :hover {
+    border-width: .12rem;
+    border-color: #9C0000;
+    border-style: solid;
+    text-decoration: none;
+}
+
+.activity {
+    color: #0b0b0b;
+    text-decoration: none;
+}
+

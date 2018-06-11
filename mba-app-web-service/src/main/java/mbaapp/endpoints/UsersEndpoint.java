@@ -93,7 +93,7 @@ public class UsersEndpoint extends EndpointBase{
                 return new ResponseEntity<>("User does not exist!", HttpStatus.BAD_REQUEST);
             }
 
-            mbaUser.addTask(taskRequest.getName(), taskRequest.getDescription());
+            mbaUser.addTask(taskRequest.getName(), taskRequest.getDescription(), taskRequest.getDate());
             userDBProvider.saveUser(mbaUser);
 
             return new ResponseEntity<>("Updated user", HttpStatus.OK);
@@ -156,7 +156,7 @@ public class UsersEndpoint extends EndpointBase{
                 return new ResponseEntity<>("User does not exist!", HttpStatus.BAD_REQUEST);
             }
 
-            mbaUser.updateTask(taskID, addTaskRequest.getName(), addTaskRequest.getDescription());
+            mbaUser.updateTask(taskID, addTaskRequest.getName(), addTaskRequest.getDescription(), addTaskRequest.getDate());
             userDBProvider.saveUser(mbaUser);
 
             return new ResponseEntity<>("Updated task", HttpStatus.OK);

@@ -64,8 +64,8 @@ public class User {
         this.profileRecommendation = profileRecommendation;
     }
 
-    public void addTask(String taskName, String details) {
-        Task task = new Task(taskName, details);
+    public void addTask(String taskName, String details, String date) {
+        Task task = new Task(taskName, details, date);
         if(tasks == null) {
             tasks = new ArrayList<>();
         }
@@ -92,7 +92,7 @@ public class User {
         }
     }
 
-    public void updateTask(String taskID, String taskName, String details) throws Exception{
+    public void updateTask(String taskID, String taskName, String details, String date) throws Exception{
 
 
         Task taskToUpdate = null;
@@ -101,6 +101,7 @@ public class User {
                 taskToUpdate = task;
                 task.setName(taskName);
                 task.setDetails(details);
+                task.setDate(date);
                 break;
             }
         }

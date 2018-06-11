@@ -7,9 +7,14 @@ public class AddTaskRequest {
 
     private String name;
     private String description;
+    private String date;
 
     public String getName() {
         return name;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public String getDescription() {

@@ -10,15 +10,17 @@ public class Task {
     private String name;
     private String details;
     private String id;
+    private String date;
 
 
     public Task() {
 
     }
 
-    public Task(String name, String details) {
+    public Task(String name, String details, String date) {
         this.name = name;
         this.details = details;
+        this.date = date;
         this.id = UUID.randomUUID().toString();
     }
 
@@ -26,7 +28,13 @@ public class Task {
         return id;
     }
 
+    public String getDate() {
+        return date;
+    }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public String getName() {
         return name;

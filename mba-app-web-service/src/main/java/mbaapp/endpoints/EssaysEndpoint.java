@@ -245,7 +245,10 @@ public class EssaysEndpoint extends EndpointBase{
 
             User user = userDBProvider.getUser(userEmail);
             UserSchool userSchool = getSchoolForUser(user, schoolShortName);
-            return new ResponseEntity<>(userSchool.getEssayDraft(essayID, draftID).toJSON().toString(), HttpStatus.OK);
+            JSONObject draftJSON = userSchool.getEssayDraft(essayID, draftID).toJSON();
+            SchoolInfoEssay schoolInfoEssay = userDBProvider.getSchoolInfoEssay(user, userSchool, essayID);
+            draftJSON.put("prompt", schoolInfoEssay.getEssayPrompt());
+            return new ResponseEntity<>(draftJSON.toString(), HttpStatus.OK);
 
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage(), e);

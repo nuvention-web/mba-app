@@ -19,17 +19,17 @@
     <div>
         <ul class="nav nav-tabs  m-tabs-line m-tabs-line--brand" role="tablist">
             <li class="nav-item m-tabs__item">
-                <a class="nav-link m-tabs__link show-hand-light" data-toggle="tab" href="#m_tabs_1_1" ng-reflect-href="#m_tabs_2_1">
+                <a class="nav-link m-tabs__link show-hand-light" data-toggle="tab" data-value="#overview" href="#overview" >
                     <strong>Overview</strong>
                 </a>
             </li>
             <li class="nav-item  m-tabs__item">
-                <a class="nav-link m-tabs__link show-hand-light" data-toggle="tab" href="#m_tabs_1_2" ng-reflect-href="#m_tabs_2_2">
+                <a class="nav-link m-tabs__link show-hand-light" data-toggle="tab" data-value="#essays" href="#essays" >
                     <strong>Essays</strong>
                 </a>
             </li>
             <li class="nav-item  m-tabs__item">
-                <a class="nav-link m-tabs__link show-hand-light" data-toggle="tab" href="#m_tabs_1_3"  ng-reflect-href="#m_tabs_2_3">
+                <a class="nav-link m-tabs__link show-hand-light" data-toggle="tab" data-value="#notes" href="#notes" >
                     <strong>Notes</strong>
                 </a>
             </li>
@@ -41,7 +41,7 @@
         </ul>
 
         <div class="tab-content">
-            <div *ngIf="schoolInfo != null;" class="tab-pane active" id="m_tabs_1_1" role="tabpanel">
+            <div *ngIf="schoolInfo != null;" class="tab-pane active" id="overview" role="tabpanel">
                 <div class="row mt-3">
                     <div class="m-content">
                         <div class="m-portlet">
@@ -193,7 +193,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane" id="m_tabs_1_2" role="tabpanel">
+            <div class="tab-pane" id="essays" role="tabpanel">
                 <div class="row align-items-center">
                     <h5>Essay prompts for the 2018-2019 application cycle:</h5><br><br><br>
                 </div>
@@ -217,7 +217,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane" id="m_tabs_1_3" role="tabpanel">
+            <div class="tab-pane" id="notes" role="tabpanel">
                 <div [hidden]="schoolDetails.notes != 0" class="my-5 text-center">
                     <div class="m-portlet m-portlet--mobile">
                         <div class="m-portlet__body">

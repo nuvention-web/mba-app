@@ -80,12 +80,14 @@ public class MongoUserDBProvider implements UserDBProvider {
             userEssays.put(userSchool.getShortName(), schoolEssayJSON);
             for(Essay essay : userSchool.getEssays()) {
                 int totalDrafts = essay.getDrafts().size();
-                if(totalDrafts>0) {
-                    EssayDraft lastDraft = essay.getDrafts().get(totalDrafts - 1);
-                    JSONObject draftJSON = lastDraft.toJSON();
-                    draftJSON.put("essayID", essay.getEssayID());
-                    draftJSON.put("prompt", getEssayPrompt(essay.getEssayID(), userSchool.getShortName()));
-                    schoolEssayJSON.put(essay.getEssayID(), draftJSON);
+                for(int i=0; i<totalDrafts; i++) {
+                    if (totalDrafts > 0) {
+                        EssayDraft lastDraft = essay.getDrafts().get(i);
+                        JSONObject draftJSON = lastDraft.toJSON();
+                        draftJSON.put("essayID", essay.getEssayID());
+                        draftJSON.put("prompt", getEssayPrompt(essay.getEssayID(), userSchool.getShortName()));
+                        schoolEssayJSON.put(essay.getEssayID()+"_draft_"+Integer.toString(i), draftJSON);
+                    }
                 }
 
             }
@@ -849,6 +851,17 @@ public class MongoUserDBProvider implements UserDBProvider {
         }
         return userSchool.getEssay(essayID, essayPrompt);
 
+    }
+
+    public SchoolInfoEssay getSchoolInfoEssay(User user, UserSchool userSchool, String essayID) throws Exception {
+        SchoolInfo schoolInfo = schoolInfoRepository.findByShortName(userSchool.getShortName());
+        String essayPrompt = "";
+        for (SchoolInfoEssay essay : schoolInfo.getEssays()) {
+            if (essay.getEssayID().equalsIgnoreCase(essayID)) {
+                return essay;
+            }
+        }
+        return null;
     }
 
     public void updateEssayStatus(User user, UserSchool userSchool, String essayID, EssayStatusRequest essayRequest) throws Exception {

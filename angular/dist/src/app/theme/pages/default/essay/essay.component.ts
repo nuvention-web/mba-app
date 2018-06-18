@@ -29,12 +29,15 @@ export class EssayComponent implements OnInit {
     profile: {"": ""};
     @Input()
     schoolInfo: any;
+    component = "";
 
     contactName: string;
     contactDraft: string;
     contactEmail: string;
     contactComment: string;
     contactSuccess = false;
+
+    draftTitle: string
 
 
     constructor(private route:ActivatedRoute, _script:ScriptLoaderService, private _schools:SchoolsService,
@@ -44,6 +47,7 @@ export class EssayComponent implements OnInit {
             this.params = params;
             this.school = params.school;
             this.essayID = params.id;
+            this.component = params.component;
         });
         this._schools.getEssay(this.school, this.essayID).subscribe(d => {this.essay = d; this.drafts = d["drafts"]});
         this._schools.getEssayReviews(this.school, this.essayID).subscribe(d => this.reviews = d.reviews);
@@ -55,6 +59,12 @@ export class EssayComponent implements OnInit {
     ngOnInit() {
         var self = this;
         (<any>$)("#draft_editor").summernote({
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'underline']],
+                ['fontsize', ['fontsize']],
+                ['height', ['height']]
+            ],
             placeholder: 'Start typing here...',
             tabsize: 2,
             height: 200
@@ -62,6 +72,18 @@ export class EssayComponent implements OnInit {
         (<any>$)("#essay-draft-dropdown").select2();
         (<any>$)("#notes-dropdown").select2();
         (<any>$)("#profile-dropdown").select2();
+
+        var hash = window.location.hash;
+        hash && (<any>$)('ul.nav a[href="' + hash + '"]').tab('show');
+
+        (<any>$)('.nav-tabs a').click(function (e) {
+            (<any>$)(this).tab('show');
+            var scrollmem = (<any>$)('body').scrollTop() || (<any>$)('html').scrollTop();
+            window.location.hash = this.hash;
+            (<any>$)('html,body').scrollTop(scrollmem);
+        });
+
+
     }
 
     public deleteDraft(draftID) {
@@ -73,6 +95,27 @@ export class EssayComponent implements OnInit {
             }
         );
     }
+
+    editDraft(draftID) {
+        this.router.navigate(['/','school',this.school, 'edit', 'essay', this.essayID, draftID])
+    }
+
+    textEditorDraft(draft){
+        if(draft["draftType"]=="CONTENTS"){
+            return true;
+        }
+        return false;
+    }
+
+    public draftString(draft){
+        if(draft["draftType"]=="CONTENTS"){
+            return "Last modified on "+draft.date;
+        }
+        else{
+            return "Uploaded on "+draft.date;
+        }
+    }
+
 
     transformJSON(d) {
         var list = [];
@@ -169,10 +212,12 @@ export class EssayComponent implements OnInit {
 
     saveDraft() {
         var essay_code = (<any>$)("#draft_editor").summernote('code');
-        this._schools.saveEssayDraft(essay_code, this.school, this.essayID).subscribe(
+        this._schools.saveEssayDraft(essay_code, this.school, this.essayID, this.draftTitle).subscribe(
             (response:Response) => {
-                this._schools.getEssay(this.school, this.essayID).subscribe(d => this.essay = d);
+                this._schools.getEssay(this.school, this.essayID).subscribe(d => {this.essay = d; this.drafts = d["drafts"]});
                 this._schools.getAllEssays().subscribe(d => this.allEssays = this.transformJSON(d));
+                (<any>$)('#myTab a[href="#drafts"]').tab('show');
+                document.getElementById("openModalButton").click();
             }, (error: Response) => {
 
             }
@@ -191,6 +236,8 @@ export class EssayComponent implements OnInit {
     formatDate(d) {
         return moment(d).format("LL");
     }
+
+
 
 
 }

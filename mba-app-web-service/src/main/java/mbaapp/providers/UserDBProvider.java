@@ -43,6 +43,8 @@ public interface UserDBProvider {
 
     public JSONObject getEssay(User user, UserSchool userSchool, String essayID) throws Exception;
 
+    public SchoolInfoEssay getSchoolInfoEssay(User user, UserSchool userSchool, String essayID) throws Exception;
+
     public void addEssayDraft(User user, UserSchool userSchool, EssayDraftRequest essayDraftRequest, String essayID, Keywords keywords) throws Exception;
 
     public void addEssayDraftUpload(User user, UserSchool userSchool, MultipartFile file, String essayID) throws Exception;

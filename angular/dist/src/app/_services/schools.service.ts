@@ -138,8 +138,12 @@ export class SchoolsService {
     }
 
 
-    saveEssayDraft(text, schoolName, essayID) {
-        return this.http.post(URL+"/mba/users/"+getCurrentUser()+"/school/" + schoolName + "/essay/" + essayID + "/draft",{"contents": text}, jwt(1));
+    saveEssayDraft(text, schoolName, essayID, draftTitle) {
+        return this.http.post(URL+"/mba/users/"+getCurrentUser()+"/school/" + schoolName + "/essay/" + essayID + "/draft",{"contents": text, "draftName":draftTitle}, jwt(1));
+    }
+
+    editEssayDraft(text, schoolName, essayID, draftID) {
+        return this.http.put(URL+"/mba/users/"+getCurrentUser()+"/school/" + schoolName + "/essay/" + essayID + "/draft/" + draftID,{"contents": text}, jwt(1));
     }
 
     sendForReview(schoolName, essayID, draftID, email, name, message) {

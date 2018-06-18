@@ -36,30 +36,30 @@
                 <div class="m-portlet m-portlet--tabs">
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-tools">
-                            <ul class="nav nav-tabs m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                            <ul class="nav nav-tabs m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist" id="myTab">
                                 <li class="nav-item m-tabs__item">
-                                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_tabs_6_1" role="tab"
-                                       ng-reflect-href="#m_tabs_6_1" aria-selected="true">
+                                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#prompt" role="tab"
+                                       ng-reflect-href="#prompt" aria-selected="true">
                                         <i class="fa fa-sitemap"></i>
                                         Prompts
                                     </a>
                                 </li>
                                 <li class="nav-item m-tabs__item">
-                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_2" role="tab"
-                                       ng-reflect-href="#m_tabs_6_2" aria-selected="false">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#drafts" role="tab"
+                                       ng-reflect-href="#drafts" aria-selected="false">
                                         <i class="fa fa-copy"></i>
                                         Drafts
                                     </a>
                                 </li>
                                 <li class="nav-item m-tabs__item">
-                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_3" role="tab"
-                                       ng-reflect-href="#m_tabs_6_3" aria-selected="false">
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#newDraft" role="tab"
+                                       ng-reflect-href="#newDraft" aria-selected="false">
                                         <i class="fa fa-edit"></i>
                                         New Draft
                                     </a>
                                 </li>
                                 <li class="nav-item m-tabs__item">
-                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_5" role="tab"
+                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#feedback" role="tab"
                                        ng-reflect-href="#m_tabs_6_4" aria-selected="false">
                                         <i class="fa fa-edit"></i>
                                         Feedback
@@ -70,23 +70,26 @@
                     </div>
                     <div class="m-portlet__body">
                         <div class="tab-content">
-                            <div class="tab-pane active show" id="m_tabs_6_1" role="tabpanel" [innerHTML]="essay.prompt">
+                            <div class="tab-pane active show" id="prompt" role="tabpanel" [innerHTML]="essay.prompt">
                             </div>
-                            <div class="tab-pane show" id="m_tabs_6_2" role="tabpanel">
+                            <div class="tab-pane show" id="drafts" role="tabpanel">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="list-group">
                                             <div class="list-group-item" *ngFor="let draft of essay.drafts">
                                                 <div class="row">
-                                                    <div class="col-md-6"><strong>{{ draft.draftName }}</strong><br>{{draft.draftType}}</div>
+                                                    <div class="col-md-6"><strong>{{ draft.draftName }}</strong><br>{{draftString(draft)}}</div>
                                                     <div class="col-md-6 m--align-right">
                                                         <div class="btn-group m-btn-group m-btn-group--pill"
                                                              role="group">
-                                                            <button (click)="downloadDraft(draft.id)" class="m-btn btn-sm btn btn-outline-brand" type="button">
+                                                            <button routerLink="/proofread/{{school}}/essay/{{ essay.essayID }}/draft/{{draft.id}}" class="m-btn btn-sm btn btn-outline-brand" type="button">
                                                                 <i class="fa fa-eye"></i> View
                                                             </button>
-                                                            <button routerLink="/proofread/{{school}}/essay/{{ essay.essayID }}/draft/{{draft.id}}" class="m-btn btn-sm btn btn-outline-brand" type="button">
-                                                                <i class="fa fa-signal"></i> Analyze
+                                                            <button (click)="editDraft(draft.id)" [hidden]="!textEditorDraft(draft)" class="m-btn btn-sm btn btn-outline-brand" type="button">
+                                                                <i class="fa fa-edit"></i> Edit
+                                                            </button>
+                                                            <button (click)="downloadDraft(draft.id)" [hidden]="textEditorDraft(draft)" class="m-btn btn-sm btn btn-outline-brand" type="button">
+                                                                <i class="fa fa-download"></i> Download
                                                             </button>
                                                             <button (click)="deleteDraft(draft.id)" class="m-btn btn btn-sm btn-outline-brand" type="button">
                                                                 <i class="fa fa-trash"></i> Delete
@@ -106,21 +109,22 @@
                                         <div class="m-portlet m-portlet--mobile">
                                             <div class="m-portlet__body">
                                                 <strong><p>Create your first draft for this essay! </p></strong>
-                                                <p>You can upload a Word doc, provide a link to a document stored in Google Drive, or use our editor to write your draft. You can refer to all the other essay drafts you have worked on, while writing the new draft, if you use our text editor.</p>
-                                                <p>Once you have uploaded your draft, we will use our automated proof reading service to check for any spelling or grammatical errors. You can also send the draft out to your friends and family to review, or you can get some professional advice from MBA admissions experts through our portal. Start writing! </p>
+                                                <p>You can upload a Word doc, or use our editor to write your draft. You can refer to all the other essay drafts you have worked on, while writing the new draft, if you use our text editor.</p>
+                                                <p>Once you have uploaded your draft, we will use our automated proof reading service to check for any spelling or grammatical errors. You can also send the draft out to your friends and family to review. Start writing! </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="m_tabs_6_3" role="tabpanel">
+                            <div class="tab-pane" id="newDraft" role="tabpanel">
+                                <div class="m-portlet">
+                                    <div class="m-portlet__body">
+                                        <p>You can choose to upload a draft that you have written in Microsoft Word, or write a new draft using our text editor. You can refer to all the other essay drafts you have already worked on, your school notes and your profile while working on the new draft.</p>
+                                    </div>
+                                </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-7">
                                         <form method="post">
-                                            <div class="form-group m-form__group">
-                                                <input class="form-control m-input" id="draft-title" placeholder="Enter a title for your draft" type="text">
-                                            </div>
-
                                             <ul class="nav nav-pills" role="tablist">
                                                 <li class="newdraft nav-item">
                                                     <a class="nav-link active" data-toggle="tab" href="#newdraft_file" ng-reflect-href="#newdraft_file">
@@ -132,15 +136,12 @@
                                                         Online Editor
                                                     </a>
                                                 </li>
-                                                <li class="newdraft nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#newdraft_gdrive" ng-reflect-href="#newdraft_gdrive">
-                                                        Google Drive or URL
-                                                    </a>
-                                                </li>
                                             </ul>
-
                                             <div class="tab-content">
                                                 <div class="tab-pane" id="newdraft_online" role="tabpanel">
+                                                    <div class="form-group m-form__group">
+                                                        <input class="form-control m-input" [(ngModel)]="draftTitle" name="draftTitle" id="draftTitle" placeholder="Enter a title for your draft" type="text">
+                                                    </div>
                                                     <textarea id="draft_editor" name="draft_editor"></textarea>
                                                     <br>
                                                     <button type="button" class="btn m-btn--pill btn-primary" (click)="saveDraft()">Save Draft</button>
@@ -163,7 +164,7 @@
                                             <br />
                                         </form>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
 
                                         <ul class="nav nav-tabs" role="tablist">
                                             <li class="nav-item">
@@ -178,7 +179,7 @@
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" data-toggle="tab" href="#reference_tabs_1_3" ng-reflect-href="#reference_tabs_2_3">
-                                                    Profiles
+                                                    Profile
                                                 </a>
                                             </li>
                                         </ul>
@@ -216,7 +217,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="m_tabs_6_5" role="tabpanel">
+                            <div class="tab-pane" id="feedback" role="tabpanel">
                                 <div class="form-group m-form__group">
                                     <label>
                                         Choose Advice Type:
@@ -245,52 +246,52 @@
 											</span>
                                             </label>
                                         </div>
-                                        <div class="col-lg-4">
-                                            <label class="m-option">
-											<span class="m-option__control">
-												<span class="m-radio m-radio--brand m-radio--check-bold">
-													<input name="m_option_1" type="radio" value="1" disabled>
-													<span></span>
-												</span>
-											</span>
-                                                <span class="m-option__label">
-												<span class="m-option__head">
-													<span class="m-option__title">
-														MBA Student Advice
-													</span>
-													<span class="m-option__focus">
-														$20-$60
-													</span>
-												</span>
-												<span class="m-option__body">
-													Get advice from a current student in a top MBA program.
-												</span>
-											</span>
-                                            </label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <label class="m-option">
-											<span class="m-option__control">
-												<span class="m-radio m-radio--brand m-radio--check-bold">
-													<input name="m_option_1" type="radio" value="1" disabled>
-													<span></span>
-												</span>
-											</span>
-                                                <span class="m-option__label">
-												<span class="m-option__head">
-													<span class="m-option__title">
-														Professional Consultant
-													</span>
-													<span class="m-option__focus">
-														$220
-													</span>
-												</span>
-												<span class="m-option__body">
-													Get advice from a professional MBA consultant.
-												</span>
-											</span>
-                                            </label>
-                                        </div>
+                                        <!--<div class="col-lg-4">-->
+                                            <!--<label class="m-option">-->
+											<!--<span class="m-option__control">-->
+												<!--<span class="m-radio m-radio&#45;&#45;brand m-radio&#45;&#45;check-bold">-->
+													<!--<input name="m_option_1" type="radio" value="1" disabled>-->
+													<!--<span></span>-->
+												<!--</span>-->
+											<!--</span>-->
+                                                <!--<span class="m-option__label">-->
+												<!--<span class="m-option__head">-->
+													<!--<span class="m-option__title">-->
+														<!--MBA Student Advice-->
+													<!--</span>-->
+													<!--<span class="m-option__focus">-->
+														<!--$20-$60-->
+													<!--</span>-->
+												<!--</span>-->
+												<!--<span class="m-option__body">-->
+													<!--Get advice from a current student in a top MBA program.-->
+												<!--</span>-->
+											<!--</span>-->
+                                            <!--</label>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-lg-4">-->
+                                            <!--<label class="m-option">-->
+											<!--<span class="m-option__control">-->
+												<!--<span class="m-radio m-radio&#45;&#45;brand m-radio&#45;&#45;check-bold">-->
+													<!--<input name="m_option_1" type="radio" value="1" disabled>-->
+													<!--<span></span>-->
+												<!--</span>-->
+											<!--</span>-->
+                                                <!--<span class="m-option__label">-->
+												<!--<span class="m-option__head">-->
+													<!--<span class="m-option__title">-->
+														<!--Professional Consultant-->
+													<!--</span>-->
+													<!--<span class="m-option__focus">-->
+														<!--$220-->
+													<!--</span>-->
+												<!--</span>-->
+												<!--<span class="m-option__body">-->
+													<!--Get advice from a professional MBA consultant.-->
+												<!--</span>-->
+											<!--</span>-->
+                                            <!--</label>-->
+                                        <!--</div>-->
                                     </div>
                                 </div>
                                 <form class="m-form  m-form--label-align-right">
@@ -412,7 +413,7 @@
                 </div>
                 <div class="modal-body">
                     <p>
-                        Uploaded draft!
+                        Saved draft!
                     </p>
                 </div>
                 <div class="modal-footer">

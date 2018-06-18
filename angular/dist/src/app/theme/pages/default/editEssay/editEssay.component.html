@@ -1,0 +1,134 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                {{school}} Essay
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    <a class="m-nav__link" routerLink="/school/{{school}}/">
+						<span class="m-nav__link-text">
+							{{school}}
+						</span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">-</li>
+                <li class="m-nav__item">
+                    {{essay.essayID}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- END: Subheader -->
+<div class="m-content">
+    <div class="m-portlet">
+
+        <div class="m-portlet__body">
+            <span><b><u>Prompt:</u></b></span><br><br>
+            <div [innerHTML]="draft.prompt"></div>
+        </div>
+        <div class="m-portlet__foot">
+            <div>
+                <i>While working on your draft, you can refer to the other drafts you have worked on, or your notes.</i>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7">
+            <div class="tab-pane" id="newdraft_online" role="tabpanel">
+                <textarea id="draft_editor" name="draft_editor"></textarea>
+                <br>
+                    <button type="button" class="btn m-btn--pill btn-primary" (click)="saveDraft()">Save Draft</button>
+                <br>
+                <br>
+                    <button type="button" class="btn m-btn--pill btn-primary" (click)="saveAndContinue()">Save and Continue</button>
+            </div>
+        </div>
+        <div class="col-md-5" [ngbCollapse]="isCollapsed">
+
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#reference_tabs_1_1" ng-reflect-href="#reference_tabs_2_1">
+                        Essays
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#reference_tabs_1_2" ng-reflect-href="#reference_tabs_2_2">
+                        Notes
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#reference_tabs_1_3" ng-reflect-href="#reference_tabs_2_3">
+                        Profile
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="reference_tabs_1_1" role="tabpanel">
+                    <select id="essay-draft-dropdown" (change)="valueChange()" style="width:100%;" #selectedEssay>
+                        <option value="test">Select an Essay...</option>
+                        <optgroup *ngFor="let s of allEssays" label = "{{s.school}}">
+                            <option *ngFor="let e of s.essays" [value]="e.draftName">{{e.draftName}}</option>
+                        </optgroup>
+                    </select>
+                    <br>
+                    <br>
+                    <div [innerHTML]="findEssay(selectedEssay.value).contents"></div>
+                </div>
+                <div class="tab-pane" id="reference_tabs_1_2" role="tabpanel">
+                    <select id="notes-dropdown" (change)="valueChange()" style="width:100%;" #selectedNote>
+                        <option value="test">Select a note...</option>
+                        <option *ngFor="let note of schoolDetails.notes" [value]="note.title">{{note.title}}</option>
+                    </select>
+                    <br>
+                    <br>
+                    <div [innerHTML]="findNote(selectedNote.value).contents"></div>
+                </div>
+                <div class="tab-pane" id="reference_tabs_1_3" role="tabpanel">
+                    <select id="profile-dropdown" (change)="valueChange()" style="width:100%;" #selectedQuestion>
+                        <option value="test">Select a question...</option>
+                        <option *ngFor="let q of profileKeys()" [value]="q">{{q}}</option>
+                    </select>
+                    <br>
+                    <br>
+                    <div [innerHTML]="findProfile(selectedQuestion.value)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#m_modal_1"></button>
+    <div aria-labelledby="exampleModalLabel" class="modal fade" id="m_modal_1" role="dialog" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        {{params.school}}
+                    </h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+						<span aria-hidden="true">
+							×
+						</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Draft Saved!
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal" type="button">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -33,7 +33,13 @@ public class ProofReadingService {
             draft.setGrammerCheck(grammarCheckBuilder.toString());
         }
         else{
-            draft.setGrammerCheck(runGrammarCheckOnParagraph(draft.getContents()));
+            String contents = draft.getContents();
+            String []splits = contents.split("<br>");
+            StringBuilder grammarCheckBuilder = new StringBuilder();
+            for(String split : splits) {
+                    grammarCheckBuilder.append(runGrammarCheckOnParagraph(split)).append("<br>");
+            }
+            draft.setGrammerCheck(grammarCheckBuilder.toString());
         }
         draft.setGrammarCheckRun("True");
     }

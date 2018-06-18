@@ -26,6 +26,10 @@ const routes: Routes = [
                 "loadChildren": ".\/pages\/default\/essay\/essay.module#EssayModule"
             },
             {
+                "path": "school/:school/edit/essay/:id/:draftID",
+                "loadChildren": ".\/pages\/default\/editEssay\/editEssay.module#EditEssayModule"
+            },
+            {
                 "path": "profile/edit",
                 "loadChildren": ".\/pages\/default\/profile\/profile.module#ProfileModule"
             },

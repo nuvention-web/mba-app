@@ -118,6 +118,10 @@ public class Essay {
             draftToUpdate.setUrl(url);
         }
 
+        draftToUpdate.setGrammarCheck(null);
+        draftToUpdate.setGrammarCheckRun(null);
+        draftToUpdate.setGrammerCheck(null);
+
         return draftToUpdate;
 
     }

@@ -62,6 +62,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
         this.activity.name = a.name;
         this.activity.description = a.details;
         this.activity.taskID = a.id;
+        this.activity.date = a.date;
         this.showForm(this.updateEventModal);
     }
 

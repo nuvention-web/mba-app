@@ -79,15 +79,15 @@
                                                             {{schoolInfo.tuition}}
                                                         </div>
                                                     </div>
-
+                                                    <br>
                                                     <div class="row">
                                                         <div class="col-12">
-                                                            <span>Application deadline: </span>
+                                                            <span><u>Application deadlines: </u></span>
                                                             <div class="vertical-separtor"></div>
-                                                            <div *ngFor="let d of [1,2,3,4]">
-                                                                <div *ngIf = "getDeadline(d) !== ''" class="row round">
+                                                            <div *ngFor="let d of [0,1,2,3,4]">
+                                                                <div *ngIf = "getDeadline(d) !== '' && getDeadline(d) !== null" class="row round">
                                                                     <div class="col-5 round-head">
-                                                                        Round {{d}}:
+                                                                        {{getDeadlineName(d)}}
                                                                     </div>
                                                                     <div class="col-7" align="right" style="color: red">
                                                                         <b>{{getDeadline(d)}}</b>

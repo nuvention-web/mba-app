@@ -107,7 +107,11 @@ export class IndexComponent implements OnInit, AfterViewInit {
         let i = 1;
         let name = 'round' + i.toString() + "Deadline";
         let res = [];
-        console.log(schoolInfo);
+
+        if(schoolInfo["round0Deadline"]!=null){
+            res.push(schoolInfo["round0Deadline"]);
+        }
+
         while (schoolInfo[name] != null && schoolInfo[name] !== '') {
             res.push(schoolInfo[name]);
             i++;

@@ -180,6 +180,12 @@ public class MongoUserDBProvider implements UserDBProvider {
             if (schoolInfo != null) {
                 school.put("name", schoolInfo.getName());
                 school.put("location", schoolInfo.getLocation());
+                if(schoolInfo.getRound0Deadline()!=null) {
+                    school.put("round0_deadline", schoolInfo.getRound0Deadline());
+                }
+                else{
+                    school.put("round0_deadline", "");
+                }
                 school.put("round1_deadline", schoolInfo.getRound1Deadline());
                 school.put("round2_deadline", schoolInfo.getRound2Deadline());
                 school.put("round3_deadline", schoolInfo.getRound3Deadline());

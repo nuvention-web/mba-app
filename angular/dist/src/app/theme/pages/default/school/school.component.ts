@@ -68,6 +68,15 @@ export class SchoolComponent implements OnInit {
         return this.schoolInfo[name];
     }
 
+    getDeadlineName(d){
+        if(d==0) {
+            return "Early Action";
+        }
+        else{
+            return "Round "+d.toString();
+        }
+    }
+
     ngOnInit() {
         var hash = window.location.hash;
         hash && (<any>$)('ul.nav a[href="' + hash + '"]').tab('show');

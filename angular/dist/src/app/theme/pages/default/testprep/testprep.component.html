@@ -14,46 +14,110 @@
         </div>
     </div>
 </div>
+<div>
+    </div>
 <!-- END: Subheader -->
 <div class="m-content">
-    <h5 class="m-subheader__title m-subheader__title--separator">
-        Average GMAT and undergraduate GPA at your target schools:
-    </h5>
-    <div>
-        <div class="row">
+
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                            <a href="https://click.linksynergy.com/fs-bin/click?id=DAy2F*pzX/U&offerid=192924.10004207&type=3&subid=0" target="_blank">Kaplan GMAT Test Prep</a><img border="0" width="1" alt="" height="1" src="https://ad.linksynergy.com/fs-bin/show?id=DAy2F*pzX/U&bids=192924.10004207&type=3&subid=0" >
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
+                <div class="col-xl-9">
+                    <div>
+                        <h5>
+                            <a href="https://click.linksynergy.com/fs-bin/click?id=DAy2F*pzX/U&offerid=192924.10004207&type=3&subid=0" target="_blank"><u>GMAT Prep — Self-Paced</u></a><img border="0" width="1" alt="" height="1" src="https://ad.linksynergy.com/fs-bin/show?id=DAy2F*pzX/U&bids=192924.10004207&type=3&subid=0" >
+                        </h5>
+                        <p>Prep at your speed, on your schedule.</p>
+                        <p>Watch Kaplan’s top teachers walk you through the strategies and concepts you need to tackle every topic on the GMAT. </p>
+                        <p>The GMAT Channel available with Self-Paced PLUS From fundamentals review to advanced sessions on the most difficult GMAT topics, the GMAT Channel offers interactive lessons and one-on-one help from our highest-rated GMAT experts. Catch it streaming live or watch it on demand.</p>
+                        <br>
+                    </div>
+                    <div>
+                        <h5>
+                            <a href="https://click.linksynergy.com/fs-bin/click?id=DAy2F*pzX/U&offerid=192924.10004303&type=3&subid=0" target="_blank"><u>Official Test Day Experience</u></a><img border="0" width="1" alt="" height="1" src="https://ad.linksynergy.com/fs-bin/show?id=DAy2F*pzX/U&bids=192924.10004303&type=3&subid=0" >
+                        </h5>
+                        <p>A simulated GMAT® at an actual testing center—only with Kaplan. When you know what to expect on the day of the actual exam, you eliminate the element of surprise&mdash;and that will boost your confidence. With this Kaplan Exclusive, you can:</p>
+                        <ul>
+                        <li>take a full practice exam at the same center where you&rsquo;ll sit for the real GMAT</li>
+                        <li>know when to leave the house so you arrive 30 minutes before the test</li>
+                        <li>learn what to bring (ID) and what to leave at home (phone, watch, notes)</li>
+                        <li>go through check-in, security, and everything you'll encounter on Test Day</li>
+                        </ul>
+                        <br>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div>
+                        <div align="center">
+                            <a href="https://click.linksynergy.com/fs-bin/click?id=DAy2F*pzX/U&offerid=192924.10004207&type=3&subid=0" target="_blank" class="m-brand__logo-wrapper">
+                                <img alt="" align="middle" src="./assets/demo/default/media/img/logo/Kaplan.png"/>
+                            </a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    </div>
+                </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="m-portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h4 class="m-portlet__head-text">
+                        Average GMAT and undergraduate GPA at your target schools:
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="row">
                 <div *ngFor="let school of schools; let i=index" class="col-xl-4 col-lg-6 col-sm-12">
                     <!--begin:: Widgets/Top Products-->
                     <div class="show-hand m-portlet m-portlet--bordered-semi">
                         <div class="m-portlet__head">
-                                <div class="m-portlet__head-caption">
-                                    <div class="m-portlet__head-title">
-                                        <h4 class="m-portlet__head-text">
-                                            {{ school.name }}
-                                        </h4>
-                                    </div>
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h4 class="m-portlet__head-text">
+                                        {{ school.name }}
+                                    </h4>
                                 </div>
                             </div>
-                            <div class="m-portlet__body">
-                                <div class="m-section__content">
-                                    <table class="table">
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <!-- <i class="flaticon-edit-1"></i>&nbsp;&nbsp;&nbsp;-->
-                                                Average / Median GMAT:&nbsp;  <strong>{{school.AvgGMAT}}</strong></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                            <!--<i class="flaticon-notes"></i>&nbsp;&nbsp;&nbsp;-->
-                                                Average GPA: &nbsp;<strong>{{school.AvgGPA}}</strong></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
                         </div>
-                    <!--end:: Widgets/Top Products-->
+                        <div class="m-portlet__body">
+                            <div class="m-section__content">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <!-- <i class="flaticon-edit-1"></i>&nbsp;&nbsp;&nbsp;-->
+                                            Average / Median GMAT:&nbsp;  <strong>{{school.AvgGMAT}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <!--<i class="flaticon-notes"></i>&nbsp;&nbsp;&nbsp;-->
+                                            Average GPA: &nbsp;<strong>{{school.AvgGPA}}</strong></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--end:: Widgets/Top Products-->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</div>
+

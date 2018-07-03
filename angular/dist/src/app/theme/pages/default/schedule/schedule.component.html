@@ -38,7 +38,7 @@
                         <!--Begin::Timeline 2 -->
                         <div class="m-timeline-2">
                             <div class="m-timeline-2__items  m--padding-top-25 m--padding-bottom-10">
-                                <div *ngFor="let a of activities; let i = index" class="m-timeline-2__item">
+                                <div *ngFor="let a of getIncompleteTasks(); let i = index" class="m-timeline-2__item">
                                     <span *ngIf="a.date != null && a.date !== ''" class="m-timeline-2__item-time">{{a.date}}</span>
                                     <span *ngIf="a.date == null || a.date === ''" class="m-timeline-2__item-time"> </span>
                                     <div class="m-timeline-2__item-cricle">
@@ -55,8 +55,32 @@
                         </div>
                         <!--End::Timeline 2 -->
                         <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 0px; right: 4px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+                    <!-- Completed activities -->
+                    <h5>Completed Activities</h5>
+                    <div class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide m-scroller ps ps--active-y" data-scrollbar-shown="true" data-scrollable="true" data-height="380" style="overflow: hidden; height: 380px; position: relative;">
+                        <!--Begin::Timeline 2 -->
+                        <div class="m-timeline-2">
+                            <div class="m-timeline-2__items  m--padding-top-25 m--padding-bottom-10">
+                                <div *ngFor="let a of getCompletedActivities(); let i = index" class="m-timeline-2__item">
+                                    <span *ngIf="a.date != null && a.date !== ''" class="m-timeline-2__item-time"><s>{{a.date}}</s></span>
+                                    <span *ngIf="a.date == null || a.date === ''" class="m-timeline-2__item-time"> </span>
+                                    <div class="m-timeline-2__item-cricle">
+                                        <i class="fa fa-genderless m--font-{{colors[i % colorsSize]}}"></i>
+                                    </div>
+                                    <div class="m-timeline-2__item-text">
+                                        <a class="activity" (click)="modifyActivity(a)" href="#" ng-reflect-href="#" style="text-decoration: none;">
+                                            <h5 style="padding: 0 1rem"><s>{{a.name}}</s></h5>
+                                            <p style="padding: 0 1rem"><s>{{a.details}}</s></p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End::Timeline 2 -->
+                        <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 0px; right: 4px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
                 </div>
             </div>
+
             <!--End::Portlet-->
         </div>
         <div class="col-xl-6 col-lg-12">
@@ -170,7 +194,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" (click)="updateActivity()" data-dismiss="modal">Update</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" #closeBtn>Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="completeTask()" data-dismiss="modal">{{completedButtonText(activity)}}</button>
+                <button type="button" class="btn btn-primary" (click)="deleteTask()" data-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" #closeBtn>Cancel</button>
             </div>
         </div>
     </div>

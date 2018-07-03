@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -111,6 +112,30 @@ public class User {
         }
 
     }
+
+    public void completedTask(String taskID) throws Exception{
+
+
+        Task taskToUpdate = null;
+        for(Task task : tasks) {
+            if(task.getId().equalsIgnoreCase(taskID)) {
+                taskToUpdate = task;
+                if(task.isCompleted()) {
+                    task.setCompleted(false);
+                }
+                else if(!task.isCompleted()) {
+                    task.setCompleted(true);
+                }
+                break;
+            }
+        }
+
+        if(taskToUpdate==null) {
+            throw new Exception("Did not find task");
+        }
+
+    }
+
 
 
 
@@ -342,6 +367,7 @@ public class User {
     }
 
     public List<Task> getTasks() {
+        Collections.sort(tasks);
         return tasks;
     }
 

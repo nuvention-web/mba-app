@@ -138,6 +138,38 @@ public class UsersEndpoint extends EndpointBase{
 
     }
 
+    @PutMapping("/{userEmail}/tasks/completed/{taskID}")
+    @CrossOrigin
+    @ApiOperation(value = "Add a task ")
+    public ResponseEntity<String> completedTask(@PathVariable String userEmail, @PathVariable String taskID) {
+
+        try {
+
+            if (runValidations(userEmail, null) != null) {
+                return runValidations(userEmail, null);
+            }
+
+            User mbaUser = userDBProvider.getUser(userEmail);
+
+            if (mbaUser == null) {
+                return new ResponseEntity<>("User does not exist!", HttpStatus.BAD_REQUEST);
+            }
+
+            mbaUser.completedTask(taskID);
+            userDBProvider.saveUser(mbaUser);
+
+            return new ResponseEntity<>("Deleted task", HttpStatus.OK);
+
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+
+    }
+
+
 
     @PutMapping("/{userEmail}/tasks/{taskID}")
     @CrossOrigin

@@ -77,6 +77,7 @@
                         </div>
                       </div>
                     </div>
+<!-- 
                     <div class="form-row" style="margin-bottom: 10px;">
                       <div class="col-12">
                         <input id="email" name="email" autocomplete="email" type="email" class="form-control form-control-lg" placeholder="Enter your email...">
@@ -112,15 +113,17 @@
                         </div>
                       </div>
                     </div>
+ -->
                     <input id="utm_source" type="hidden" value="<?=$_GET['utm_source']?>">
                     <input id="utm_medium" type="hidden" value="<?=$_GET['utm_medium']?>">
                     <input id="utm_campaign" type="hidden" value="<?=$_GET['utm_campaign']?>">
                     <input id="utm_term" type="hidden" value="<?=$_GET['utm_term']?>">
                     <input id="utm_content" type="hidden" value="<?=$_GET['utm_content']?>">
                     <div class="form-row">
-                      <div class="col-12">
-                        <button id="submit" type="submit" class="btn btn-block btn-lg btn-dark">Reserve Your Invite</button>
-                      </div>
+						<div class="col-12">
+                        <a href="https://portal.myapp.mba" class="btn btn-block btn-lg btn-dark">Go to the portal</a>
+                      </div>                    
+                    </div>						                 
                     </div>
                   </form>
                   <div id="success" class="hidden alert alert-success" role="alert">
@@ -204,14 +207,11 @@
       <div class="container">
         <div class="row">
           <div class="col-xl-9 mx-auto">
-            <h2 class="mb-4">Want the invite when we launch?* Sign up now.</h2>
+            <h2 class="mb-4">Sign up now to get started on your applications.</h2>
           </div>
-          <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-              <a href="#masthead" class="btn btn-block btn-lg btn-primary">Get an Invite</a>
-          </div>
-          <div class="col-xl-9 mx-auto">
-            <br>
-            <p>* myapp.MBA will launch in a private beta with a limited number of invitations. Sign up to save your spot.</p>
+<div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+              <a href="https://portal.myapp.mba" class="btn btn-block btn-lg btn-primary">Go to the Portal</a>
+          </div>            <br>
           </div>
         </div>
       </div>

@@ -13,12 +13,20 @@ export class TasksService {
     }
 
     addTask(activity) {
-        console.log(activity);
-        console.log(URL + '/mba/users/' + getCurrentUser() + '/tasks');
         return this.http.post(URL + '/mba/users/' + getCurrentUser() + '/tasks', activity, jwt(1));
     }
 
     updateTask(activity) {
         return this.http.put(URL + '/mba/users/' + getCurrentUser() + '/tasks/' + activity.taskID, activity, jwt(1));
     }
+
+    completeTask(activity) {
+        return this.http.put(URL + '/mba/users/' + getCurrentUser() + '/tasks/completed/' + activity.taskID, {}, jwt(1));
+    }
+
+
+    deleteTask(activity) {
+        return this.http.delete(URL + '/mba/users/' + getCurrentUser() + '/tasks/' + activity.taskID, jwt(1));
+    }
+
 }

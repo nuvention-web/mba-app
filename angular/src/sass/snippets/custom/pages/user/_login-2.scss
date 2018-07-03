@@ -399,6 +399,10 @@
                     color: $base-color;
                 }
 
+                .m-login__account-msg1 {
+                    color: $base-color;
+                }
+
                 .m-login__account-link {
                     @include m-set-component--typography-link-color(darken($base-color, 15%), darken($base-color, 25%));
                 }

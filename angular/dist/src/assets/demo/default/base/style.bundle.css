@@ -39029,10 +39029,30 @@ select.m-select2 {
     color: #898b96
 }
 
+.m-login.m-login--1 .m-login__account .m-login__account-signup {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #898b96
+}
+
+
 .m-login.m-login--1 .m-login__account .m-login__account-link {
     font-size: 1.1rem;
     font-weight: 400
 }
+
+
+.m-login.m-login--1 .m-login__account .m-login__signup-link {
+    font-size: 1.3rem;
+    font-weight: 400
+}
+
+
+.m-login.m-login--1 .m-login__account .m-login__signup {
+    font-size: 1.3rem;
+    font-weight: 400
+}
+
 
 .m-login.m-login--1.m-login--signin .m-login__signup {
     display: none

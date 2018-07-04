@@ -3,7 +3,6 @@ package mbaapp.endpoints;
 import io.swagger.annotations.ApiOperation;
 import mbaapp.core.Resume;
 import mbaapp.core.User;
-import mbaapp.core.UserSchool;
 import mbaapp.services.ResumeService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -54,6 +53,9 @@ public class ResumeEndpoint extends EndpointBase {
             for (Resume resume : resumes) {
                 resumesArray.put(resume.toJSON());
             }
+
+            resumesJSON.put("resumesScored", user.getResumesScored());
+            resumesJSON.put("allowUnlimitedResumes", user.isAllowUnlimitedResumes());
 
             return new ResponseEntity<>(resumesJSON.toString(), HttpStatus.OK);
 
@@ -112,6 +114,8 @@ public class ResumeEndpoint extends EndpointBase {
 
             byte[] resumeContents = userDBProvider.getResumeUpload(user, resume).toByteArray();
             resumeService.runAnalysis(user, resumeContents, resume);
+            int resumesScored = user.getResumesScored();
+            user.setResumesScored(resumesScored+1);
             userDBProvider.saveUser(user);
 
             return new ResponseEntity<>("Done analysis", HttpStatus.CREATED);

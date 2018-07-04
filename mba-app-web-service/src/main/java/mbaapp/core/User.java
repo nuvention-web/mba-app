@@ -50,8 +50,11 @@ public class User {
 
     public ProfilePDF profileRecommendation;
 
-
     public String whatDoYouBring;
+
+    public int resumesScored;
+
+    public boolean allowUnlimitedResumes = false;
 
     public User(){
 
@@ -74,6 +77,21 @@ public class User {
         tasks.add(task);
     }
 
+    public int getResumesScored() {
+        return resumesScored;
+    }
+
+    public void setResumesScored(int resumesScored) {
+        this.resumesScored = resumesScored;
+    }
+
+    public void setAllowUnlimitedResumes(boolean allowUnimitedResumes) {
+        this.allowUnlimitedResumes = allowUnimitedResumes;
+    }
+
+    public boolean isAllowUnlimitedResumes() {
+        return allowUnlimitedResumes;
+    }
 
     public void deleteTask(String taskID) throws Exception {
 

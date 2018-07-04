@@ -41,8 +41,15 @@ export class ResumeComponent implements OnInit{
 
         this._schools.getResumes(). subscribe(d => {
             this.resumes = d.resumes;
+            if(d.resumesScored<3 || d.allowUnlimitedResumes){
+                this.scoreResumeButtonDisabled = false;
+                this.scoreResumeText="Score your resume";
+            }
+            else{
+                this.scoreResumeButtonDisabled = true;
+                this.scoreResumeText="Resume scoring limit reached";
+            }
         })
-        this.scoreResumeText="Score your resume";
         this.resumeUploadText = "Upload your resume";
 
     }
@@ -122,11 +129,18 @@ export class ResumeComponent implements OnInit{
                 this._schools.getResumes(). subscribe(d => {
                     this.resumes = d.resumes;
                     this.scoreResumeText="Score your resume";
-                    this.scoreResumeButtonDisabled = false;
+                    if(d.resumesScored<3 || d.allowUnlimitedResumes){
+                        this.scoreResumeButtonDisabled = false;
+                        this.scoreResumeText="Score your resume";
+                    }
+                    else{
+                        this.scoreResumeButtonDisabled = true;
+                        this.scoreResumeText="Resume scoring limit reached";
+                    }
                 })
             }, (error:Response) => {
-                this.scoreResumeText="Score your resume";
-                this.scoreResumeButtonDisabled = false;
+                // this.scoreResumeText="Score your resume";
+                // this.scoreResumeButtonDisabled = false;
             },
         );
     }

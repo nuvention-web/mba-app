@@ -172,6 +172,10 @@
                                                 <div class="m-portlet__body overview">
                                                     <!--<h2 class="school-info-title"> {{schoolInfo.name}}  </h2>-->
                                                     <p>{{schoolInfo.info}}</p>
+                                                    <br>
+                                                    <span>
+                                                        <i>Source: U.S. News & World Report 2018</i>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -196,7 +200,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -215,7 +219,7 @@
                     </div>
                 </div>
                 <div [hidden]="essays.length == 0" class="row">
-                    <div *ngFor="let essay of schoolDetails.essays" class="col-xl-4 col-md-6">
+                    <div *ngFor="let essay of schoolDetails.essays" class="col-xl-6 col-md-6">
                         <div class="m-portlet show-hand" routerLink="/school/{{school}}/essay/{{ essay.essayID }}">
                             <!--<div class="m-portlet__body">-->
                                 <!--{{ essay.prompt }}-->

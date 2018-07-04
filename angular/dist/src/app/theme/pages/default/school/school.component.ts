@@ -78,15 +78,15 @@ export class SchoolComponent implements OnInit {
     }
 
     ngOnInit() {
-        var hash = window.location.hash;
-        hash && (<any>$)('ul.nav a[href="' + hash + '"]').tab('show');
-
-        (<any>$)('.nav-tabs a').click(function (e) {
-            (<any>$)(this).tab('show');
-            var scrollmem = (<any>$)('body').scrollTop() || (<any>$)('html').scrollTop();
-            window.location.hash = this.hash;
-            (<any>$)('html,body').scrollTop(scrollmem);
-        });
+        // var hash = window.location.hash;
+        // hash && (<any>$)('ul.nav a[href="' + hash + '"]').tab('show');
+        //
+        // (<any>$)('.nav-tabs a').click(function (e) {
+        //     (<any>$)(this).tab('show');
+        //     var scrollmem = (<any>$)('body').scrollTop() || (<any>$)('html').scrollTop();
+        //     window.location.hash = this.hash;
+        //     (<any>$)('html,body').scrollTop(scrollmem);
+        // });
     }
 
     newNote() {

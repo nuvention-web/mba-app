@@ -3,6 +3,14 @@
 
   <head>
 
+    <!-- Google Analytics -->
+		<script>
+            window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+            ga('create', 'UA-121365295-2', 'none');
+            ga('send', 'pageview', 'landing');
+		</script>
+		<script async src='https://www.google-analytics.com/analytics.js'></script>
+      
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -270,7 +278,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+<!--
+     Global site tag (gtag.js) - Google Analytics 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-117478607-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -278,6 +287,7 @@
       gtag('js', new Date());
       gtag('config', 'UA-117478607-1');
     </script>
+-->
 
 
   </body>

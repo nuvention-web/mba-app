@@ -384,6 +384,9 @@ public class User {
     }
 
     public List<Task> getTasks() {
+        if(tasks==null) {
+            return new ArrayList<>();
+        }
         Collections.sort(tasks);
         return tasks;
     }

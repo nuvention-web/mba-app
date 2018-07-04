@@ -123,7 +123,11 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
     addDeadline() {
         (<any>$(this.deadlineModal.nativeElement)).modal('hide');
-        this._schools.updateDeadline(this.chosenDeadlineSchool, this.chosenDeadline).subscribe();
+        this._schools.updateDeadline(this.chosenDeadlineSchool, this.chosenDeadline).subscribe(
+            d => {
+                this.getSchools();
+                this._schools.getAllSchools().subscribe(d => {this.allSchools = d; console.log(d)});
+            });
         this.deadlineList = [];
         this.chosenDeadlineSchool = null;
         this.chosenDeadline = null;
@@ -149,6 +153,13 @@ export class IndexComponent implements OnInit, AfterViewInit {
             }
         );
         this.chosenValue = "blank";
+    }
+
+    getSchoolDeadline(school) {
+        if(school.deadline==null) {
+            return "Target Deadline not picked";
+        }
+        return "Deadline " + school.deadline;
     }
 
 

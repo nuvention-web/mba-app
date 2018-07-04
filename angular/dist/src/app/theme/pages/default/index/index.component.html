@@ -59,7 +59,7 @@
 														<a (click)="chooseDeadline($event, school.shortName)" class="m-nav__link">
 															<i class="m-nav__link-icon flaticon-calendar-2"></i>
 															<span class="m-nav__link-text" >
-																Deadline
+																Pick a deadline
 															</span>
 														</a>
 													</li>
@@ -84,6 +84,9 @@
 							</tr>
 							<tr>
 								<td><i class="flaticon-chat"></i>&nbsp;&nbsp;&nbsp;<strong>{{school.numReviewsReturned}}/{{school.numDraftsSentForReview}}</strong> Review Requests Returned</td>
+							</tr>
+							<tr>
+								<td><i class="flaticon-calendar"></i>&nbsp;&nbsp;&nbsp;<strong>{{getSchoolDeadline(school)}}</strong></td>
 							</tr>
 							</tbody>
 						</table>

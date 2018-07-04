@@ -54,10 +54,9 @@ public class User {
 
     public int resumesScored;
 
-    public boolean allowUnlimitedResumes = false;
+    public boolean allowUnlimitedResumes;
 
     public User(){
-
     }
 
     public ProfilePDF getProfilePDF() {

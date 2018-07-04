@@ -74,6 +74,8 @@ public class ResumeService {
             e.printStackTrace();
         }
 
+        file.delete();
+
 
     }
 

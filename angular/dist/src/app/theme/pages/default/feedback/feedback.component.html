@@ -23,6 +23,17 @@
                 </div>
               </div>
 
+              <div *ngIf='user' class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+                  <div><h5><p style="color:#ab3233">{{reviewer}}'s feedback:</p></h5></div>
+                  <div>{{feedback}}</div>
+                  <br><br>
+                  <span *ngIf='reviewUploadID != null'>
+                    <i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Download the reviewed draft : <a href="#" (click)="downloadReview()">{{fileName}}</a>
+                  </span>
+                </div>
+              </div>
+
               <!--<div *ngIf='user' class="m-portlet m-portlet&#45;&#45;mobile">-->
                 <!--<div class="m-portlet__body">-->
                     <!--<div> <h4>{{reviewer}}'s comments: </h4></div>-->
@@ -48,12 +59,6 @@
                 </div>
               </div>
 
-              <div *ngIf='user' class="m-portlet m-portlet--mobile">
-                <div class="m-portlet__body">
-                  <div><h5><p style="color:#ab3233">{{reviewer}}'s feedback:</p></h5></div>
-                  <div>{{feedback}}</div>
-                </div>
-              </div>
 
               <div *ngIf='!user'>
                 <ng2-file-input [drop-text]="'Upload an edited draft here, or you can leave some comments below! '" [browse-text]="'Upload file'" (onAction)="onAction($event)"></ng2-file-input>

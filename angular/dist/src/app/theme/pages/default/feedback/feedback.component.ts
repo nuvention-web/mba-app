@@ -16,9 +16,11 @@ export class FeedbackComponent implements OnInit, AfterViewInit{
   info = {} = null;
   feedback: string;
   reviewer: string;
+  fileName : string;
   userFirstName: string;
   submitted: any = false;
   user:any = false;
+  reviewUploadID : string;
   height: any;
   constructor(private feedbackService: FeedbackService, private _script: ScriptLoaderService, private router: Router) {
       this.info = this.feedbackService.parseURL(this.router.url);
@@ -29,6 +31,8 @@ export class FeedbackComponent implements OnInit, AfterViewInit{
       }
       this.reviewer = this.content['reviewer'].split(' ')[0];
       this.userFirstName = this.content['user'].split(' ')[0];
+      this.reviewUploadID = this.content['review']['reviewComments']['uploadID'];
+      this.fileName = this.content['review']['reviewComments']['fileName']
       });
     this.height = window.screen.height + "px";
     if(this.info["view"]=="user"){
@@ -61,6 +65,10 @@ export class FeedbackComponent implements OnInit, AfterViewInit{
     }
     ngAfterViewInit() {
 
+    }
+
+    downloadReview(){
+        this.feedbackService.downloadReviewFile()
     }
 
 

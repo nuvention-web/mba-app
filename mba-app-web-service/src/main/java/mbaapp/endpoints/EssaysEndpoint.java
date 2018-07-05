@@ -337,8 +337,11 @@ public class EssaysEndpoint extends EndpointBase{
             User user = userDBProvider.getUser(userEmail);
             UserSchool school = getSchoolForUser(user, schoolShortName);
 
-            File draftFile = userDBProvider.getDraft(user, school, essayID, draftID);
             EssayDraft draft = school.getEssayDraft(essayID, draftID);
+            File draftFile = null;
+            if(draft.getDraftType()== EssayDraft.DraftType.UPLOAD) {
+                draftFile = userDBProvider.getDraft(user, school, essayID, draftID);
+            }
 
             Review review = new Review(getDate(), emailDraftRequest.getName(), emailDraftRequest.getEmail(), emailDraftRequest.getMessage());
 

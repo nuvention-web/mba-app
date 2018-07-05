@@ -2,6 +2,7 @@ package mbaapp.endpoints;
 
 import io.swagger.annotations.ApiOperation;
 import mbaapp.core.*;
+import mbaapp.email.EmailService;
 import mbaapp.mongoDB.SchoolInfoRepository;
 import mbaapp.requests.ReviewRequest;
 import org.json.JSONObject;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +28,12 @@ public class ReviewsEndpoint extends EndpointBase {
 
     @Autowired
     private SchoolInfoRepository schoolInfoRepository;
+
+    @Autowired
+    public JavaMailSender emailSender;
+
+    @Autowired
+    EmailService emailService;
 
 
     @GetMapping(produces = "application/json")
@@ -111,8 +119,11 @@ public class ReviewsEndpoint extends EndpointBase {
                     reviewComments.setComment(reviewRequest.getComments());
                     foundReview = true;
                     review.setReviewComments(reviewComments);
+                    emailService.sendDraftNotification(emailSender, user, school, essay, review );
+                    break;
                 }
             }
+
 
             userDBProvider.saveUser(user);
 
@@ -169,6 +180,8 @@ public class ReviewsEndpoint extends EndpointBase {
             if (file != null) {
                 userDBProvider.addReviewDraft(user, school, file, reviewComments);
             }
+
+
 
             return new ResponseEntity<>("Added review comment", HttpStatus.OK);
 

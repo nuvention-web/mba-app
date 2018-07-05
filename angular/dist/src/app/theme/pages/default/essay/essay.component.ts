@@ -37,6 +37,8 @@ export class EssayComponent implements OnInit {
     contactComment: string;
     contactSuccess = false;
 
+    sendForFeedbackDisabled = false;
+
     draftTitle: string
 
 
@@ -225,11 +227,13 @@ export class EssayComponent implements OnInit {
     }
 
     sendForReview() {
+        this.sendForFeedbackDisabled = true;
         this._schools.sendForReview(this.school, this.essayID, this.contactDraft, this.contactEmail, this.contactName, this.contactComment).subscribe((response) => {
             this._schools.getEssayReviews(this.school, this.essayID).subscribe(d => this.reviews = d.reviews);
             this.contactSuccess = true;
+            this.sendForFeedbackDisabled = false;
         }, (error) => {
-        
+            this.sendForFeedbackDisabled = false;
         });
     }
 

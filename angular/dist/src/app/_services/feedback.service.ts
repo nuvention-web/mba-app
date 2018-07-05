@@ -40,5 +40,12 @@ export class FeedbackService {
         return this.http.post( this.info['url'] + '/review/users/' + this.info['user']
             + '/school/' + this.info['school'] + '/essay/' + this.info['essay'] +  '/draft/' + this.info['token'] + '/review/' + this.info['reviewid'] + '/upload', formData);
     }
+
+
+    downloadReviewFile() {
+        window.open(this.info['url'] + '/review/users/' + this.info['user']
+            + '/school/' + this.info['school'] + '/essay/' + this.info['essay'] +  '/draft/' + this.info['token'] + '/review/' + this.info['reviewid'] + '/download');
+    }
+
 }
 

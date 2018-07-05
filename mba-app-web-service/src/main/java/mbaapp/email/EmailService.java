@@ -41,8 +41,6 @@ public class EmailService {
     private static String DOMAIN_NAME = "mail.myapp.mba";
     private static String API_KEY = "key-1013ff5b4d9ac554d9ac41f1163ff258";
 
-    private final String FROM = "myapp.MBA <mail@mail.myapp.mba>";
-
     private static final String REST_URI = "https://api.mailgun.net/v3/" + DOMAIN_NAME + "/messages";
 
 
@@ -69,11 +67,42 @@ public class EmailService {
         helper.setTo(draftRequest.getEmail());
         helper.setSubject(subject);
         helper.setText(html, true);
-        helper.setFrom("mail@mail.myapp.mba", "myapp.MBA");
-        FileSystemResource file = new FileSystemResource(draftFile);
-        helper.addAttachment(draftFile.getName(), file);
+        helper.setFrom("hello@myapp.mba", "myapp.MBA");
+
+        if(draftFile!=null) {
+            FileSystemResource file = new FileSystemResource(draftFile);
+            helper.addAttachment(draftFile.getName(), file);
+        }
         emailSender.send(message);
 
+    }
+
+    public void sendDraftNotification(JavaMailSender emailSender, User user,
+                                      UserSchool userSchool, Essay essay, Review review) throws Exception {
+
+        String subject = MessageFormat.format("{0} has reviewed a draft of your essay for {1}", review.getName(),
+                userSchool.getShortName());
+
+
+
+        Resource resource = new ClassPathResource("email/reviewNotification.html");
+        InputStream resourceInputStream = resource.getInputStream();
+        String html = IOUtils.toString(resourceInputStream, StandardCharsets.UTF_8.name());
+        html = html.replace("{replaceUserName}", user.getName().split(" ")[0]);
+        html = html.replace("{replaceReviewerName}", review.getName());
+        html = html.replace("{replaceSchoolName}", userSchool.getShortName());
+        String reviewURL = MessageFormat.format("https://portal.myapp.mba/school/{0}/essay/{1}#feedback",
+                 userSchool.getShortName(), essay.getEssayID());
+        html = html.replace("{replaceReviewURL}", reviewURL);
+
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(user.getEmail());
+        helper.setSubject(subject);
+        helper.setText(html, true);
+        helper.setFrom("hello@myapp.mba", "myapp.MBA");
+
+        emailSender.send(message);
     }
 
 
@@ -95,7 +124,7 @@ public class EmailService {
         html = html.replace("{buttonText}","Reset password");
 
         helper.setText(html, true);
-        helper.setFrom("mail@mail.myapp.mba", "myapp.MBA");
+        helper.setFrom("hello@myapp.mba", "myapp.MBA");
         emailSender.send(message);
 
     }
@@ -124,7 +153,7 @@ public class EmailService {
         html = html.replace("{buttonText}","Verify Account");
 
         helper.setText(html, true);
-        helper.setFrom("mail@mail.myapp.mba", "myapp.MBA");
+        helper.setFrom("hello@myapp.mba", "myapp.MBA");
         emailSender.send(message);
 
     }

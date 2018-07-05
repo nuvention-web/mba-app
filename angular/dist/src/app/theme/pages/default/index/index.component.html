@@ -48,18 +48,18 @@
 											<div class="m-dropdown__content">
 												<ul class="m-nav">
 													<li class="m-nav__item">
-														<a (click)="confirmDeleteSchool($event, i, school.shortName)" class="m-nav__link">
-															<i class="m-nav__link-icon flaticon-circle"></i>
+														<a (click)="chooseDeadline($event, school.shortName)" class="m-nav__link">
+															<i class="m-nav__link-icon flaticon-calendar-2"></i>
 															<span class="m-nav__link-text" >
-																Remove
+																Set your target deadline
 															</span>
 														</a>
 													</li>
 													<li class="m-nav__item">
-														<a (click)="chooseDeadline($event, school.shortName)" class="m-nav__link">
-															<i class="m-nav__link-icon flaticon-calendar-2"></i>
+														<a (click)="confirmDeleteSchool($event, i, school.shortName)" class="m-nav__link">
+															<i class="m-nav__link-icon flaticon-circle"></i>
 															<span class="m-nav__link-text" >
-																Pick a deadline
+																Remove school
 															</span>
 														</a>
 													</li>

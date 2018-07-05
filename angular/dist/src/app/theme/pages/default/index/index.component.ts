@@ -157,7 +157,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
     getSchoolDeadline(school) {
         if(school.deadline==null) {
-            return "Target Deadline not picked";
+            return "Target Deadline not set";
         }
         return "Deadline " + school.deadline;
     }

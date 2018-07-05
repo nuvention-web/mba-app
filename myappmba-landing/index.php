@@ -34,7 +34,7 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- Custom styles for this template -->
-    <link href="css/landing-page.min.css" rel="stylesheet">
+    <link href="css/landing-page.css" rel="stylesheet">
     <!-- Facebook Pixel Code -->
     <script>
       !function(f,b,e,v,n,t,s)
@@ -150,31 +150,41 @@
     <section class="features-icons bg-dark text-center">
       <div class="container">
         <div class="row">
-          <div class="col-lg-4">
+          <div class="col-lg-3">
+                <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                    <div class="features-icons-icon d-flex">
+                        <i class="fa fa-edit m-auto"></i>
+                    </div>
+                    <h3>Applications, Streamlined</h3>
+                    <p class="lead mb-0">Manage all your MBA applications through a centralized portal.</p>
+                </div>
+            </div>
+          <div class="col-lg-3">
             <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
               <div class="features-icons-icon d-flex">
                 <i class="fa fa-edit m-auto"></i>
               </div>
               <h3>Essay Drafts, Wrangled</h3>
-              <p class="lead mb-0">Write, manage, and get feedback on your essays all in one place.</p>
+              <p class="lead mb-0">Don't get lost in drafts - write, manage, and get feedback all in one place.</p>
             </div>
           </div>
-          <div class="col-lg-4">
+          <div class="col-lg-3">
             <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
               <div class="features-icons-icon d-flex">
                 <i class="fa fa-calendar m-auto"></i>
               </div>
               <h3>Deadlines, Managed</h3>
-              <p class="lead mb-0">Keep track of all your application deadlines in one place</p>
+              <p class="lead mb-0">Keep track of upcoming deadlines and create tasks to plan your application process.</p>
             </div>
           </div>
-          <div class="col-lg-4">
+          <div class="col-lg-3">
             <div class="features-icons-item mx-auto mb-0 mb-lg-3">
               <div class="features-icons-icon d-flex">
                 <i class="fa fa-comments m-auto"></i>
               </div>
               <h3>Advice, On-Demand</h3>
-              <p class="lead mb-0">Specialists will review you application for a small fee.</p>
+              <p class="lead mb-0">Specialists will review you application for a small fee.             <i>(Coming Soon!)</i>
+              </p>
             </div>
           </div>
         </div>
@@ -184,28 +194,57 @@
     <!-- Image Showcases -->
     <section class="showcase">
       <div class="container-fluid p-0">
-        <div class="row no-gutters">
+          <div class="row  no-gutters">
+              <div class="col-lg-4 my-auto showcase-text">
+                  <h2>Applications, Streamlined</h2>
+                  <p class="lead mb-0">Every school has different requirements and timelines. Managing your applications doesn't have to be a pain. myapp.MBA provides you with a centralized portal to help you streamline your applications so you can focus on the more important things.
+                  </p>
+              </div>
+              <div class="col-lg-8 text-white">
+                  <img src="img/Home.jpg" class="showcase-img">
+              </div>
+          </div>
+          <div class="row  no-gutters bg-dark">
+              <div class="col-lg-8 text-white">
+                  <img src="img/Essays.jpg" class="showcase-img">
+              </div>
+              <div class="col-lg-4 my-auto showcase-text">
+                  <h2>Essay Drafts, Wrangled</h2>
+                  <p class="lead mb-0">Writing your application essays can be the hardest part of the application process. myapp.MBA allows you to focus on your story—we take care of the rest with a suite of tools to make managing drafts, versions, and prompts a breeze.
+                  </p>
+              </div>
+              </div>
+          <div class="row  no-gutters ">
+              <div class="col-lg-4 my-auto showcase-text">
+                  <h2>Deadlines and Tasks, Managed</h2>
+                  <p class="lead mb-0">Stay on top of the application process by creating tasks for yourself and keeping track of upcoming deadlines.
+                  </p>
+              </div>
+              <div class="col-lg-8 text-white">
+                  <img src="img/Deadlines.jpg" class="showcase-img">
+              </div>
+          </div>
+          <div class="row  no-gutters bg-dark">
+              <div class="col-lg-8 text-white">
+                  <img src="img/Resume.jpg" class="showcase-img">
+              </div>
+              <div class="col-lg-4 my-auto showcase-text">
+                  <h2>Resumes, Analyzed</h2>
+                  <p class="lead mb-0">Get your resume analyzed and scored by an automated AI and Machine Learning driven tool.
 
-          <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/bg-showcase-1.jpg');"></div>
-          <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-            <h2>Essay Drafts, Wrangled</h2>
-            <p class="lead mb-0">Writing your application essays can be the hardest part of the application process. myapp.MBA allows you to focus on your story—we take care of the rest with a suite of tools to make managing drafts, versions, and prompts a breeze.</p>
+                  </p>
+              </div>
           </div>
-        </div>
-        <div class="row  no-gutters">
-          <div class="col-lg-6 text-white showcase-img" style="background-image: url('img/bg-showcase-2.jpg');"></div>
-          <div class="col-lg-6 my-auto showcase-text">
-            <h2>Applications, Streamlined</h2>
-            <p class="lead mb-0">Every school has different requirements and timelines. Managing your applications doesn't have to be a pain. myapp.MBA provides you with a centralized portal to help you streamline your applications so you can focus on the more important things.</p>
+          <div class="row  no-gutters-bottom">
+              <div class="col-lg-4 my-auto showcase-text">
+                  <h2>Advice, On Demand</h2>
+                  <p class="lead mb-0">Get feedback from your friends and family. Or you can get your application reviewed by our experts for a small fee (coming soon).
+                  </p>
+              </div>
+              <div class="col-lg-8 text-white">
+                  <img src="img/Feedback.jpg" class="showcase-img">
+              </div>
           </div>
-        </div>
-        <div class="row  no-gutters">
-          <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/bg-showcase-3.jpg');"></div>
-          <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-            <h2>Advice, On-Demand</h2>
-            <p class="lead mb-0">If you get stuck on an essay or have a question, we have specialists who can review your application material to get you back on track!</p>
-          </div>
-        </div>
       </div>
     </section>
 

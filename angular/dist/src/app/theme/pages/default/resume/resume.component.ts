@@ -82,6 +82,15 @@ export class ResumeComponent implements OnInit{
         let file = event.target.files[0];
         console.log(file); // You will see the file
         this.fileUpload = file;
+        console.log(file.size)
+        if(file!=null && file.size>2000000) {
+            this.resumeUploadButtonDisabled=true;
+            this.resumeUploadText="The filesize exceeds the 2MB limit. Only files upto 2MB can be uploaded. Please upload a smaller file."
+        }
+        else{
+            this.resumeUploadButtonDisabled=false;
+            this.resumeUploadText="Upload your resume"
+        }
     }
 
     ngOnInit() {

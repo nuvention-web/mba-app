@@ -163,7 +163,7 @@
                                                                 Choose a .doc or .docx file...
                                                             </label>
                                                         </div>
-                                                        <button type="button" class="btn m-btn--pill btn-primary" (click)="uploadDraft()">Upload Draft</button>
+                                                        <button type="button" class="btn m-btn--pill btn-primary" [disabled]="uploadButtonDisabled" (click)="uploadDraft()">{{uploadButtonString}}</button>
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane" id="newdraft_gdrive" role="tabpanel">

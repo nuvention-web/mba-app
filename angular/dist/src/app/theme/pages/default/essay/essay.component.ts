@@ -38,6 +38,8 @@ export class EssayComponent implements OnInit {
     contactSuccess = false;
 
     sendForFeedbackDisabled = false;
+    uploadButtonDisabled = false;
+    uploadButtonString: string;
 
     draftTitle: string
 
@@ -56,6 +58,7 @@ export class EssayComponent implements OnInit {
         this._schools.getAllEssays().subscribe(d => this.allEssays = this.transformJSON(d));
         this._schools.getSchoolDetails(this.school).subscribe(d => this.schoolDetails = d);
         this._profile.getProfile().subscribe(p => {this.profile = p; delete this.profile['name']; delete this.profile['email']; delete this.profile['id']; delete this.profile['resumes']});
+        this.uploadButtonString = "Upload";
     }
 
     ngOnInit() {
@@ -194,6 +197,15 @@ export class EssayComponent implements OnInit {
         let file = event.target.files[0];
             console.log(file); // You will see the file
             this.fileUpload = file;
+             if(file!=null && file.size>2000000) {
+                this.uploadButtonDisabled=true;
+                this.uploadButtonString="The filesize exceeds the 2MB limit. Only files upto 2MB can be uploaded. Please upload a smaller file."
+            }
+            else{
+                this.uploadButtonDisabled=false;
+                this.uploadButtonString="Upload"
+            }
+
     }
 
     uploadDraft() {

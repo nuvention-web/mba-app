@@ -21,6 +21,8 @@ export class FeedbackComponent implements OnInit, AfterViewInit{
   submitted: any = false;
   user:any = false;
   reviewUploadID : string;
+  submitButtonDisabled = false;
+  submitButtonText : string;
   height: any;
   constructor(private feedbackService: FeedbackService, private _script: ScriptLoaderService, private router: Router) {
       this.info = this.feedbackService.parseURL(this.router.url);
@@ -38,6 +40,7 @@ export class FeedbackComponent implements OnInit, AfterViewInit{
     if(this.info["view"]=="user"){
         this.user=true
     }
+    this.submitButtonText = "Submit";
     console.log('start');
   }
 
@@ -46,6 +49,16 @@ export class FeedbackComponent implements OnInit, AfterViewInit{
     if (event.action === Ng2FileInputAction.Added) {
       const f = event['file'];
       this.file = {name: f['name'], file: f};
+      console.log(f.size);
+        if(f!=null && f.size>2000000) {
+            this.submitButtonDisabled=true;
+            this.submitButtonText="The filesize exceeds the 2MB limit. Only files upto 2MB can be uploaded. Please add a smaller file."
+        }
+        else{
+            this.submitButtonDisabled=false;
+            this.submitButtonText="Submit"
+        }
+
     }
     if (event.action === Ng2FileInputAction.Removed) {
       this.file = null;

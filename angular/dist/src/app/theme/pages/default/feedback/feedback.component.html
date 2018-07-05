@@ -61,7 +61,7 @@
 
 
               <div *ngIf='!user'>
-                <ng2-file-input [drop-text]="'Upload an edited draft here, or you can leave some comments below! '" [browse-text]="'Upload file'" (onAction)="onAction($event)"></ng2-file-input>
+                <ng2-file-input [drop-text]="'Upload an edited draft here, and/or you can leave some comments below. '" [browse-text]="'Add file'" (onAction)="onAction($event)"></ng2-file-input>
 
                 <form id="feedback-form">
                   <div class="form-group">
@@ -70,7 +70,7 @@
                   </div>
                 </form>
                 <div style="text-align: center" >
-                  <button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+                  <button type="button" class="btn btn-primary" [disabled]="submitButtonDisabled" (click)="onSubmit()">{{submitButtonText}}</button>
                 </div>
               </div>
             </div>

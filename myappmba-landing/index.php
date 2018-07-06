@@ -51,7 +51,7 @@
     <noscript><img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=173732776620419&ev=PageView&noscript=1"
     /></noscript>
-    <!-- End Facebook Pixel Code -->cha
+    <!-- End Facebook Pixel Code -->
   </head>
 
   <body>
@@ -129,8 +129,14 @@
                     <input id="utm_content" type="hidden" value="<?=$_GET['utm_content']?>">
                     <div class="form-row">
 						<div class="col-12">
-                        <a href="https://portal.myapp.mba" class="btn btn-block btn-lg btn-dark">Go to the portal</a>
-                      </div>                    
+                            <a href="https://portal.myapp.mba" class="btn btn-block btn-lg btn-dark">Sign Up for Free!</a>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="col-12">
+                            <a href="https://portal.myapp.mba" class="btn btn-block btn-lg btn-dark">Continue to your Portal</a>
+                        </div>
                     </div>						                 
                     </div>
                   </form>
@@ -256,9 +262,10 @@
           <div class="col-xl-9 mx-auto">
             <h2 class="mb-4">Sign up now to get started on your applications.</h2>
           </div>
-<div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
               <a href="https://portal.myapp.mba" class="btn btn-block btn-lg btn-primary">Go to the Portal</a>
-          </div>            <br>
+          </div>
+            <br>
           </div>
         </div>
       </div>
